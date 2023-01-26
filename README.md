@@ -1,4 +1,4 @@
-# Orb TypeScript SDK
+# Orb SDKs
 
 SDKs for the [Orb API](https://docs.withorb.com/docs/orb-docs/overview). Orb is developer-first billing infrastructure that’s flexible, reliable, and accurate—at every stage of your growth.
 

@@ -1,4 +1,4 @@
-# @orb/sdk
+# Orb Typescript SDK
 
 <!-- Start SDK Installation -->
 ## SDK Installation
