@@ -1,4 +1,4 @@
-# orbapi
+# Orb Python SDK
 
 <!-- Start SDK Installation -->
 ## SDK Installation

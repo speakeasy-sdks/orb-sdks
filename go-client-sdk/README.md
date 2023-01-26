@@ -1,4 +1,4 @@
-# github.com/speakeasy-sdks/orb-sdks/go-client-sdk
+# Orb Go SDK
 
 <!-- Start SDK Installation -->
 ## SDK Installation

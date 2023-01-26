@@ -5063,7 +5063,7 @@ paths:
         [Price](../reference/Orb-API.json/components/schemas/Price) object. The
         `model_type` field determines the key for the configuration object that
         is present. A detailed explanation of price types can be found in the
-        [Price schema](../reference/Orb-API.json/components/schemas/Price). 
+        [Price schema](../reference/Orb-API.json/components/schemas/Price).
   /plans:
     get:
       summary: List plans
