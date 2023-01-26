@@ -5064,12 +5064,6 @@ paths:
         `model_type` field determines the key for the configuration object that
         is present. A detailed explanation of price types can be found in the
         [Price schema](../reference/Orb-API.json/components/schemas/Price). 
-# https://stackoverflow.com/questions/978061/http-get-with-request-body
-#      requestBody:
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/Plan'
   /plans:
     get:
       summary: List plans
