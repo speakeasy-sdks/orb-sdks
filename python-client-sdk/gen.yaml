@@ -1,0 +1,5 @@
+python:
+    version: 1.0.0
+    packagename: orbapi
+    author: orbapi
+sdkclassname: OrbAPI

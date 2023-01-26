@@ -1,0 +1,5 @@
+typescript:
+    version: 2.2.4
+    packagename: '@orb/sdk'
+    author: orbapi
+sdkclassname: OrbAPI
