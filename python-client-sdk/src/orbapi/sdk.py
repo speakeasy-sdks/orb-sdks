@@ -35,7 +35,7 @@ class OrbAPI:
     _security: shared.Security
     _server_url: str = SERVERS[0]
     _language: str = "python"
-    _sdk_version: str = "1.1.0"
+    _sdk_version: str = "1.1.1"
     _gen_version: str = "0.21.0"
 
     def __init__(self) -> None:
