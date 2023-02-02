@@ -1,7 +1,7 @@
 management:
     openapi-checksum: 2c12389edb4702454e1a5e8d3bde2463
     openapi-version: "1.0"
-    speakeasy-version: 0.21.2
+    speakeasy-version: 0.22.0
 go:
-    version: 1.1.3
+    version: 1.2.0
     packagename: github.com/speakeasy-sdks/orb-sdks/go-client-sdk

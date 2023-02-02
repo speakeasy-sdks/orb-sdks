@@ -1,9 +1,9 @@
 management:
     openapi-checksum: 2c12389edb4702454e1a5e8d3bde2463
     openapi-version: "1.0"
-    speakeasy-version: 0.21.2
+    speakeasy-version: 0.22.0
 typescript:
-    version: 2.3.3
+    version: 2.4.0
     packagename: '@orb/sdk'
     author: orbapi
 sdkclassname: OrbAPI
