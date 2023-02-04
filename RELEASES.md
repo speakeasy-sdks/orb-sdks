@@ -49,3 +49,13 @@ Based on:
 - [NPM v1.2.0] https://www.npmjs.com/package/@orb/sdk/v/1.2.0 - typescript-client-sdk
 - [PyPI v1.2.0] https://pypi.org/project/orbapi/1.2.0 - python-client-sdk
 - [Go v1.2.0] https://github.com/speakeasy-sdks/orb-sdks/releases/tag/v1.2.0 - go-client-sdk
+
+## Version 1.2.1
+### Changes
+Based on:
+- OpenAPI Doc 1.0 openapi.yaml
+- Speakeasy CLI 0.22.1 https://github.com/speakeasy-api/speakeasy
+### Releases
+- [NPM v1.2.1] https://www.npmjs.com/package/@orb/sdk/v/1.2.1 - typescript-client-sdk
+- [PyPI v1.2.1] https://pypi.org/project/orbapi/1.2.1 - python-client-sdk
+- [Go v1.2.1] https://github.com/speakeasy-sdks/orb-sdks/releases/tag/v1.2.1 - go-client-sdk
