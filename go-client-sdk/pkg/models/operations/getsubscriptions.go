@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetSubscriptionsQueryParams struct {
@@ -9,17 +9,17 @@ type GetSubscriptionsQueryParams struct {
 	ExternalCustomerID *string `queryParam:"style=form,explode=true,name=external_customer_id"`
 }
 
+type GetSubscriptionsRequest struct {
+	QueryParams GetSubscriptionsQueryParams
+}
+
 type GetSubscriptions200ApplicationJSON struct {
 	Data               []shared.Subscription  `json:"data,omitempty"`
 	PaginationMetadata map[string]interface{} `json:"pagination_metadata,omitempty"`
 }
 
-type GetSubscriptionsRequest struct {
-	QueryParams GetSubscriptionsQueryParams
-}
-
 type GetSubscriptionsResponse struct {
 	ContentType                              string
-	StatusCode                               int64
+	StatusCode                               int
 	GetSubscriptions200ApplicationJSONObject *GetSubscriptions200ApplicationJSON
 }

@@ -1,5 +1,4 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 // CreditLedgerEntryCreditBlock
@@ -17,7 +16,6 @@ export class CreditLedgerEntryCreditBlock extends SpeakeasyBase {
   perUnitCostBasis: string;
 }
 
-
 export class CreditLedgerEntryCustomer extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
   externalCustomerId: string;
@@ -25,19 +23,16 @@ export class CreditLedgerEntryCustomer extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id: string;
 }
-
 export enum CreditLedgerEntryEntryStatusEnum {
     Committed = "committed",
     Pending = "pending"
 }
-
 export enum CreditLedgerEntryEntryTypeEnum {
     Increment = "increment",
     Decrement = "decrement",
     ExpirationChange = "expiration_change",
     CreditBlockExpiry = "credit_block_expiry"
 }
-
 
 // CreditLedgerEntry
 /** 

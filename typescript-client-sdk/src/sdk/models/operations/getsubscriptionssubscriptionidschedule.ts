@@ -1,5 +1,4 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class GetSubscriptionsSubscriptionIdSchedulePathParams extends SpeakeasyBase {
@@ -7,8 +6,12 @@ export class GetSubscriptionsSubscriptionIdSchedulePathParams extends SpeakeasyB
   subscriptionId: string;
 }
 
+export class GetSubscriptionsSubscriptionIdScheduleRequest extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  pathParams: GetSubscriptionsSubscriptionIdSchedulePathParams;
+}
 
-export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonDataPlan extends SpeakeasyBase {
+export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONDataPlan extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id?: string;
 
@@ -16,33 +19,24 @@ export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonDataPlan ex
   name?: string;
 }
 
-
-export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonData extends SpeakeasyBase {
+export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=end_date" })
   endDate?: Date;
 
   @SpeakeasyMetadata({ data: "json, name=plan" })
-  plan?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonDataPlan;
+  plan?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONDataPlan;
 
   @SpeakeasyMetadata({ data: "json, name=start_date" })
   startDate?: Date;
 }
 
-
-export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonData })
-  data?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJsonData[];
+export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData })
+  data?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData[];
 
   @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
-
-
-export class GetSubscriptionsSubscriptionIdScheduleRequest extends SpeakeasyBase {
-  @SpeakeasyMetadata()
-  pathParams: GetSubscriptionsSubscriptionIdSchedulePathParams;
-}
-
 
 export class GetSubscriptionsSubscriptionIdScheduleResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -52,5 +46,5 @@ export class GetSubscriptionsSubscriptionIdScheduleResponse extends SpeakeasyBas
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getSubscriptionsSubscriptionIdSchedule200ApplicationJSONObject?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJson;
+  getSubscriptionsSubscriptionIdSchedule200ApplicationJSONObject?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSON;
 }

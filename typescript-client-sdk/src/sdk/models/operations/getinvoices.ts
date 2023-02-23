@@ -1,6 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class GetInvoicesQueryParams extends SpeakeasyBase {
@@ -14,21 +13,18 @@ export class GetInvoicesQueryParams extends SpeakeasyBase {
   subscriptionId?: string;
 }
 
+export class GetInvoicesRequest extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  queryParams: GetInvoicesQueryParams;
+}
 
-export class GetInvoices200ApplicationJson extends SpeakeasyBase {
+export class GetInvoices200ApplicationJSON extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Invoice })
   data?: shared.Invoice[];
 
   @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
-
-
-export class GetInvoicesRequest extends SpeakeasyBase {
-  @SpeakeasyMetadata()
-  queryParams: GetInvoicesQueryParams;
-}
-
 
 export class GetInvoicesResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -38,5 +34,5 @@ export class GetInvoicesResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getInvoices200ApplicationJSONObject?: GetInvoices200ApplicationJson;
+  getInvoices200ApplicationJSONObject?: GetInvoices200ApplicationJSON;
 }

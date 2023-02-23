@@ -1,7 +1,7 @@
 import requests
-from typing import Any,Optional
-from orbapi.models import shared, operations
 from . import utils
+from orbapi.models import operations, shared
+from typing import Optional
 
 class Subscription:
     _client: requests.Session

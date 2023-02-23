@@ -1,8 +1,8 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"time"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/types"
 )
 
 type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityPathParams struct {
@@ -10,9 +10,9 @@ type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityPathParams struct {
 }
 
 type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityRequestBody struct {
-	EffectiveDate *time.Time `json:"effective_date,omitempty"`
-	PriceID       string     `json:"price_id"`
-	Quantity      float64    `json:"quantity"`
+	EffectiveDate *types.Date `json:"effective_date,omitempty"`
+	PriceID       string      `json:"price_id"`
+	Quantity      float64     `json:"quantity"`
 }
 
 type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityRequest struct {
@@ -22,6 +22,6 @@ type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityRequest struct {
 
 type PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityResponse struct {
 	ContentType  string
-	StatusCode   int64
+	StatusCode   int
 	Subscription *shared.Subscription
 }

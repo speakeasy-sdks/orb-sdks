@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
-from enum import Enum
 from dataclasses_json import dataclass_json
+from enum import Enum
 from orbapi import utils
+from typing import Any, Optional
 
 class PostIngestDebugEnum(str, Enum):
     TRUE = "true"
@@ -31,29 +31,10 @@ class PostIngestRequestBody:
     events: list[PostIngestRequestBodyEvents] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('events') }})
     
 
-@dataclass_json
 @dataclasses.dataclass
-class PostIngest200ApplicationJSONDebug:
-    r"""PostIngest200ApplicationJSONDebug
-    Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
-    """
-    
-    duplicate: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('duplicate') }})
-    ingested: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('ingested') }})
-    
-
-@dataclass_json
-@dataclasses.dataclass
-class PostIngest200ApplicationJSONValidationFailed:
-    idempotency_key: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('idempotency_key') }})
-    validation_errors: Optional[list[dict[str, Any]]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_errors') }})
-    
-
-@dataclass_json
-@dataclasses.dataclass
-class PostIngest200ApplicationJSON:
-    validation_failed: list[PostIngest200ApplicationJSONValidationFailed] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_failed') }})
-    debug: Optional[PostIngest200ApplicationJSONDebug] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('debug') }})
+class PostIngestRequest:
+    query_params: PostIngestQueryParams = dataclasses.field()
+    request: Optional[PostIngestRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 @dataclass_json
@@ -81,10 +62,29 @@ class PostIngest400ApplicationJSON:
     debug: Optional[PostIngest400ApplicationJSONDebug] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('debug') }})
     
 
+@dataclass_json
 @dataclasses.dataclass
-class PostIngestRequest:
-    query_params: PostIngestQueryParams = dataclasses.field()
-    request: Optional[PostIngestRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+class PostIngest200ApplicationJSONDebug:
+    r"""PostIngest200ApplicationJSONDebug
+    Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
+    """
+    
+    duplicate: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('duplicate') }})
+    ingested: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('ingested') }})
+    
+
+@dataclass_json
+@dataclasses.dataclass
+class PostIngest200ApplicationJSONValidationFailed:
+    idempotency_key: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('idempotency_key') }})
+    validation_errors: Optional[list[dict[str, Any]]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_errors') }})
+    
+
+@dataclass_json
+@dataclasses.dataclass
+class PostIngest200ApplicationJSON:
+    validation_failed: list[PostIngest200ApplicationJSONValidationFailed] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_failed') }})
+    debug: Optional[PostIngest200ApplicationJSONDebug] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('debug') }})
     
 
 @dataclasses.dataclass

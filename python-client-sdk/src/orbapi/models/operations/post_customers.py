@@ -1,10 +1,10 @@
 import dataclasses
-from typing import Optional
-from enum import Enum
-from dataclasses_json import dataclass_json
-from orbapi import utils
-from ..shared import customer_tax_id as shared_customer_tax_id
 from ..shared import customer as shared_customer
+from ..shared import customer_tax_id as shared_customer_tax_id
+from dataclasses_json import dataclass_json
+from enum import Enum
+from orbapi import utils
+from typing import Optional
 
 
 @dataclass_json

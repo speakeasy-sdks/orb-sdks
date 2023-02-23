@@ -3,30 +3,30 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 	"strings"
 )
 
-type Customer struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type customer struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewCustomer(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Customer {
-	return &Customer{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newCustomer(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *customer {
+	return &customer{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -34,8 +34,8 @@ func NewCustomer(defaultClient, securityClient HTTPClient, serverURL, language, 
 // This performs a deletion of this customer, its subscriptions, and its invoices. This operation is irreversible. Note that this is a _soft_ deletion, but the data will be inaccessible through the API and Orb dashboard. For hard-deletion, please reach out to the Orb team directly.
 //
 // **Note**: This operation happens asynchronously and can be expected to take a few minutes to propagate to related resources. However, querying for the customer on subsequent GET requests while deletion is in process will reflect its deletion with a `deleted: true` property. Once the customer deletion has been fully processed, the customer will not be returned in the API.
-func (s *Customer) DeleteCustomersCustomerID(ctx context.Context, request operations.DeleteCustomersCustomerIDRequest) (*operations.DeleteCustomersCustomerIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) DeleteCustomersCustomerID(ctx context.Context, request operations.DeleteCustomersCustomerIDRequest) (*operations.DeleteCustomersCustomerIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "DELETE", url, nil)
@@ -43,18 +43,21 @@ func (s *Customer) DeleteCustomersCustomerID(ctx context.Context, request operat
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.DeleteCustomersCustomerIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -66,8 +69,8 @@ func (s *Customer) DeleteCustomersCustomerID(ctx context.Context, request operat
 
 // GetCustomerCosts - View customer costs by external customer ID
 // This endpoint's resource and semantics exactly mirror [View customer costs](../reference/Orb-API.json/paths/~1customers~1{customer_id}~1costs/get) but operates on an [external customer ID](../docs/Customer-ID-Aliases.md) rather than an Orb issued identifier.
-func (s *Customer) GetCustomerCosts(ctx context.Context, request operations.GetCustomerCostsRequest) (*operations.GetCustomerCostsResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomerCosts(ctx context.Context, request operations.GetCustomerCostsRequest) (*operations.GetCustomerCostsResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/external_customer_id/{external_customer_id}/costs", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -75,20 +78,25 @@ func (s *Customer) GetCustomerCosts(ctx context.Context, request operations.GetC
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomerCostsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -171,8 +179,8 @@ func (s *Customer) GetCustomerCosts(ctx context.Context, request operations.GetC
 //
 // ### Matrix prices
 // When a price uses matrix pricing, it's important to view costs grouped by those matrix dimensions. Orb will return `price_groups` with the `grouping_key` and `secondary_grouping_key` based on the matrix price definition, for each `grouping_value` and `secondary_grouping_value` available.
-func (s *Customer) GetCustomerCostsByID(ctx context.Context, request operations.GetCustomerCostsByIDRequest) (*operations.GetCustomerCostsByIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomerCostsByID(ctx context.Context, request operations.GetCustomerCostsByIDRequest) (*operations.GetCustomerCostsByIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/costs", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -180,20 +188,25 @@ func (s *Customer) GetCustomerCostsByID(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomerCostsByIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -217,8 +230,8 @@ func (s *Customer) GetCustomerCostsByID(ctx context.Context, request operations.
 // This endpoint returns a list of all customers for an account. The list of customers is ordered starting from the most recently created customer. This endpoint follows Orb's [standardized pagination format](../docs/Pagination.md).
 //
 // See [Customer](../reference/Orb-API.json/components/schemas/Customer) for an overview of the customer model.
-func (s *Customer) GetCustomers(ctx context.Context) (*operations.GetCustomersResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomers(ctx context.Context) (*operations.GetCustomersResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/customers"
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -226,18 +239,21 @@ func (s *Customer) GetCustomers(ctx context.Context) (*operations.GetCustomersRe
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -260,8 +276,8 @@ func (s *Customer) GetCustomers(ctx context.Context) (*operations.GetCustomersRe
 // This endpoint is used to fetch customer details given an identifier. If the `Customer` is in the process of being deleted, only the properties `id` and `deleted: true` will be returned.
 //
 // See the [Customer resource](Orb-API.json/components/schemas/Customer) for a full discussion of the Customer model.
-func (s *Customer) GetCustomersCustomerID(ctx context.Context, request operations.GetCustomersCustomerIDRequest) (*operations.GetCustomersCustomerIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomersCustomerID(ctx context.Context, request operations.GetCustomersCustomerIDRequest) (*operations.GetCustomersCustomerIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -269,18 +285,21 @@ func (s *Customer) GetCustomersCustomerID(ctx context.Context, request operation
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersCustomerIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -313,8 +332,8 @@ func (s *Customer) GetCustomersCustomerID(ctx context.Context, request operation
 // ## Eligibility
 //
 // The customer balance can only be applied to invoices or adjusted manually if invoices are not synced to a separate invoicing provider. If a payment gateway such as Stripe is used, the balance will be applied to the invoice before forwarding payment to the gateway.
-func (s *Customer) GetCustomersCustomerIDBalanceTransactions(ctx context.Context, request operations.GetCustomersCustomerIDBalanceTransactionsRequest) (*operations.GetCustomersCustomerIDBalanceTransactionsResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomersCustomerIDBalanceTransactions(ctx context.Context, request operations.GetCustomersCustomerIDBalanceTransactionsRequest) (*operations.GetCustomersCustomerIDBalanceTransactionsResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/balance_transactions", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -322,18 +341,21 @@ func (s *Customer) GetCustomersCustomerIDBalanceTransactions(ctx context.Context
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersCustomerIDBalanceTransactionsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -356,8 +378,8 @@ func (s *Customer) GetCustomersCustomerIDBalanceTransactions(ctx context.Context
 // This endpoint is used to fetch customer details given an `external_customer_id` (see [Customer ID Aliases](../docs/Customer-ID-Aliases.md)).
 //
 // Note that the resource and semantics of this endpoint exactly mirror [Get Customer](Orb-API.json/paths/~1customers/get).
-func (s *Customer) GetCustomersExternalCustomerIDExternalCustomerID(ctx context.Context, request operations.GetCustomersExternalCustomerIDExternalCustomerIDRequest) (*operations.GetCustomersExternalCustomerIDExternalCustomerIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) GetCustomersExternalCustomerIDExternalCustomerID(ctx context.Context, request operations.GetCustomersExternalCustomerIDExternalCustomerIDRequest) (*operations.GetCustomersExternalCustomerIDExternalCustomerIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/external_customer_id/{external_customer_id}", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -365,18 +387,21 @@ func (s *Customer) GetCustomersExternalCustomerIDExternalCustomerID(ctx context.
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersExternalCustomerIDExternalCustomerIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -450,8 +475,8 @@ func (s *Customer) GetCustomersExternalCustomerIDExternalCustomerID(ctx context.
 // Note that Orb does not currently enforce a hard rate-limit for API usage or a maximum request payload size. Similar to the event ingestion API, this API is architected for high-throughput ingestion. It is also safe to _programmatically_ call this endpoint if your system can automatically detect a need for historical amendment.
 //
 // In order to overwrite timeframes with a very large number of events, we suggest using multiple calls with small adjacent (e.g. every hour) timeframes.
-func (s *Customer) PatchCustomersCustomerIDUsage(ctx context.Context, request operations.PatchCustomersCustomerIDUsageRequest) (*operations.PatchCustomersCustomerIDUsageResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) PatchCustomersCustomerIDUsage(ctx context.Context, request operations.PatchCustomersCustomerIDUsageRequest) (*operations.PatchCustomersCustomerIDUsageResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/usage", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -466,20 +491,25 @@ func (s *Customer) PatchCustomersCustomerIDUsage(ctx context.Context, request op
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PatchCustomersCustomerIDUsageResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -510,8 +540,8 @@ func (s *Customer) PatchCustomersCustomerIDUsage(ctx context.Context, request op
 
 // PatchExternalCustomersCustomerIDUsage - Amend customer usage by external ID
 // This endpoint's resource and semantics exactly mirror [Amend customer usage](../reference/Orb-API.json/paths/~1customers~1{customer_id}~1usage/patch) but operates on an [external customer ID](../docs/Customer-ID-Aliases.md) rather than an Orb issued identifier.
-func (s *Customer) PatchExternalCustomersCustomerIDUsage(ctx context.Context, request operations.PatchExternalCustomersCustomerIDUsageRequest) (*operations.PatchExternalCustomersCustomerIDUsageResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) PatchExternalCustomersCustomerIDUsage(ctx context.Context, request operations.PatchExternalCustomersCustomerIDUsageRequest) (*operations.PatchExternalCustomersCustomerIDUsageResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/external_customer_id/{external_customer_id}/usage", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -526,20 +556,25 @@ func (s *Customer) PatchExternalCustomersCustomerIDUsage(ctx context.Context, re
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PatchExternalCustomersCustomerIDUsageResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -575,8 +610,8 @@ func (s *Customer) PatchExternalCustomersCustomerIDUsage(ctx context.Context, re
 // * Automated charges can be configured by setting `payment_provider` and `payment_provider_id` to automatically issue invoices
 // * [Customer ID Aliases](../docs/Customer-ID-Aliases.md) can be configured by setting `external_customer_id`
 // * [Timezone localization](../docs/Timezone-localization.md) can be configured on a per-customer basis by setting the `timezone` parameter
-func (s *Customer) PostCustomers(ctx context.Context, request operations.PostCustomersRequest) (*operations.PostCustomersResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) PostCustomers(ctx context.Context, request operations.PostCustomersRequest) (*operations.PostCustomersResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/customers"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -591,18 +626,21 @@ func (s *Customer) PostCustomers(ctx context.Context, request operations.PostCus
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostCustomersResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -625,8 +663,8 @@ func (s *Customer) PostCustomers(ctx context.Context, request operations.PostCus
 // This endpoint can be used to update the `payment_provider`, `payment_provider_id`, `name`, `email`, `shipping_address`, and `billing_address` of an existing customer.
 //
 // Other fields on a customer are currently immutable.
-func (s *Customer) PutCustomersCustomerID(ctx context.Context, request operations.PutCustomersCustomerIDRequest) (*operations.PutCustomersCustomerIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) PutCustomersCustomerID(ctx context.Context, request operations.PutCustomersCustomerIDRequest) (*operations.PutCustomersCustomerIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -641,18 +679,21 @@ func (s *Customer) PutCustomersCustomerID(ctx context.Context, request operation
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PutCustomersCustomerIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -675,8 +716,8 @@ func (s *Customer) PutCustomersCustomerID(ctx context.Context, request operation
 // This endpoint is used to update customer details given an `external_customer_id` (see [Customer ID Aliases](../docs/Customer-ID-Aliases.md)).
 //
 // Note that the resource and semantics of this endpoint exactly mirror [Update Customer](Orb-API.json/paths/~1customers~1{customer_id}/put).
-func (s *Customer) PutCustomersExternalCustomerIDExternalCustomerID(ctx context.Context, request operations.PutCustomersExternalCustomerIDExternalCustomerIDRequest) (*operations.PutCustomersExternalCustomerIDExternalCustomerIDResponse, error) {
-	baseURL := s._serverURL
+func (s *customer) PutCustomersExternalCustomerIDExternalCustomerID(ctx context.Context, request operations.PutCustomersExternalCustomerIDExternalCustomerIDRequest) (*operations.PutCustomersExternalCustomerIDExternalCustomerIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/external_customer_id/{external_customer_id}", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -691,18 +732,21 @@ func (s *Customer) PutCustomersExternalCustomerIDExternalCustomerID(ctx context.
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PutCustomersExternalCustomerIDExternalCustomerIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

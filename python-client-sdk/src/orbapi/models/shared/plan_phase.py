@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
-from enum import Enum
 from dataclasses_json import dataclass_json
+from enum import Enum
 from orbapi import utils
+from typing import Any, Optional
 
 class PlanPhaseDurationUnitEnum(str, Enum):
     MONTHLY = "monthly"

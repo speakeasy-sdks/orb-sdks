@@ -1,18 +1,15 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class GetCustomerCostsByIdPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=customer_id" })
   customerId: string;
 }
-
 export enum GetCustomerCostsByIdViewModeEnum {
     Periodic = "periodic",
     Cumulative = "cumulative"
 }
-
 
 export class GetCustomerCostsByIdQueryParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=group_by" })
@@ -28,8 +25,15 @@ export class GetCustomerCostsByIdQueryParams extends SpeakeasyBase {
   viewMode?: GetCustomerCostsByIdViewModeEnum;
 }
 
+export class GetCustomerCostsByIdRequest extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  pathParams: GetCustomerCostsByIdPathParams;
 
-export class GetCustomerCostsById200ApplicationJsonDataPerPriceCostsPriceGroups extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  queryParams: GetCustomerCostsByIdQueryParams;
+}
+
+export class GetCustomerCostsById200ApplicationJSONDataPerPriceCostsPriceGroups extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=grouping_key" })
   groupingKey: string;
 
@@ -46,17 +50,16 @@ export class GetCustomerCostsById200ApplicationJsonDataPerPriceCostsPriceGroups 
   total: string;
 }
 
-
-// GetCustomerCostsById200ApplicationJsonDataPerPriceCosts
+// GetCustomerCostsById200ApplicationJSONDataPerPriceCosts
 /** 
  * Price's contributions for the timeframe, excluding any transforms (minimums and discounts).
 **/
-export class GetCustomerCostsById200ApplicationJsonDataPerPriceCosts extends SpeakeasyBase {
+export class GetCustomerCostsById200ApplicationJSONDataPerPriceCosts extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=price" })
   price?: shared.Price;
 
-  @SpeakeasyMetadata({ data: "json, name=price_groups", elemType: GetCustomerCostsById200ApplicationJsonDataPerPriceCostsPriceGroups })
-  priceGroups: GetCustomerCostsById200ApplicationJsonDataPerPriceCostsPriceGroups[];
+  @SpeakeasyMetadata({ data: "json, name=price_groups", elemType: GetCustomerCostsById200ApplicationJSONDataPerPriceCostsPriceGroups })
+  priceGroups: GetCustomerCostsById200ApplicationJSONDataPerPriceCostsPriceGroups[];
 
   @SpeakeasyMetadata({ data: "json, name=subtotal" })
   subtotal?: string;
@@ -65,10 +68,9 @@ export class GetCustomerCostsById200ApplicationJsonDataPerPriceCosts extends Spe
   total?: string;
 }
 
-
-export class GetCustomerCostsById200ApplicationJsonData extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=per_price_costs", elemType: GetCustomerCostsById200ApplicationJsonDataPerPriceCosts })
-  perPriceCosts: GetCustomerCostsById200ApplicationJsonDataPerPriceCosts[];
+export class GetCustomerCostsById200ApplicationJSONData extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=per_price_costs", elemType: GetCustomerCostsById200ApplicationJSONDataPerPriceCosts })
+  perPriceCosts: GetCustomerCostsById200ApplicationJSONDataPerPriceCosts[];
 
   @SpeakeasyMetadata({ data: "json, name=subtotal" })
   subtotal: string;
@@ -83,24 +85,13 @@ export class GetCustomerCostsById200ApplicationJsonData extends SpeakeasyBase {
   total: string;
 }
 
-
-export class GetCustomerCostsById200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetCustomerCostsById200ApplicationJsonData })
-  data: GetCustomerCostsById200ApplicationJsonData[];
+export class GetCustomerCostsById200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetCustomerCostsById200ApplicationJSONData })
+  data: GetCustomerCostsById200ApplicationJSONData[];
 
   @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
   paginationMetadata: Record<string, any>;
 }
-
-
-export class GetCustomerCostsByIdRequest extends SpeakeasyBase {
-  @SpeakeasyMetadata()
-  pathParams: GetCustomerCostsByIdPathParams;
-
-  @SpeakeasyMetadata()
-  queryParams: GetCustomerCostsByIdQueryParams;
-}
-
 
 export class GetCustomerCostsByIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -110,5 +101,5 @@ export class GetCustomerCostsByIdResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCustomerCostsById200ApplicationJSONObject?: GetCustomerCostsById200ApplicationJson;
+  getCustomerCostsById200ApplicationJSONObject?: GetCustomerCostsById200ApplicationJSON;
 }

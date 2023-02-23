@@ -1,11 +1,15 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetSubscriptionsByCouponIDPathParams struct {
 	CouponID string `pathParam:"style=simple,explode=false,name=coupon_id"`
+}
+
+type GetSubscriptionsByCouponIDRequest struct {
+	PathParams GetSubscriptionsByCouponIDPathParams
 }
 
 type GetSubscriptionsByCouponID200ApplicationJSON struct {
@@ -13,12 +17,8 @@ type GetSubscriptionsByCouponID200ApplicationJSON struct {
 	PaginationMetadata map[string]interface{} `json:"pagination_metadata,omitempty"`
 }
 
-type GetSubscriptionsByCouponIDRequest struct {
-	PathParams GetSubscriptionsByCouponIDPathParams
-}
-
 type GetSubscriptionsByCouponIDResponse struct {
 	ContentType                                        string
-	StatusCode                                         int64
+	StatusCode                                         int
 	GetSubscriptionsByCouponID200ApplicationJSONObject *GetSubscriptionsByCouponID200ApplicationJSON
 }

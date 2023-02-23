@@ -1,12 +1,10 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class PatchExternalCustomersCustomerIdUsagePathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=external_customer_id" })
   externalCustomerId: string;
 }
-
 
 export class PatchExternalCustomersCustomerIdUsageQueryParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end" })
@@ -15,7 +13,6 @@ export class PatchExternalCustomersCustomerIdUsageQueryParams extends SpeakeasyB
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start" })
   timeframeStart: Date;
 }
-
 
 export class PatchExternalCustomersCustomerIdUsageRequestBodyEvents extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=event_name" })
@@ -28,45 +25,10 @@ export class PatchExternalCustomersCustomerIdUsageRequestBodyEvents extends Spea
   timestamp: string;
 }
 
-
 export class PatchExternalCustomersCustomerIdUsageRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=events", elemType: PatchExternalCustomersCustomerIdUsageRequestBodyEvents })
   events: PatchExternalCustomersCustomerIdUsageRequestBodyEvents[];
 }
-
-
-export class PatchExternalCustomersCustomerIdUsage200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=duplicate" })
-  duplicate?: Record<string, any>[];
-
-  @SpeakeasyMetadata({ data: "json, name=ingested" })
-  ingested?: string[];
-}
-
-
-export class PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
-  idempotencyKey?: string;
-
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
-  validationErrors?: string[];
-}
-
-
-export class PatchExternalCustomersCustomerIdUsage400ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
-  status: number;
-
-  @SpeakeasyMetadata({ data: "json, name=title" })
-  title: string;
-
-  @SpeakeasyMetadata({ data: "json, name=type" })
-  type: string;
-
-  @SpeakeasyMetadata({ data: "json, name=validation_errors", elemType: PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors })
-  validationErrors: PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors[];
-}
-
 
 export class PatchExternalCustomersCustomerIdUsageRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -79,6 +41,35 @@ export class PatchExternalCustomersCustomerIdUsageRequest extends SpeakeasyBase 
   request?: PatchExternalCustomersCustomerIdUsageRequestBody;
 }
 
+export class PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
+  idempotencyKey?: string;
+
+  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  validationErrors?: string[];
+}
+
+export class PatchExternalCustomersCustomerIdUsage400ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=status" })
+  status: number;
+
+  @SpeakeasyMetadata({ data: "json, name=title" })
+  title: string;
+
+  @SpeakeasyMetadata({ data: "json, name=type" })
+  type: string;
+
+  @SpeakeasyMetadata({ data: "json, name=validation_errors", elemType: PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors })
+  validationErrors: PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors[];
+}
+
+export class PatchExternalCustomersCustomerIdUsage200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=duplicate" })
+  duplicate?: Record<string, any>[];
+
+  @SpeakeasyMetadata({ data: "json, name=ingested" })
+  ingested?: string[];
+}
 
 export class PatchExternalCustomersCustomerIdUsageResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -88,8 +79,8 @@ export class PatchExternalCustomersCustomerIdUsageResponse extends SpeakeasyBase
   statusCode: number;
 
   @SpeakeasyMetadata()
-  patchExternalCustomersCustomerIdUsage200ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage200ApplicationJson;
+  patchExternalCustomersCustomerIdUsage200ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage200ApplicationJSON;
 
   @SpeakeasyMetadata()
-  patchExternalCustomersCustomerIdUsage400ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage400ApplicationJson;
+  patchExternalCustomersCustomerIdUsage400ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage400ApplicationJSON;
 }

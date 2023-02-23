@@ -16,8 +16,9 @@ type PutEventsEventIDRequestBody struct {
 	Timestamp          time.Time              `json:"timestamp"`
 }
 
-type PutEventsEventID200ApplicationJSON struct {
-	Amended *string `json:"amended,omitempty"`
+type PutEventsEventIDRequest struct {
+	PathParams PutEventsEventIDPathParams
+	Request    *PutEventsEventIDRequestBody `request:"mediaType=application/json"`
 }
 
 type PutEventsEventID400ApplicationJSON struct {
@@ -27,14 +28,13 @@ type PutEventsEventID400ApplicationJSON struct {
 	ValidationErrors []string `json:"validation_errors,omitempty"`
 }
 
-type PutEventsEventIDRequest struct {
-	PathParams PutEventsEventIDPathParams
-	Request    *PutEventsEventIDRequestBody `request:"mediaType=application/json"`
+type PutEventsEventID200ApplicationJSON struct {
+	Amended *string `json:"amended,omitempty"`
 }
 
 type PutEventsEventIDResponse struct {
 	ContentType                              string
-	StatusCode                               int64
+	StatusCode                               int
 	PutEventsEventID200ApplicationJSONObject *PutEventsEventID200ApplicationJSON
 	PutEventsEventID400ApplicationJSONObject *PutEventsEventID400ApplicationJSON
 }

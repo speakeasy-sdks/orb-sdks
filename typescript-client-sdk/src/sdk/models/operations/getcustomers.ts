@@ -1,9 +1,8 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
 
 
-
-export class GetCustomers200ApplicationJsonPaginationMetadata extends SpeakeasyBase {
+export class GetCustomers200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=has_more" })
   hasMore: boolean;
 
@@ -11,15 +10,13 @@ export class GetCustomers200ApplicationJsonPaginationMetadata extends SpeakeasyB
   nextCursor: string;
 }
 
-
-export class GetCustomers200ApplicationJson extends SpeakeasyBase {
+export class GetCustomers200ApplicationJSON extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Customer })
   data: shared.Customer[];
 
   @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata: GetCustomers200ApplicationJsonPaginationMetadata;
+  paginationMetadata: GetCustomers200ApplicationJSONPaginationMetadata;
 }
-
 
 export class GetCustomersResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -29,5 +26,5 @@ export class GetCustomersResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCustomers200ApplicationJSONObject?: GetCustomers200ApplicationJson;
+  getCustomers200ApplicationJSONObject?: GetCustomers200ApplicationJSON;
 }

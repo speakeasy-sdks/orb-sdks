@@ -3,29 +3,29 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 )
 
-type Credits struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type credits struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewCredits(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Credits {
-	return &Credits{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newCredits(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *credits {
+	return &credits{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -35,8 +35,8 @@ func NewCredits(defaultClient, securityClient HTTPClient, serverURL, language, s
 // Orb keeps track of credit balances in _credit blocks_, where each block is optionally associated with an `expiry_date`. Each time credits are added, a new credit block is created. Credits which do not expire have an `expiry_date` of `null`. To aid in revenue recognition, credit blocks can optionally have a `per_unit_cost_basis`, to indicate how much in USD a customer paid for a single credit in a block.
 //
 // Orb only returns _unexpired_ credit blocks in this response. For credits that have already expired, you can view this deduction from the customer's balance in the [Credit Ledger](../reference/Orb-API.json/paths/~1customers~1{customer_id}~1credits~1ledger/get) response.
-func (s *Credits) GetCustomersCustomerIDCredits(ctx context.Context, request operations.GetCustomersCustomerIDCreditsRequest) (*operations.GetCustomersCustomerIDCreditsResponse, error) {
-	baseURL := s._serverURL
+func (s *credits) GetCustomersCustomerIDCredits(ctx context.Context, request operations.GetCustomersCustomerIDCreditsRequest) (*operations.GetCustomersCustomerIDCreditsResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/credits", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -44,18 +44,21 @@ func (s *Credits) GetCustomersCustomerIDCredits(ctx context.Context, request ope
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersCustomerIDCreditsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -105,8 +108,8 @@ func (s *Credits) GetCustomersCustomerIDCredits(ctx context.Context, request ope
 // ## Credits expiry
 //
 // When a set of credits expire on pre-set expiration date, the customer's balance automatically reflects this change and adds an entry to the ledger indicating this event. Note that credit expiry should always happen close to a date boundary in the customer's timezone.
-func (s *Credits) GetCustomersCustomerIDCreditsLedger(ctx context.Context, request operations.GetCustomersCustomerIDCreditsLedgerRequest) (*operations.GetCustomersCustomerIDCreditsLedgerResponse, error) {
-	baseURL := s._serverURL
+func (s *credits) GetCustomersCustomerIDCreditsLedger(ctx context.Context, request operations.GetCustomersCustomerIDCreditsLedgerRequest) (*operations.GetCustomersCustomerIDCreditsLedgerResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/credits/ledger", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -114,20 +117,25 @@ func (s *Credits) GetCustomersCustomerIDCreditsLedger(ctx context.Context, reque
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCustomersCustomerIDCreditsLedgerResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -207,8 +215,8 @@ func (s *Credits) GetCustomersCustomerIDCreditsLedger(ctx context.Context, reque
 //	}
 //
 // ```
-func (s *Credits) PostCustomersCustomerIDCreditsLedgerEntry(ctx context.Context, request operations.PostCustomersCustomerIDCreditsLedgerEntryRequest) (*operations.PostCustomersCustomerIDCreditsLedgerEntryResponse, error) {
-	baseURL := s._serverURL
+func (s *credits) PostCustomersCustomerIDCreditsLedgerEntry(ctx context.Context, request operations.PostCustomersCustomerIDCreditsLedgerEntryRequest) (*operations.PostCustomersCustomerIDCreditsLedgerEntryResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/customers/{customer_id}/credits/ledger_entry", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -223,18 +231,21 @@ func (s *Credits) PostCustomersCustomerIDCreditsLedgerEntry(ctx context.Context,
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostCustomersCustomerIDCreditsLedgerEntryResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

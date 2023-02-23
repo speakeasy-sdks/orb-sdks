@@ -1,10 +1,10 @@
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
 from dataclasses_json import dataclass_json
+from datetime import datetime
+from marshmallow import fields
 from orbapi import utils
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -22,10 +22,10 @@ class PutEventsEventIDRequestBody:
     external_customer_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('external_customer_id') }})
     
 
-@dataclass_json
 @dataclasses.dataclass
-class PutEventsEventID200ApplicationJSON:
-    amended: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('amended') }})
+class PutEventsEventIDRequest:
+    path_params: PutEventsEventIDPathParams = dataclasses.field()
+    request: Optional[PutEventsEventIDRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 @dataclass_json
@@ -37,10 +37,10 @@ class PutEventsEventID400ApplicationJSON:
     validation_errors: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_errors') }})
     
 
+@dataclass_json
 @dataclasses.dataclass
-class PutEventsEventIDRequest:
-    path_params: PutEventsEventIDPathParams = dataclasses.field()
-    request: Optional[PutEventsEventIDRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+class PutEventsEventID200ApplicationJSON:
+    amended: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('amended') }})
     
 
 @dataclasses.dataclass

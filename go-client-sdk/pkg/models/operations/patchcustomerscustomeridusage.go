@@ -23,9 +23,10 @@ type PatchCustomersCustomerIDUsageRequestBody struct {
 	Events []PatchCustomersCustomerIDUsageRequestBodyEvents `json:"events"`
 }
 
-type PatchCustomersCustomerIDUsage200ApplicationJSON struct {
-	Duplicate []map[string]interface{} `json:"duplicate,omitempty"`
-	Ingested  []string                 `json:"ingested,omitempty"`
+type PatchCustomersCustomerIDUsageRequest struct {
+	PathParams  PatchCustomersCustomerIDUsagePathParams
+	QueryParams PatchCustomersCustomerIDUsageQueryParams
+	Request     *PatchCustomersCustomerIDUsageRequestBody `request:"mediaType=application/json"`
 }
 
 type PatchCustomersCustomerIDUsage400ApplicationJSONValidationErrors struct {
@@ -40,15 +41,14 @@ type PatchCustomersCustomerIDUsage400ApplicationJSON struct {
 	ValidationErrors []PatchCustomersCustomerIDUsage400ApplicationJSONValidationErrors `json:"validation_errors"`
 }
 
-type PatchCustomersCustomerIDUsageRequest struct {
-	PathParams  PatchCustomersCustomerIDUsagePathParams
-	QueryParams PatchCustomersCustomerIDUsageQueryParams
-	Request     *PatchCustomersCustomerIDUsageRequestBody `request:"mediaType=application/json"`
+type PatchCustomersCustomerIDUsage200ApplicationJSON struct {
+	Duplicate []map[string]interface{} `json:"duplicate,omitempty"`
+	Ingested  []string                 `json:"ingested,omitempty"`
 }
 
 type PatchCustomersCustomerIDUsageResponse struct {
 	ContentType                                           string
-	StatusCode                                            int64
+	StatusCode                                            int
 	PatchCustomersCustomerIDUsage200ApplicationJSONObject *PatchCustomersCustomerIDUsage200ApplicationJSON
 	PatchCustomersCustomerIDUsage400ApplicationJSONObject *PatchCustomersCustomerIDUsage400ApplicationJSON
 }

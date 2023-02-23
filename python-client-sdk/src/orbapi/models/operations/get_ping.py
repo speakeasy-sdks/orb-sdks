@@ -1,7 +1,7 @@
 import dataclasses
-from typing import Optional
 from dataclasses_json import dataclass_json
 from orbapi import utils
+from typing import Optional
 
 
 @dataclass_json

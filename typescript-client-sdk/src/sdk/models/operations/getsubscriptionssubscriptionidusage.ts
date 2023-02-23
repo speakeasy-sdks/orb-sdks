@@ -1,21 +1,17 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class GetSubscriptionsSubscriptionIdUsagePathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=subscription_id" })
   subscriptionId: string;
 }
-
 export enum GetSubscriptionsSubscriptionIdUsageGranularityEnum {
     Day = "day"
 }
-
 export enum GetSubscriptionsSubscriptionIdUsageViewModeEnum {
     Periodic = "periodic",
     Cumulative = "cumulative"
 }
-
 
 export class GetSubscriptionsSubscriptionIdUsageQueryParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=billable_metric_id" })
@@ -37,7 +33,6 @@ export class GetSubscriptionsSubscriptionIdUsageQueryParams extends SpeakeasyBas
   viewMode?: GetSubscriptionsSubscriptionIdUsageViewModeEnum;
 }
 
-
 export class GetSubscriptionsSubscriptionIdUsageRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: GetSubscriptionsSubscriptionIdUsagePathParams;
@@ -45,7 +40,6 @@ export class GetSubscriptionsSubscriptionIdUsageRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   queryParams: GetSubscriptionsSubscriptionIdUsageQueryParams;
 }
-
 
 export class GetSubscriptionsSubscriptionIdUsageResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

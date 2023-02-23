@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
+from ..shared import coupon as shared_coupon
 from dataclasses_json import dataclass_json
 from orbapi import utils
-from ..shared import coupon as shared_coupon
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -11,16 +11,16 @@ class GetCouponsQueryParams:
     show_archived: Optional[bool] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'show_archived', 'style': 'form', 'explode': True }})
     
 
+@dataclasses.dataclass
+class GetCouponsRequest:
+    query_params: GetCouponsQueryParams = dataclasses.field()
+    
+
 @dataclass_json
 @dataclasses.dataclass
 class GetCoupons200ApplicationJSON:
     data: Optional[list[shared_coupon.Coupon]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetCouponsRequest:
-    query_params: GetCouponsQueryParams = dataclasses.field()
     
 
 @dataclasses.dataclass

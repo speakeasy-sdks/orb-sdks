@@ -1,13 +1,11 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class PutCustomersCustomerIdPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=customer_id" })
   customerId: string;
 }
-
 
 // PutCustomersCustomerIdRequestBodyBillingAddress
 /** 
@@ -32,14 +30,12 @@ export class PutCustomersCustomerIdRequestBodyBillingAddress extends SpeakeasyBa
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 export enum PutCustomersCustomerIdRequestBodyPaymentProviderEnum {
     StripeInvoice = "stripe_invoice",
     Quickbooks = "quickbooks",
     BillCom = "bill.com",
     StripeCharge = "stripe_charge"
 }
-
 
 // PutCustomersCustomerIdRequestBodyShippingAddress
 /** 
@@ -64,7 +60,6 @@ export class PutCustomersCustomerIdRequestBodyShippingAddress extends SpeakeasyB
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 
 // PutCustomersCustomerIdRequestBody
 /** 
@@ -96,7 +91,6 @@ export class PutCustomersCustomerIdRequestBody extends SpeakeasyBase {
   taxId?: shared.CustomerTaxId;
 }
 
-
 export class PutCustomersCustomerIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: PutCustomersCustomerIdPathParams;
@@ -104,7 +98,6 @@ export class PutCustomersCustomerIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PutCustomersCustomerIdRequestBody;
 }
-
 
 export class PutCustomersCustomerIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

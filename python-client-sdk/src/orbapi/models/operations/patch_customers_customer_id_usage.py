@@ -1,10 +1,10 @@
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
 from dataclasses_json import dataclass_json
+from datetime import datetime
+from marshmallow import fields
 from orbapi import utils
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -32,11 +32,11 @@ class PatchCustomersCustomerIDUsageRequestBody:
     events: list[PatchCustomersCustomerIDUsageRequestBodyEvents] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('events') }})
     
 
-@dataclass_json
 @dataclasses.dataclass
-class PatchCustomersCustomerIDUsage200ApplicationJSON:
-    duplicate: Optional[list[dict[str, Any]]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('duplicate') }})
-    ingested: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('ingested') }})
+class PatchCustomersCustomerIDUsageRequest:
+    path_params: PatchCustomersCustomerIDUsagePathParams = dataclasses.field()
+    query_params: PatchCustomersCustomerIDUsageQueryParams = dataclasses.field()
+    request: Optional[PatchCustomersCustomerIDUsageRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 @dataclass_json
@@ -55,11 +55,11 @@ class PatchCustomersCustomerIDUsage400ApplicationJSON:
     validation_errors: list[PatchCustomersCustomerIDUsage400ApplicationJSONValidationErrors] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_errors') }})
     
 
+@dataclass_json
 @dataclasses.dataclass
-class PatchCustomersCustomerIDUsageRequest:
-    path_params: PatchCustomersCustomerIDUsagePathParams = dataclasses.field()
-    query_params: PatchCustomersCustomerIDUsageQueryParams = dataclasses.field()
-    request: Optional[PatchCustomersCustomerIDUsageRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
+class PatchCustomersCustomerIDUsage200ApplicationJSON:
+    duplicate: Optional[list[dict[str, Any]]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('duplicate') }})
+    ingested: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('ingested') }})
     
 
 @dataclasses.dataclass

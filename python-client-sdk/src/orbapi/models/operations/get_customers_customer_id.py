@@ -1,6 +1,6 @@
 import dataclasses
-from typing import Optional
 from ..shared import customer as shared_customer
+from typing import Optional
 
 
 @dataclasses.dataclass

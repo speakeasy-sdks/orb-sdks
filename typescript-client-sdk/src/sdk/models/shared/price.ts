@@ -1,12 +1,10 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class PriceBillableMetric extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id?: string;
 }
-
 
 // PriceBpsConfig
 /** 
@@ -20,7 +18,6 @@ export class PriceBpsConfig extends SpeakeasyBase {
   perUnitMaximum?: string;
 }
 
-
 export class PriceBulkBpsConfigTiers extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=bps" })
   bps?: number;
@@ -32,7 +29,6 @@ export class PriceBulkBpsConfigTiers extends SpeakeasyBase {
   perUnitMaximum?: string;
 }
 
-
 // PriceBulkBpsConfig
 /** 
  * Provided when model_type is `bulk_bps`
@@ -42,7 +38,6 @@ export class PriceBulkBpsConfig extends SpeakeasyBase {
   tiers?: PriceBulkBpsConfigTiers[];
 }
 
-
 export class PriceBulkConfigTiers extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=maximum_units" })
   maximumUnits?: string;
@@ -50,7 +45,6 @@ export class PriceBulkConfigTiers extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=unit_amount" })
   unitAmount?: string;
 }
-
 
 // PriceBulkConfig
 /** 
@@ -60,13 +54,11 @@ export class PriceBulkConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceBulkConfigTiers })
   tiers?: PriceBulkConfigTiers[];
 }
-
 export enum PriceCadenceEnum {
     Annual = "annual",
     Monthly = "monthly",
     Quarterly = "quarterly"
 }
-
 
 export class PriceMatrixConfigMatrixValues extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=dimension_values" })
@@ -75,7 +67,6 @@ export class PriceMatrixConfigMatrixValues extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=unit_amount" })
   unitAmount?: string;
 }
-
 
 // PriceMatrixConfig
 /** 
@@ -91,7 +82,6 @@ export class PriceMatrixConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=matrix_values", elemType: PriceMatrixConfigMatrixValues })
   matrixValues?: PriceMatrixConfigMatrixValues[];
 }
-
 export enum PriceModelTypeEnum {
     Unit = "unit",
     Tiered = "tiered",
@@ -102,7 +92,6 @@ export enum PriceModelTypeEnum {
     BulkBps = "bulk_bps",
     Matrix = "matrix"
 }
-
 
 // PricePackageConfig
 /** 
@@ -115,7 +104,6 @@ export class PricePackageConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=package_size" })
   packageSize?: number;
 }
-
 
 export class PriceTieredBpsConfigTiers extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=bps" })
@@ -131,7 +119,6 @@ export class PriceTieredBpsConfigTiers extends SpeakeasyBase {
   perUnitMaximum?: string;
 }
 
-
 // PriceTieredBpsConfig
 /** 
  * Provided when model_type is `tiered_bps`
@@ -140,7 +127,6 @@ export class PriceTieredBpsConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceTieredBpsConfigTiers })
   tiers?: PriceTieredBpsConfigTiers[];
 }
-
 
 export class PriceTieredConfigTiers extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=first_unit" })
@@ -153,7 +139,6 @@ export class PriceTieredConfigTiers extends SpeakeasyBase {
   unitAmount?: string;
 }
 
-
 // PriceTieredConfig
 /** 
  * Provided when model_type is`tiered`
@@ -163,7 +148,6 @@ export class PriceTieredConfig extends SpeakeasyBase {
   tiers?: PriceTieredConfigTiers[];
 }
 
-
 // PriceUnitConfig
 /** 
  * Provided when model_type is `unit`
@@ -172,7 +156,6 @@ export class PriceUnitConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=unit_amount" })
   unitAmount?: string;
 }
-
 
 // Price
 /** 

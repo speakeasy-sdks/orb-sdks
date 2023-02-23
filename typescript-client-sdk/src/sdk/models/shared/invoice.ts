@@ -1,8 +1,7 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-import { Price } from "./price";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import { CustomerBalanceTransaction } from "./customerbalancetransaction";
 import { CustomerTaxId } from "./customertaxid";
-
+import { Price } from "./price";
 
 
 // InvoiceAutoCollection
@@ -17,7 +16,6 @@ export class InvoiceAutoCollection extends SpeakeasyBase {
   previouslyAttemptedAt?: Date;
 }
 
-
 // InvoiceCustomer
 /** 
  * The customer receiving this invoice.
@@ -29,7 +27,6 @@ export class InvoiceCustomer extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id: string;
 }
-
 
 // InvoiceLineItemsSubLineItemsGrouping
 /** 
@@ -43,7 +40,6 @@ export class InvoiceLineItemsSubLineItemsGrouping extends SpeakeasyBase {
   value?: string;
 }
 
-
 // InvoiceLineItemsSubLineItemsMatrixConfig
 /** 
  * Only available if `type` is `matrix`. Contains the values of the matrix that this `sub_line_item` represents.
@@ -52,7 +48,6 @@ export class InvoiceLineItemsSubLineItemsMatrixConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=dimension_values" })
   dimensionValues: string[];
 }
-
 
 // InvoiceLineItemsSubLineItemsTierConfig
 /** 
@@ -68,12 +63,10 @@ export class InvoiceLineItemsSubLineItemsTierConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=unit_amount" })
   unitAmount: string;
 }
-
 export enum InvoiceLineItemsSubLineItemsTypeEnum {
     Matrix = "matrix",
     Tier = "tier"
 }
-
 
 export class InvoiceLineItemsSubLineItems extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
@@ -98,7 +91,6 @@ export class InvoiceLineItemsSubLineItems extends SpeakeasyBase {
   type: InvoiceLineItemsSubLineItemsTypeEnum;
 }
 
-
 export class InvoiceLineItemsTaxAmounts extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
   amount: string;
@@ -109,7 +101,6 @@ export class InvoiceLineItemsTaxAmounts extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=tax_rate_percentage" })
   taxRatePercentage: string;
 }
-
 
 export class InvoiceLineItems extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
@@ -151,7 +142,6 @@ export class InvoiceLineItems extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=tax_amounts", elemType: InvoiceLineItemsTaxAmounts })
   taxAmounts: InvoiceLineItemsTaxAmounts[];
 }
-
 export enum InvoiceStatusEnum {
     Issued = "issued",
     Paid = "paid",
@@ -159,7 +149,6 @@ export enum InvoiceStatusEnum {
     Void = "void",
     Draft = "draft"
 }
-
 
 // InvoiceSubscription
 /** 
@@ -169,7 +158,6 @@ export class InvoiceSubscription extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id: string;
 }
-
 
 // Invoice
 /** 

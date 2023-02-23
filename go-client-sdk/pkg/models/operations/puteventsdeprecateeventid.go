@@ -4,8 +4,8 @@ type PutEventsDeprecateEventIDPathParams struct {
 	EventID string `pathParam:"style=simple,explode=false,name=event_id"`
 }
 
-type PutEventsDeprecateEventID200ApplicationJSON struct {
-	Deprecated *string `json:"deprecated,omitempty"`
+type PutEventsDeprecateEventIDRequest struct {
+	PathParams PutEventsDeprecateEventIDPathParams
 }
 
 type PutEventsDeprecateEventID400ApplicationJSON struct {
@@ -15,13 +15,13 @@ type PutEventsDeprecateEventID400ApplicationJSON struct {
 	ValidationErrors []string `json:"validation_errors,omitempty"`
 }
 
-type PutEventsDeprecateEventIDRequest struct {
-	PathParams PutEventsDeprecateEventIDPathParams
+type PutEventsDeprecateEventID200ApplicationJSON struct {
+	Deprecated *string `json:"deprecated,omitempty"`
 }
 
 type PutEventsDeprecateEventIDResponse struct {
 	ContentType                                       string
-	StatusCode                                        int64
+	StatusCode                                        int
 	PutEventsDeprecateEventID200ApplicationJSONObject *PutEventsDeprecateEventID200ApplicationJSON
 	PutEventsDeprecateEventID400ApplicationJSONObject *PutEventsDeprecateEventID400ApplicationJSON
 }

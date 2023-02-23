@@ -1,6 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class GetInvoicesUpcomingQueryParams extends SpeakeasyBase {
@@ -8,12 +7,10 @@ export class GetInvoicesUpcomingQueryParams extends SpeakeasyBase {
   subscriptionId: string;
 }
 
-
 export class GetInvoicesUpcomingRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   queryParams: GetInvoicesUpcomingQueryParams;
 }
-
 
 export class GetInvoicesUpcomingResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

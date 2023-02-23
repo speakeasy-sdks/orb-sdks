@@ -1,5 +1,4 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 // Coupon
@@ -31,7 +30,6 @@ export class Coupon extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=times_redeemed" })
   timesRedeemed?: number;
 }
-
 
 // CouponInput
 /** 

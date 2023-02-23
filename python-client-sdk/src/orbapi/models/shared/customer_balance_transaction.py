@@ -1,9 +1,9 @@
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from enum import Enum
 from dataclasses_json import dataclass_json
+from datetime import datetime
+from enum import Enum
+from marshmallow import fields
 from orbapi import utils
 
 class CustomerBalanceTransactionActionEnum(str, Enum):

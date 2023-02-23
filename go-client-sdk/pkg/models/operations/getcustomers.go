@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetCustomers200ApplicationJSONPaginationMetadata struct {
@@ -16,6 +16,6 @@ type GetCustomers200ApplicationJSON struct {
 
 type GetCustomersResponse struct {
 	ContentType                          string
-	StatusCode                           int64
+	StatusCode                           int
 	GetCustomers200ApplicationJSONObject *GetCustomers200ApplicationJSON
 }

@@ -1,12 +1,10 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 export enum CustomerBalanceTransactionActionEnum {
     AppliedToInvoice = "applied_to_invoice",
     ProratedRefund = "prorated_refund",
     ManualAdjustment = "manual_adjustment"
 }
-
 
 // CustomerBalanceTransactionInvoice
 /** 
@@ -16,7 +14,6 @@ export class CustomerBalanceTransactionInvoice extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id: string;
 }
-
 
 // CustomerBalanceTransaction
 /** 

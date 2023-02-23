@@ -1,6 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 // PostCustomersRequestBodyBillingAddress
@@ -26,14 +25,12 @@ export class PostCustomersRequestBodyBillingAddress extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 export enum PostCustomersRequestBodyPaymentProviderEnum {
     Quickbooks = "quickbooks",
     BillCom = "bill.com",
     StripeCharge = "stripe_charge",
     StripeInvoice = "stripe_invoice"
 }
-
 
 // PostCustomersRequestBodyShippingAddress
 /** 
@@ -58,7 +55,6 @@ export class PostCustomersRequestBodyShippingAddress extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 
 export class PostCustomersRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=auto_collection" })
@@ -95,12 +91,10 @@ export class PostCustomersRequestBody extends SpeakeasyBase {
   timezone?: string;
 }
 
-
 export class PostCustomersRequest extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PostCustomersRequestBody;
 }
-
 
 export class PostCustomersResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

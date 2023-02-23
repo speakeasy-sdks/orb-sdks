@@ -1,16 +1,14 @@
-import axios, { AxiosInstance } from "axios";
 import * as utils from "../internal/utils";
-import { Security } from "./models/shared";
-
 import { Availability } from "./availability";
 import { Coupon } from "./coupon";
 import { Credits } from "./credits";
 import { Customer } from "./customer";
 import { Event } from "./event";
 import { Invoice } from "./invoice";
+import { Security } from "./models/shared";
 import { Plan } from "./plan";
 import { Subscription } from "./subscription";
-
+import axios, { AxiosInstance } from "axios";
 
 export const ServerList = [
 	"https://api.billwithorb.com/v1",
@@ -27,7 +25,7 @@ export type SDKProps = {
 }
 
 
-export class OrbApi {
+export class OrbAPI {
   public availability: Availability;
   public coupon: Coupon;
   public credits: Credits;
@@ -41,8 +39,8 @@ export class OrbApi {
   public _securityClient: AxiosInstance;
   public _serverURL: string;
   private _language = "typescript";
-  private _sdkVersion = "2.4.1";
-  private _genVersion = "0.22.1";
+  private _sdkVersion = "3.0.0";
+  private _genVersion = "1.4.8";
 
   constructor(props: SDKProps) {
     this._serverURL = props.serverUrl ?? ServerList[0];
@@ -132,4 +130,5 @@ export class OrbApi {
       this._genVersion
     );
   }
+  
 }

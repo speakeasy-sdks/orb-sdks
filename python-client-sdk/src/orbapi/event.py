@@ -1,7 +1,7 @@
 import requests
-from typing import Optional
-from orbapi.models import operations
 from . import utils
+from orbapi.models import operations
+from typing import Optional
 
 class Event:
     _client: requests.Session

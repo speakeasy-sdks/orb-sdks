@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
+from ..shared import invoice as shared_invoice
 from dataclasses_json import dataclass_json
 from orbapi import utils
-from ..shared import invoice as shared_invoice
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -12,16 +12,16 @@ class GetInvoicesQueryParams:
     subscription_id: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'subscription_id', 'style': 'form', 'explode': True }})
     
 
+@dataclasses.dataclass
+class GetInvoicesRequest:
+    query_params: GetInvoicesQueryParams = dataclasses.field()
+    
+
 @dataclass_json
 @dataclasses.dataclass
 class GetInvoices200ApplicationJSON:
     data: Optional[list[shared_invoice.Invoice]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetInvoicesRequest:
-    query_params: GetInvoicesQueryParams = dataclasses.field()
     
 
 @dataclasses.dataclass

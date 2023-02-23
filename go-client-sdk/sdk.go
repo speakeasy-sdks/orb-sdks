@@ -1,10 +1,10 @@
 package sdk
 
 import (
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
-
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"time"
 )
 
 var ServerList = []string{
@@ -16,15 +16,16 @@ type HTTPClient interface {
 }
 
 type SDK struct {
-	Availability *Availability
-	Coupon       *Coupon
-	Credits      *Credits
-	Customer     *Customer
-	Event        *Event
-	Invoice      *Invoice
-	Plan         *Plan
-	Subscription *Subscription
+	Availability *availability
+	Coupon       *coupon
+	Credits      *credits
+	Customer     *customer
+	Event        *event
+	Invoice      *invoice
+	Plan         *plan
+	Subscription *subscription
 
+	// Non-idiomatic field names below are to namespace fields from the fields names above to avoid name conflicts
 	_defaultClient  HTTPClient
 	_securityClient HTTPClient
 	_security       *shared.Security
@@ -61,15 +62,16 @@ func WithSecurity(security shared.Security) SDKOption {
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
 		_language:   "go",
-		_sdkVersion: "1.2.1",
-		_genVersion: "0.22.1",
+		_sdkVersion: "2.0.0",
+		_genVersion: "1.4.8",
 	}
 	for _, opt := range opts {
 		opt(sdk)
 	}
 
+	// Use WithClient to override the default client if you would like to customize the timeout
 	if sdk._defaultClient == nil {
-		sdk._defaultClient = http.DefaultClient
+		sdk._defaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk._securityClient == nil {
 
@@ -85,7 +87,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._serverURL = ServerList[0]
 	}
 
-	sdk.Availability = NewAvailability(
+	sdk.Availability = newAvailability(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -94,7 +96,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Coupon = NewCoupon(
+	sdk.Coupon = newCoupon(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -103,7 +105,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Credits = NewCredits(
+	sdk.Credits = newCredits(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -112,7 +114,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Customer = NewCustomer(
+	sdk.Customer = newCustomer(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -121,7 +123,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Event = NewEvent(
+	sdk.Event = newEvent(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -130,7 +132,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Invoice = NewInvoice(
+	sdk.Invoice = newInvoice(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -139,7 +141,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Plan = NewPlan(
+	sdk.Plan = newPlan(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
@@ -148,7 +150,7 @@ func New(opts ...SDKOption) *SDK {
 		sdk._genVersion,
 	)
 
-	sdk.Subscription = NewSubscription(
+	sdk.Subscription = newSubscription(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,

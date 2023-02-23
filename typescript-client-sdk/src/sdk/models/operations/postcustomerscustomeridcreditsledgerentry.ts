@@ -1,19 +1,16 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class PostCustomersCustomerIdCreditsLedgerEntryPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=customer_id" })
   customerId: string;
 }
-
 export enum PostCustomersCustomerIdCreditsLedgerEntryRequestBodyEntryTypeEnum {
     Increment = "increment",
     Decrement = "decrement",
     ExpirationChange = "expiration_change"
 }
-
 
 // PostCustomersCustomerIdCreditsLedgerEntryRequestBodyInvoiceSettings
 /** 
@@ -29,7 +26,6 @@ export class PostCustomersCustomerIdCreditsLedgerEntryRequestBodyInvoiceSettings
   @SpeakeasyMetadata({ data: "json, name=net_terms" })
   netTerms: number;
 }
-
 
 export class PostCustomersCustomerIdCreditsLedgerEntryRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
@@ -60,7 +56,6 @@ export class PostCustomersCustomerIdCreditsLedgerEntryRequestBody extends Speake
   targetExpiryDate?: Date;
 }
 
-
 export class PostCustomersCustomerIdCreditsLedgerEntryRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: PostCustomersCustomerIdCreditsLedgerEntryPathParams;
@@ -68,7 +63,6 @@ export class PostCustomersCustomerIdCreditsLedgerEntryRequest extends SpeakeasyB
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PostCustomersCustomerIdCreditsLedgerEntryRequestBody;
 }
-
 
 export class PostCustomersCustomerIdCreditsLedgerEntryResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

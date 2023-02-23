@@ -1,13 +1,11 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class PutCustomersExternalCustomerIdExternalCustomerIdPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=external_customer_id" })
   externalCustomerId: string;
 }
-
 
 // PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress
 /** 
@@ -32,14 +30,12 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingA
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 export enum PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyPaymentProviderEnum {
     Quickbooks = "quickbooks",
     StripeCharge = "stripe_charge",
     StripeInvoice = "stripe_invoice",
     BillCom = "bill.com"
 }
-
 
 // PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress
 /** 
@@ -65,7 +61,6 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShipping
   state?: string;
 }
 
-
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=billing_address" })
   billingAddress?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress;
@@ -86,7 +81,6 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBody extends
   shippingAddress?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress;
 }
 
-
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: PutCustomersExternalCustomerIdExternalCustomerIdPathParams;
@@ -94,7 +88,6 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdRequest extends Spe
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBody;
 }
-
 
 export class PutCustomersExternalCustomerIdExternalCustomerIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

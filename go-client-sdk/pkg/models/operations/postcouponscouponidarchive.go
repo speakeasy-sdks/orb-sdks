@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type PostCouponsCouponIDArchivePathParams struct {
@@ -15,5 +15,5 @@ type PostCouponsCouponIDArchiveRequest struct {
 type PostCouponsCouponIDArchiveResponse struct {
 	ContentType string
 	Coupon      *shared.Coupon
-	StatusCode  int64
+	StatusCode  int
 }

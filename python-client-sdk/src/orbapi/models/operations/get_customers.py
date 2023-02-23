@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Optional
+from ..shared import customer as shared_customer
 from dataclasses_json import dataclass_json
 from orbapi import utils
-from ..shared import customer as shared_customer
+from typing import Optional
 
 
 @dataclass_json

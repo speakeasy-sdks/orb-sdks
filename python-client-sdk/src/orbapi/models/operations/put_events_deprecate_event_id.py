@@ -1,7 +1,7 @@
 import dataclasses
-from typing import Optional
 from dataclasses_json import dataclass_json
 from orbapi import utils
+from typing import Optional
 
 
 @dataclasses.dataclass
@@ -9,10 +9,9 @@ class PutEventsDeprecateEventIDPathParams:
     event_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'event_id', 'style': 'simple', 'explode': False }})
     
 
-@dataclass_json
 @dataclasses.dataclass
-class PutEventsDeprecateEventID200ApplicationJSON:
-    deprecated: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('deprecated') }})
+class PutEventsDeprecateEventIDRequest:
+    path_params: PutEventsDeprecateEventIDPathParams = dataclasses.field()
     
 
 @dataclass_json
@@ -24,9 +23,10 @@ class PutEventsDeprecateEventID400ApplicationJSON:
     validation_errors: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('validation_errors') }})
     
 
+@dataclass_json
 @dataclasses.dataclass
-class PutEventsDeprecateEventIDRequest:
-    path_params: PutEventsDeprecateEventIDPathParams = dataclasses.field()
+class PutEventsDeprecateEventID200ApplicationJSON:
+    deprecated: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('deprecated') }})
     
 
 @dataclasses.dataclass

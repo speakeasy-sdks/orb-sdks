@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
+from ..shared import event as shared_event
 from dataclasses_json import dataclass_json
 from orbapi import utils
-from ..shared import event as shared_event
+from typing import Any, Optional
 
 
 @dataclass_json
@@ -10,6 +10,11 @@ from ..shared import event as shared_event
 class PostEventsSearchRequestBody:
     event_ids: Optional[list[str]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('event_ids') }})
     invoice_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('invoice_id') }})
+    
+
+@dataclasses.dataclass
+class PostEventsSearchRequest:
+    request: Optional[PostEventsSearchRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 @dataclass_json
@@ -21,11 +26,6 @@ class PostEventsSearch200ApplicationJSON:
     
     data: Optional[list[shared_event.Event]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class PostEventsSearchRequest:
-    request: Optional[PostEventsSearchRequestBody] = dataclasses.field(default=None, metadata={'request': { 'media_type': 'application/json' }})
     
 
 @dataclasses.dataclass

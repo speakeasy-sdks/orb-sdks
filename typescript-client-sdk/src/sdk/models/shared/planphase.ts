@@ -1,12 +1,10 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 export enum PlanPhaseDurationUnitEnum {
     Monthly = "monthly",
     Quarterly = "quarterly",
     Annual = "annual"
 }
-
 
 // PlanPhase
 /** 

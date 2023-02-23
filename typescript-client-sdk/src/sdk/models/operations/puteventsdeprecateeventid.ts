@@ -1,5 +1,4 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class PutEventsDeprecateEventIdPathParams extends SpeakeasyBase {
@@ -7,14 +6,12 @@ export class PutEventsDeprecateEventIdPathParams extends SpeakeasyBase {
   eventId: string;
 }
 
-
-export class PutEventsDeprecateEventId200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=deprecated" })
-  deprecated?: string;
+export class PutEventsDeprecateEventIdRequest extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  pathParams: PutEventsDeprecateEventIdPathParams;
 }
 
-
-export class PutEventsDeprecateEventId400ApplicationJson extends SpeakeasyBase {
+export class PutEventsDeprecateEventId400ApplicationJSON extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=status" })
   status?: number;
 
@@ -28,12 +25,10 @@ export class PutEventsDeprecateEventId400ApplicationJson extends SpeakeasyBase {
   validationErrors?: string[];
 }
 
-
-export class PutEventsDeprecateEventIdRequest extends SpeakeasyBase {
-  @SpeakeasyMetadata()
-  pathParams: PutEventsDeprecateEventIdPathParams;
+export class PutEventsDeprecateEventId200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=deprecated" })
+  deprecated?: string;
 }
-
 
 export class PutEventsDeprecateEventIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -43,8 +38,8 @@ export class PutEventsDeprecateEventIdResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  putEventsDeprecateEventId200ApplicationJSONObject?: PutEventsDeprecateEventId200ApplicationJson;
+  putEventsDeprecateEventId200ApplicationJSONObject?: PutEventsDeprecateEventId200ApplicationJSON;
 
   @SpeakeasyMetadata()
-  putEventsDeprecateEventId400ApplicationJSONObject?: PutEventsDeprecateEventId400ApplicationJson;
+  putEventsDeprecateEventId400ApplicationJSONObject?: PutEventsDeprecateEventId400ApplicationJSON;
 }

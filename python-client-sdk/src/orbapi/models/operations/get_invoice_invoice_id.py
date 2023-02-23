@@ -1,6 +1,6 @@
 import dataclasses
-from typing import Optional
 from ..shared import invoice as shared_invoice
+from typing import Optional
 
 
 @dataclasses.dataclass

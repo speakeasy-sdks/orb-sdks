@@ -1,25 +1,21 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class GetCustomersCustomerIdCreditsLedgerPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=customer_id" })
   customerId: string;
 }
-
 export enum GetCustomersCustomerIdCreditsLedgerEntryStatusEnum {
     Committed = "committed",
     Pending = "pending"
 }
-
 export enum GetCustomersCustomerIdCreditsLedgerEntryTypeEnum {
     Increment = "increment",
     Decrement = "decrement",
     ExpirationChange = "expiration_change",
     CreditBlockExpiry = "credit_block_expiry"
 }
-
 
 export class GetCustomersCustomerIdCreditsLedgerQueryParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=entry_status" })
@@ -32,25 +28,6 @@ export class GetCustomersCustomerIdCreditsLedgerQueryParams extends SpeakeasyBas
   minimumAmount?: number;
 }
 
-
-export class GetCustomersCustomerIdCreditsLedger200ApplicationJsonPaginationMetadata extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=has_more" })
-  hasMore: boolean;
-
-  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
-  nextCursor: string;
-}
-
-
-export class GetCustomersCustomerIdCreditsLedger200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.CreditLedgerEntry })
-  data: shared.CreditLedgerEntry[];
-
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata: GetCustomersCustomerIdCreditsLedger200ApplicationJsonPaginationMetadata;
-}
-
-
 export class GetCustomersCustomerIdCreditsLedgerRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: GetCustomersCustomerIdCreditsLedgerPathParams;
@@ -59,6 +36,21 @@ export class GetCustomersCustomerIdCreditsLedgerRequest extends SpeakeasyBase {
   queryParams: GetCustomersCustomerIdCreditsLedgerQueryParams;
 }
 
+export class GetCustomersCustomerIdCreditsLedger200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=has_more" })
+  hasMore: boolean;
+
+  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
+  nextCursor: string;
+}
+
+export class GetCustomersCustomerIdCreditsLedger200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.CreditLedgerEntry })
+  data: shared.CreditLedgerEntry[];
+
+  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  paginationMetadata: GetCustomersCustomerIdCreditsLedger200ApplicationJSONPaginationMetadata;
+}
 
 export class GetCustomersCustomerIdCreditsLedgerResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -68,5 +60,5 @@ export class GetCustomersCustomerIdCreditsLedgerResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCustomersCustomerIdCreditsLedger200ApplicationJSONObject?: GetCustomersCustomerIdCreditsLedger200ApplicationJson;
+  getCustomersCustomerIdCreditsLedger200ApplicationJSONObject?: GetCustomersCustomerIdCreditsLedger200ApplicationJSON;
 }

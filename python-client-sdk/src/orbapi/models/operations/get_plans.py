@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Any,Optional
+from ..shared import plan as shared_plan
 from dataclasses_json import dataclass_json
 from orbapi import utils
-from ..shared import plan as shared_plan
+from typing import Any, Optional
 
 
 @dataclass_json

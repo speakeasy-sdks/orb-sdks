@@ -1,6 +1,6 @@
 import dataclasses
-from typing import Optional
 from ..shared import coupon as shared_coupon
+from typing import Optional
 
 
 @dataclasses.dataclass

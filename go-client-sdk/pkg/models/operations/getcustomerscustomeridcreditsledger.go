@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetCustomersCustomerIDCreditsLedgerPathParams struct {
@@ -30,6 +30,11 @@ type GetCustomersCustomerIDCreditsLedgerQueryParams struct {
 	MinimumAmount *float64                                            `queryParam:"style=form,explode=true,name=minimum_amount"`
 }
 
+type GetCustomersCustomerIDCreditsLedgerRequest struct {
+	PathParams  GetCustomersCustomerIDCreditsLedgerPathParams
+	QueryParams GetCustomersCustomerIDCreditsLedgerQueryParams
+}
+
 type GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata struct {
 	HasMore    bool   `json:"has_more"`
 	NextCursor string `json:"next_cursor"`
@@ -40,13 +45,8 @@ type GetCustomersCustomerIDCreditsLedger200ApplicationJSON struct {
 	PaginationMetadata GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata `json:"pagination_metadata"`
 }
 
-type GetCustomersCustomerIDCreditsLedgerRequest struct {
-	PathParams  GetCustomersCustomerIDCreditsLedgerPathParams
-	QueryParams GetCustomersCustomerIDCreditsLedgerQueryParams
-}
-
 type GetCustomersCustomerIDCreditsLedgerResponse struct {
 	ContentType                                                 string
-	StatusCode                                                  int64
+	StatusCode                                                  int
 	GetCustomersCustomerIDCreditsLedger200ApplicationJSONObject *GetCustomersCustomerIDCreditsLedger200ApplicationJSON
 }

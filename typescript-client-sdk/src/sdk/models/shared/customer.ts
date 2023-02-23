@@ -1,6 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import { CustomerTaxId } from "./customertaxid";
-
 
 
 // CustomerBillingAddress
@@ -26,7 +25,6 @@ export class CustomerBillingAddress extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 export enum CustomerPaymentProviderEnum {
     Stripe = "stripe",
     Quickbooks = "quickbooks",
@@ -34,7 +32,6 @@ export enum CustomerPaymentProviderEnum {
     StripeCharge = "stripe_charge",
     StripeInvoice = "stripe_invoice"
 }
-
 
 // CustomerShippingAddress
 /** 
@@ -59,7 +56,6 @@ export class CustomerShippingAddress extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=state" })
   state?: string;
 }
-
 
 // Customer
 /** 

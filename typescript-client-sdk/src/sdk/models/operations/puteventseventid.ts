@@ -1,12 +1,10 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 export class PutEventsEventIdPathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=event_id" })
   eventId: string;
 }
-
 
 export class PutEventsEventIdRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=customer_id" })
@@ -25,14 +23,15 @@ export class PutEventsEventIdRequestBody extends SpeakeasyBase {
   timestamp: Date;
 }
 
+export class PutEventsEventIdRequest extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  pathParams: PutEventsEventIdPathParams;
 
-export class PutEventsEventId200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amended" })
-  amended?: string;
+  @SpeakeasyMetadata({ data: "request, media_type=application/json" })
+  request?: PutEventsEventIdRequestBody;
 }
 
-
-export class PutEventsEventId400ApplicationJson extends SpeakeasyBase {
+export class PutEventsEventId400ApplicationJSON extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=status" })
   status?: number;
 
@@ -46,15 +45,10 @@ export class PutEventsEventId400ApplicationJson extends SpeakeasyBase {
   validationErrors?: string[];
 }
 
-
-export class PutEventsEventIdRequest extends SpeakeasyBase {
-  @SpeakeasyMetadata()
-  pathParams: PutEventsEventIdPathParams;
-
-  @SpeakeasyMetadata({ data: "request, media_type=application/json" })
-  request?: PutEventsEventIdRequestBody;
+export class PutEventsEventId200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ data: "json, name=amended" })
+  amended?: string;
 }
-
 
 export class PutEventsEventIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -64,8 +58,8 @@ export class PutEventsEventIdResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  putEventsEventId200ApplicationJSONObject?: PutEventsEventId200ApplicationJson;
+  putEventsEventId200ApplicationJSONObject?: PutEventsEventId200ApplicationJSON;
 
   @SpeakeasyMetadata()
-  putEventsEventId400ApplicationJSONObject?: PutEventsEventId400ApplicationJson;
+  putEventsEventId400ApplicationJSONObject?: PutEventsEventId400ApplicationJSON;
 }

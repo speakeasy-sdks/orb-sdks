@@ -1,19 +1,16 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
 
 
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangePathParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "pathParam, style=simple;explode=false;name=subscription_id" })
   subscriptionId: string;
 }
-
 export enum PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBodyChangeOptionEnum {
     RequestedDate = "requested_date",
     EndOfSubscriptionTerm = "end_of_subscription_term",
     Immediate = "immediate"
 }
-
 
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBody extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=align_billing_with_plan_change_date" })
@@ -41,7 +38,6 @@ export class PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBody extend
   priceOverrides?: Record<string, any>[];
 }
 
-
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangeRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: PostSubscriptionsSubscriptionIdSchedulePlanChangePathParams;
@@ -49,7 +45,6 @@ export class PostSubscriptionsSubscriptionIdSchedulePlanChangeRequest extends Sp
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBody;
 }
-
 
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangeResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

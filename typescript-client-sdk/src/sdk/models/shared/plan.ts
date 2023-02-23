@@ -1,7 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import { PlanPhase } from "./planphase";
 import { Price } from "./price";
-
 
 
 // PlanBasePlan
@@ -19,7 +18,6 @@ export class PlanBasePlan extends SpeakeasyBase {
   name?: string;
 }
 
-
 export class PlanProduct extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=created_at" })
   createdAt: Date;
@@ -30,11 +28,9 @@ export class PlanProduct extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=name" })
   name: string;
 }
-
 export enum PlanTrialConfigTrialPeriodUnitEnum {
     Days = "days"
 }
-
 
 export class PlanTrialConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=trial_period" })
@@ -43,7 +39,6 @@ export class PlanTrialConfig extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=trial_period_unit" })
   trialPeriodUnit: PlanTrialConfigTrialPeriodUnitEnum;
 }
-
 
 export class Plan extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=base_plan" })

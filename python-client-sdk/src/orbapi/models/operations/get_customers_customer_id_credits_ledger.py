@@ -1,9 +1,9 @@
 import dataclasses
-from typing import Optional
-from enum import Enum
-from dataclasses_json import dataclass_json
-from orbapi import utils
 from ..shared import credit_ledger_entry as shared_credit_ledger_entry
+from dataclasses_json import dataclass_json
+from enum import Enum
+from orbapi import utils
+from typing import Optional
 
 
 @dataclasses.dataclass
@@ -28,6 +28,12 @@ class GetCustomersCustomerIDCreditsLedgerQueryParams:
     minimum_amount: Optional[float] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'minimum_amount', 'style': 'form', 'explode': True }})
     
 
+@dataclasses.dataclass
+class GetCustomersCustomerIDCreditsLedgerRequest:
+    path_params: GetCustomersCustomerIDCreditsLedgerPathParams = dataclasses.field()
+    query_params: GetCustomersCustomerIDCreditsLedgerQueryParams = dataclasses.field()
+    
+
 @dataclass_json
 @dataclasses.dataclass
 class GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata:
@@ -40,12 +46,6 @@ class GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata:
 class GetCustomersCustomerIDCreditsLedger200ApplicationJSON:
     data: list[shared_credit_ledger_entry.CreditLedgerEntry] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetCustomersCustomerIDCreditsLedgerRequest:
-    path_params: GetCustomersCustomerIDCreditsLedgerPathParams = dataclasses.field()
-    query_params: GetCustomersCustomerIDCreditsLedgerQueryParams = dataclasses.field()
     
 
 @dataclasses.dataclass

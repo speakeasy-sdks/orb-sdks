@@ -1,5 +1,4 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 
 
 // UpcomingPercent20InvoiceCustomer
@@ -14,7 +13,6 @@ export class UpcomingPercent20InvoiceCustomer extends SpeakeasyBase {
   id: string;
 }
 
-
 // UpcomingPercent20InvoiceLineItemsGrouping
 /** 
  * For configured prices that are split by a grouping key, this will be populated with the key and a value. The `amount` and `subtotal` will be the values for this particular grouping.
@@ -27,7 +25,6 @@ export class UpcomingPercent20InvoiceLineItemsGrouping extends SpeakeasyBase {
   value: string;
 }
 
-
 // UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig
 /** 
  * Only available if `type` is `matrix`. Contains the values of the matrix that this `sub_line_item` represents.
@@ -36,7 +33,6 @@ export class UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig extends S
   @SpeakeasyMetadata({ data: "json, name=dimension_values" })
   dimensionValues: string[];
 }
-
 
 // UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig
 /** 
@@ -52,12 +48,10 @@ export class UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig extends Spe
   @SpeakeasyMetadata({ data: "json, name=unit_amount" })
   unitAmount: string;
 }
-
 export enum UpcomingPercent20InvoiceLineItemsSubLineItemsTypeEnum {
     Matrix = "matrix",
     Tier = "tier"
 }
-
 
 export class UpcomingPercent20InvoiceLineItemsSubLineItems extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
@@ -78,7 +72,6 @@ export class UpcomingPercent20InvoiceLineItemsSubLineItems extends SpeakeasyBase
   @SpeakeasyMetadata({ data: "json, name=type" })
   type: UpcomingPercent20InvoiceLineItemsSubLineItemsTypeEnum;
 }
-
 
 export class UpcomingPercent20InvoiceLineItems extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=amount" })
@@ -106,7 +99,6 @@ export class UpcomingPercent20InvoiceLineItems extends SpeakeasyBase {
   subtotal: string;
 }
 
-
 // UpcomingPercent20InvoiceSubscription
 /** 
  * The associated subscription for this invoice.
@@ -115,7 +107,6 @@ export class UpcomingPercent20InvoiceSubscription extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "json, name=id" })
   id: string;
 }
-
 
 // UpcomingPercent20Invoice
 /** 

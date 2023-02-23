@@ -1,15 +1,20 @@
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
 from dataclasses_json import dataclass_json
+from datetime import datetime
+from marshmallow import fields
 from orbapi import utils
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
 class GetSubscriptionsSubscriptionIDSchedulePathParams:
     subscription_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'subscription_id', 'style': 'simple', 'explode': False }})
+    
+
+@dataclasses.dataclass
+class GetSubscriptionsSubscriptionIDScheduleRequest:
+    path_params: GetSubscriptionsSubscriptionIDSchedulePathParams = dataclasses.field()
     
 
 @dataclass_json
@@ -32,11 +37,6 @@ class GetSubscriptionsSubscriptionIDSchedule200ApplicationJSONData:
 class GetSubscriptionsSubscriptionIDSchedule200ApplicationJSON:
     data: Optional[list[GetSubscriptionsSubscriptionIDSchedule200ApplicationJSONData]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetSubscriptionsSubscriptionIDScheduleRequest:
-    path_params: GetSubscriptionsSubscriptionIDSchedulePathParams = dataclasses.field()
     
 
 @dataclasses.dataclass
