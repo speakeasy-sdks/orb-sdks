@@ -1,6 +1,7 @@
+from __future__ import annotations
 import dataclasses
 import dateutil.parser
-from dataclasses_json import dataclass_json
+from dataclasses_json import Undefined, dataclass_json
 from datetime import datetime
 from enum import Enum
 from marshmallow import fields
@@ -12,7 +13,7 @@ class CustomerBalanceTransactionActionEnum(str, Enum):
     MANUAL_ADJUSTMENT = "manual_adjustment"
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CustomerBalanceTransactionInvoice:
     r"""CustomerBalanceTransactionInvoice
@@ -22,7 +23,7 @@ class CustomerBalanceTransactionInvoice:
     id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('id') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CustomerBalanceTransaction:
     r"""CustomerBalanceTransaction

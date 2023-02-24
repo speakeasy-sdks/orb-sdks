@@ -1,3 +1,4 @@
+from __future__ import annotations
 import dataclasses
 from ..shared import invoice as shared_invoice
 from typing import Optional

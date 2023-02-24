@@ -1,3 +1,4 @@
+from __future__ import annotations
 import dataclasses
 from ..shared import coupon as shared_coupon
 from typing import Optional

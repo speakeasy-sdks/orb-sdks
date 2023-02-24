@@ -1,3 +1,4 @@
+from __future__ import annotations
 import dataclasses
 from ..shared import customer as shared_customer
 from typing import Optional

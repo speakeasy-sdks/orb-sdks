@@ -1,6 +1,7 @@
+from __future__ import annotations
 import dataclasses
 from ..shared import credit_ledger_entry as shared_credit_ledger_entry
-from dataclasses_json import dataclass_json
+from dataclasses_json import Undefined, dataclass_json
 from enum import Enum
 from orbapi import utils
 from typing import Optional
@@ -34,14 +35,14 @@ class GetCustomersCustomerIDCreditsLedgerRequest:
     query_params: GetCustomersCustomerIDCreditsLedgerQueryParams = dataclasses.field()
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomersCustomerIDCreditsLedger200ApplicationJSONPaginationMetadata:
     has_more: bool = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('has_more') }})
     next_cursor: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('next_cursor') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomersCustomerIDCreditsLedger200ApplicationJSON:
     data: list[shared_credit_ledger_entry.CreditLedgerEntry] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})

@@ -1,3 +1,4 @@
+from __future__ import annotations
 import dataclasses
 from ..shared import subscription as shared_subscription
 from typing import Optional

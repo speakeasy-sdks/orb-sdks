@@ -40,13 +40,13 @@ class Event:
         url = base_url.removesuffix("/") + "/events/search"
         
         headers = {}
-        req_content_type, data, json, files = utils.serialize_request_body(request)
+        req_content_type, data, form = utils.serialize_request_body(request)
         if req_content_type != "multipart/form-data" and req_content_type != "multipart/mixed":
             headers["content-type"] = req_content_type
         
         client = self._security_client
         
-        r = client.request("POST", url, data=data, json=json, files=files, headers=headers)
+        r = client.request("POST", url, data=data, files=form, headers=headers)
         content_type = r.headers.get("Content-Type")
 
         res = operations.PostEventsSearchResponse(status_code=r.status_code, content_type=content_type)
@@ -205,14 +205,14 @@ class Event:
         url = base_url.removesuffix("/") + "/ingest"
         
         headers = {}
-        req_content_type, data, json, files = utils.serialize_request_body(request)
+        req_content_type, data, form = utils.serialize_request_body(request)
         if req_content_type != "multipart/form-data" and req_content_type != "multipart/mixed":
             headers["content-type"] = req_content_type
         query_params = utils.get_query_params(request.query_params)
         
         client = self._security_client
         
-        r = client.request("POST", url, params=query_params, data=data, json=json, files=files, headers=headers)
+        r = client.request("POST", url, params=query_params, data=data, files=form, headers=headers)
         content_type = r.headers.get("Content-Type")
 
         res = operations.PostIngestResponse(status_code=r.status_code, content_type=content_type)
@@ -297,13 +297,13 @@ class Event:
         url = utils.generate_url(base_url, "/events/{event_id}", request.path_params)
         
         headers = {}
-        req_content_type, data, json, files = utils.serialize_request_body(request)
+        req_content_type, data, form = utils.serialize_request_body(request)
         if req_content_type != "multipart/form-data" and req_content_type != "multipart/mixed":
             headers["content-type"] = req_content_type
         
         client = self._security_client
         
-        r = client.request("PUT", url, data=data, json=json, files=files, headers=headers)
+        r = client.request("PUT", url, data=data, files=form, headers=headers)
         content_type = r.headers.get("Content-Type")
 
         res = operations.PutEventsEventIDResponse(status_code=r.status_code, content_type=content_type)
