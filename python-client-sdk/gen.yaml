@@ -1,9 +1,9 @@
 management:
     openapi-checksum: 2c12389edb4702454e1a5e8d3bde2463
     openapi-version: "1.0"
-    speakeasy-version: 1.5.0
+    speakeasy-version: 1.5.3
 python:
-    version: 2.1.0
+    version: 2.1.1
     packagename: orbapi
     author: orbapi
 sdkclassname: OrbAPI
