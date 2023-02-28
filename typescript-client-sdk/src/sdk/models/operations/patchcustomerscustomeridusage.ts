@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PatchCustomersCustomerIdUsagePathParams extends SpeakeasyBase {
@@ -7,26 +8,31 @@ export class PatchCustomersCustomerIdUsagePathParams extends SpeakeasyBase {
 }
 
 export class PatchCustomersCustomerIdUsageQueryParams extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeEnd: Date;
 
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeStart: Date;
 }
 
 export class PatchCustomersCustomerIdUsageRequestBodyEvents extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=event_name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_name" })
   eventName: string;
 
-  @SpeakeasyMetadata({ data: "json, name=properties" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "properties" })
   properties: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=timestamp" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timestamp" })
   timestamp: string;
 }
 
 export class PatchCustomersCustomerIdUsageRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=events", elemType: PatchCustomersCustomerIdUsageRequestBodyEvents })
+  @SpeakeasyMetadata({ elemType: PatchCustomersCustomerIdUsageRequestBodyEvents })
+  @Expose({ name: "events" })
+  @Type(() => PatchCustomersCustomerIdUsageRequestBodyEvents)
   events: PatchCustomersCustomerIdUsageRequestBodyEvents[];
 }
 
@@ -42,32 +48,41 @@ export class PatchCustomersCustomerIdUsageRequest extends SpeakeasyBase {
 }
 
 export class PatchCustomersCustomerIdUsage400ApplicationJSONValidationErrors extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "idempotency_key" })
   idempotencyKey?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
   validationErrors?: string[];
 }
 
 export class PatchCustomersCustomerIdUsage400ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
   status: number;
 
-  @SpeakeasyMetadata({ data: "json, name=title" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "title" })
   title: string;
 
-  @SpeakeasyMetadata({ data: "json, name=type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
   type: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors", elemType: PatchCustomersCustomerIdUsage400ApplicationJSONValidationErrors })
+  @SpeakeasyMetadata({ elemType: PatchCustomersCustomerIdUsage400ApplicationJSONValidationErrors })
+  @Expose({ name: "validation_errors" })
+  @Type(() => PatchCustomersCustomerIdUsage400ApplicationJSONValidationErrors)
   validationErrors: PatchCustomersCustomerIdUsage400ApplicationJSONValidationErrors[];
 }
 
 export class PatchCustomersCustomerIdUsage200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=duplicate" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duplicate" })
   duplicate?: Record<string, any>[];
 
-  @SpeakeasyMetadata({ data: "json, name=ingested" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ingested" })
   ingested?: string[];
 }
 

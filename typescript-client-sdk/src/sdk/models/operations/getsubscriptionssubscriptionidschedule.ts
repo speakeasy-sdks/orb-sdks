@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class GetSubscriptionsSubscriptionIdSchedulePathParams extends SpeakeasyBase {
@@ -12,29 +13,40 @@ export class GetSubscriptionsSubscriptionIdScheduleRequest extends SpeakeasyBase
 }
 
 export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONDataPlan extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name?: string;
 }
 
 export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=end_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "end_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   endDate?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=plan" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "plan" })
+  @Type(() => GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONDataPlan)
   plan?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONDataPlan;
 
-  @SpeakeasyMetadata({ data: "json, name=start_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "start_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   startDate?: Date;
 }
 
 export class GetSubscriptionsSubscriptionIdSchedule200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData })
+  @SpeakeasyMetadata({ elemType: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData })
+  @Expose({ name: "data" })
+  @Type(() => GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData)
   data?: GetSubscriptionsSubscriptionIdSchedule200ApplicationJSONData[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
 

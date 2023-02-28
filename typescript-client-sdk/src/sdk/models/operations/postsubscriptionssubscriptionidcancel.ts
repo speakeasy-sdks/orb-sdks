@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PostSubscriptionsSubscriptionIdCancelPathParams extends SpeakeasyBase {
@@ -13,10 +14,13 @@ export enum PostSubscriptionsSubscriptionIdCancelRequestBodyCancelOptionEnum {
 }
 
 export class PostSubscriptionsSubscriptionIdCancelRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=cancel_option" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "cancel_option" })
   cancelOption: PostSubscriptionsSubscriptionIdCancelRequestBodyCancelOptionEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=cancellation_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "cancellation_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   cancellationDate?: Date;
 }
 

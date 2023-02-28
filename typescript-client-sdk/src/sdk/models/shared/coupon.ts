@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform } from "class-transformer";
 
 
 // Coupon
@@ -9,25 +10,33 @@ import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
  * 
 **/
 export class Coupon extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=archived_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "archived_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   archivedAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=duration_in_months" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duration_in_months" })
   durationInMonths?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=max_redemptions" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "max_redemptions" })
   maxRedemptions?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=redemption_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "redemption_code" })
   redemptionCode: string;
 
-  @SpeakeasyMetadata({ data: "json, name=times_redeemed" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "times_redeemed" })
   timesRedeemed?: number;
 }
 
@@ -39,21 +48,27 @@ export class Coupon extends SpeakeasyBase {
  * 
 **/
 export class CouponInput extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=duration_in_months" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duration_in_months" })
   durationInMonths?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=max_redemptions" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "max_redemptions" })
   maxRedemptions?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=redemption_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "redemption_code" })
   redemptionCode: string;
 
-  @SpeakeasyMetadata({ data: "json, name=times_redeemed" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "times_redeemed" })
   timesRedeemed?: number;
 }

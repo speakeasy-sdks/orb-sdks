@@ -7,6 +7,7 @@ src/sdk/invoice.ts
 src/sdk/plan.ts
 src/sdk/subscription.ts
 src/sdk/sdk.ts
+jest.config.js
 package-lock.json
 package.json
 src/index.ts

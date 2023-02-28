@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose } from "class-transformer";
 
 export enum PlanPhaseDurationUnitEnum {
     Monthly = "monthly",
@@ -11,24 +12,31 @@ export enum PlanPhaseDurationUnitEnum {
  * A plan can optionally consist of plan phases, which represents a pricing configuration that's only active for the length of time specified by `duration` and `duration_unit`. All plans must have an evergreen phase, which is the last phase and active indefinitely.
 **/
 export class PlanPhase extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=description" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "description" })
   description?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=duration" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duration" })
   duration?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=duration_unit" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duration_unit" })
   durationUnit: PlanPhaseDurationUnitEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum" })
   minimum: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=order" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "order" })
   order?: number;
 }

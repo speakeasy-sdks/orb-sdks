@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
 export class GetCouponsQueryParams extends SpeakeasyBase {
@@ -16,10 +17,13 @@ export class GetCouponsRequest extends SpeakeasyBase {
 }
 
 export class GetCoupons200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Coupon })
+  @SpeakeasyMetadata({ elemType: shared.Coupon })
+  @Expose({ name: "data" })
+  @Type(() => shared.Coupon)
   data?: shared.Coupon[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
 

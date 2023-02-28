@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PutEventsEventIdPathParams extends SpeakeasyBase {
@@ -7,19 +8,25 @@ export class PutEventsEventIdPathParams extends SpeakeasyBase {
 }
 
 export class PutEventsEventIdRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer_id" })
   customerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=event_name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_name" })
   eventName: string;
 
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=properties" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "properties" })
   properties: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=timestamp" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timestamp" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   timestamp: Date;
 }
 
@@ -32,21 +39,26 @@ export class PutEventsEventIdRequest extends SpeakeasyBase {
 }
 
 export class PutEventsEventId400ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
   status?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=title" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "title" })
   title?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
   type?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
   validationErrors?: string[];
 }
 
 export class PutEventsEventId200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amended" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amended" })
   amended?: string;
 }
 

@@ -1,6 +1,8 @@
 import * as utils from "../internal/utils";
 import * as operations from "./models/operations";
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Invoice {
   _defaultClient: AxiosInstance;
@@ -52,7 +54,11 @@ export class Invoice {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.invoice = httpRes?.data;
+              res.invoice = plainToInstance(
+                shared.Invoice,
+                httpRes?.data as shared.Invoice,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -84,19 +90,12 @@ export class Invoice {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -107,7 +106,11 @@ export class Invoice {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getInvoices200ApplicationJSONObject = httpRes?.data;
+              res.getInvoices200ApplicationJSONObject = plainToInstance(
+                operations.GetInvoices200ApplicationJSON,
+                httpRes?.data as operations.GetInvoices200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -135,19 +138,12 @@ export class Invoice {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -158,7 +154,11 @@ export class Invoice {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.upcomingPercent20Invoice = httpRes?.data;
+              res.upcomingPercent20Invoice = plainToInstance(
+                shared.UpcomingPercent20Invoice,
+                httpRes?.data as shared.UpcomingPercent20Invoice,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -203,7 +203,11 @@ export class Invoice {
         switch (true) {
           case httpRes?.status == 201:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.invoice = httpRes?.data;
+              res.invoice = plainToInstance(
+                shared.Invoice,
+                httpRes?.data as shared.Invoice,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:

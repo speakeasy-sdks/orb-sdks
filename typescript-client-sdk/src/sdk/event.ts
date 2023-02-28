@@ -1,6 +1,7 @@
 import * as utils from "../internal/utils";
 import * as operations from "./models/operations";
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Event {
   _defaultClient: AxiosInstance;
@@ -75,7 +76,11 @@ export class Event {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.postEventsSearch200ApplicationJSONObject = httpRes?.data;
+              res.postEventsSearch200ApplicationJSONObject = plainToInstance(
+                operations.PostEventsSearch200ApplicationJSON,
+                httpRes?.data as operations.PostEventsSearch200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -250,21 +255,14 @@ export class Event {
     const client: AxiosInstance = this._securityClient!;
     
     const headers = {...reqBodyHeaders, ...config?.headers};
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "post",
       headers: headers,
       data: reqBody, 
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -275,12 +273,20 @@ export class Event {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.postIngest200ApplicationJSONObject = httpRes?.data;
+              res.postIngest200ApplicationJSONObject = plainToInstance(
+                operations.PostIngest200ApplicationJSON,
+                httpRes?.data as operations.PostIngest200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.postIngest400ApplicationJSONObject = httpRes?.data;
+              res.postIngest400ApplicationJSONObject = plainToInstance(
+                operations.PostIngest400ApplicationJSON,
+                httpRes?.data as operations.PostIngest400ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -338,12 +344,20 @@ export class Event {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.putEventsDeprecateEventId200ApplicationJSONObject = httpRes?.data;
+              res.putEventsDeprecateEventId200ApplicationJSONObject = plainToInstance(
+                operations.PutEventsDeprecateEventId200ApplicationJSON,
+                httpRes?.data as operations.PutEventsDeprecateEventId200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.putEventsDeprecateEventId400ApplicationJSONObject = httpRes?.data;
+              res.putEventsDeprecateEventId400ApplicationJSONObject = plainToInstance(
+                operations.PutEventsDeprecateEventId400ApplicationJSON,
+                httpRes?.data as operations.PutEventsDeprecateEventId400ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -413,12 +427,20 @@ export class Event {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.putEventsEventId200ApplicationJSONObject = httpRes?.data;
+              res.putEventsEventId200ApplicationJSONObject = plainToInstance(
+                operations.PutEventsEventId200ApplicationJSON,
+                httpRes?.data as operations.PutEventsEventId200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.putEventsEventId400ApplicationJSONObject = httpRes?.data;
+              res.putEventsEventId400ApplicationJSONObject = plainToInstance(
+                operations.PutEventsEventId400ApplicationJSON,
+                httpRes?.data as operations.PutEventsEventId400ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

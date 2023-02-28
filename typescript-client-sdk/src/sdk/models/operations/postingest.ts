@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Type } from "class-transformer";
 
 export enum PostIngestDebugEnum {
     True = "true",
@@ -11,27 +12,35 @@ export class PostIngestQueryParams extends SpeakeasyBase {
 }
 
 export class PostIngestRequestBodyEvents extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer_id" })
   customerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=event_name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_name" })
   eventName: string;
 
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "idempotency_key" })
   idempotencyKey: string;
 
-  @SpeakeasyMetadata({ data: "json, name=properties" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "properties" })
   properties: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=timestamp" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timestamp" })
   timestamp: string;
 }
 
 export class PostIngestRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=events", elemType: PostIngestRequestBodyEvents })
+  @SpeakeasyMetadata({ elemType: PostIngestRequestBodyEvents })
+  @Expose({ name: "events" })
+  @Type(() => PostIngestRequestBodyEvents)
   events: PostIngestRequestBodyEvents[];
 }
 
@@ -48,26 +57,34 @@ export class PostIngestRequest extends SpeakeasyBase {
  * Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
 **/
 export class PostIngest400ApplicationJSONDebug extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=duplicate" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duplicate" })
   duplicate?: string[];
 
-  @SpeakeasyMetadata({ data: "json, name=ingested" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ingested" })
   ingested?: string[];
 }
 
 export class PostIngest400ApplicationJSONValidationFailed extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "idempotency_key" })
   idempotencyKey?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
   validationErrors?: string[];
 }
 
 export class PostIngest400ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=debug" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "debug" })
+  @Type(() => PostIngest400ApplicationJSONDebug)
   debug?: PostIngest400ApplicationJSONDebug;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_failed", elemType: PostIngest400ApplicationJSONValidationFailed })
+  @SpeakeasyMetadata({ elemType: PostIngest400ApplicationJSONValidationFailed })
+  @Expose({ name: "validation_failed" })
+  @Type(() => PostIngest400ApplicationJSONValidationFailed)
   validationFailed: PostIngest400ApplicationJSONValidationFailed[];
 }
 
@@ -76,26 +93,34 @@ export class PostIngest400ApplicationJSON extends SpeakeasyBase {
  * Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
 **/
 export class PostIngest200ApplicationJSONDebug extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=duplicate" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "duplicate" })
   duplicate?: string[];
 
-  @SpeakeasyMetadata({ data: "json, name=ingested" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ingested" })
   ingested?: string[];
 }
 
 export class PostIngest200ApplicationJSONValidationFailed extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "idempotency_key" })
   idempotencyKey?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
   validationErrors?: Record<string, any>[];
 }
 
 export class PostIngest200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=debug" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "debug" })
+  @Type(() => PostIngest200ApplicationJSONDebug)
   debug?: PostIngest200ApplicationJSONDebug;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_failed", elemType: PostIngest200ApplicationJSONValidationFailed })
+  @SpeakeasyMetadata({ elemType: PostIngest200ApplicationJSONValidationFailed })
+  @Expose({ name: "validation_failed" })
+  @Type(() => PostIngest200ApplicationJSONValidationFailed)
   validationFailed: PostIngest200ApplicationJSONValidationFailed[];
 }
 

@@ -1,8 +1,10 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PriceBillableMetric extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id?: string;
 }
 
@@ -11,21 +13,26 @@ export class PriceBillableMetric extends SpeakeasyBase {
  * Provided when model_type is `bps`
 **/
 export class PriceBpsConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=bps" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bps" })
   bps?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=per_unit_maximum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_maximum" })
   perUnitMaximum?: string;
 }
 
 export class PriceBulkBpsConfigTiers extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=bps" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bps" })
   bps?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=maximum_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "maximum_amount" })
   maximumAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=per_unit_maximum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_maximum" })
   perUnitMaximum?: string;
 }
 
@@ -34,15 +41,19 @@ export class PriceBulkBpsConfigTiers extends SpeakeasyBase {
  * Provided when model_type is `bulk_bps`
 **/
 export class PriceBulkBpsConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceBulkBpsConfigTiers })
+  @SpeakeasyMetadata({ elemType: PriceBulkBpsConfigTiers })
+  @Expose({ name: "tiers" })
+  @Type(() => PriceBulkBpsConfigTiers)
   tiers?: PriceBulkBpsConfigTiers[];
 }
 
 export class PriceBulkConfigTiers extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=maximum_units" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "maximum_units" })
   maximumUnits?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_amount" })
   unitAmount?: string;
 }
 
@@ -51,7 +62,9 @@ export class PriceBulkConfigTiers extends SpeakeasyBase {
  * Provided when model_type is `bulk`
 **/
 export class PriceBulkConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceBulkConfigTiers })
+  @SpeakeasyMetadata({ elemType: PriceBulkConfigTiers })
+  @Expose({ name: "tiers" })
+  @Type(() => PriceBulkConfigTiers)
   tiers?: PriceBulkConfigTiers[];
 }
 export enum PriceCadenceEnum {
@@ -61,10 +74,12 @@ export enum PriceCadenceEnum {
 }
 
 export class PriceMatrixConfigMatrixValues extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=dimension_values" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "dimension_values" })
   dimensionValues?: string[];
 
-  @SpeakeasyMetadata({ data: "json, name=unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_amount" })
   unitAmount?: string;
 }
 
@@ -73,13 +88,17 @@ export class PriceMatrixConfigMatrixValues extends SpeakeasyBase {
  * Provided when model_type is `matrix`
 **/
 export class PriceMatrixConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=default_unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "default_unit_amount" })
   defaultUnitAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=dimensions" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "dimensions" })
   dimensions?: string[];
 
-  @SpeakeasyMetadata({ data: "json, name=matrix_values", elemType: PriceMatrixConfigMatrixValues })
+  @SpeakeasyMetadata({ elemType: PriceMatrixConfigMatrixValues })
+  @Expose({ name: "matrix_values" })
+  @Type(() => PriceMatrixConfigMatrixValues)
   matrixValues?: PriceMatrixConfigMatrixValues[];
 }
 export enum PriceModelTypeEnum {
@@ -98,24 +117,30 @@ export enum PriceModelTypeEnum {
  * Provided when model_type is `package`
 **/
 export class PricePackageConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=package_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "package_amount" })
   packageAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=package_size" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "package_size" })
   packageSize?: number;
 }
 
 export class PriceTieredBpsConfigTiers extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=bps" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bps" })
   bps?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=maximum_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "maximum_amount" })
   maximumAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum_amount" })
   minimumAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=per_unit_maximum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_maximum" })
   perUnitMaximum?: string;
 }
 
@@ -124,18 +149,23 @@ export class PriceTieredBpsConfigTiers extends SpeakeasyBase {
  * Provided when model_type is `tiered_bps`
 **/
 export class PriceTieredBpsConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceTieredBpsConfigTiers })
+  @SpeakeasyMetadata({ elemType: PriceTieredBpsConfigTiers })
+  @Expose({ name: "tiers" })
+  @Type(() => PriceTieredBpsConfigTiers)
   tiers?: PriceTieredBpsConfigTiers[];
 }
 
 export class PriceTieredConfigTiers extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=first_unit" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "first_unit" })
   firstUnit?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=last_unit" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "last_unit" })
   lastUnit?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_amount" })
   unitAmount?: string;
 }
 
@@ -144,7 +174,9 @@ export class PriceTieredConfigTiers extends SpeakeasyBase {
  * Provided when model_type is`tiered`
 **/
 export class PriceTieredConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=tiers", elemType: PriceTieredConfigTiers })
+  @SpeakeasyMetadata({ elemType: PriceTieredConfigTiers })
+  @Expose({ name: "tiers" })
+  @Type(() => PriceTieredConfigTiers)
   tiers?: PriceTieredConfigTiers[];
 }
 
@@ -153,7 +185,8 @@ export class PriceTieredConfig extends SpeakeasyBase {
  * Provided when model_type is `unit`
 **/
 export class PriceUnitConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_amount" })
   unitAmount?: string;
 }
 
@@ -338,60 +371,89 @@ export class PriceUnitConfig extends SpeakeasyBase {
  * 
 **/
 export class Price extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=billable_metric" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "billable_metric" })
+  @Type(() => PriceBillableMetric)
   billableMetric?: PriceBillableMetric;
 
-  @SpeakeasyMetadata({ data: "json, name=bps_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bps_config" })
+  @Type(() => PriceBpsConfig)
   bpsConfig?: PriceBpsConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=bulk_bps_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bulk_bps_config" })
+  @Type(() => PriceBulkBpsConfig)
   bulkBpsConfig?: PriceBulkBpsConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=bulk_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "bulk_config" })
+  @Type(() => PriceBulkConfig)
   bulkConfig?: PriceBulkConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=cadence" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "cadence" })
   cadence?: PriceCadenceEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=created_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "created_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   createdAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=currency" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "currency" })
   currency: string;
 
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=fixed_price_quantity" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "fixed_price_quantity" })
   fixedPriceQuantity?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=matrix_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "matrix_config" })
+  @Type(() => PriceMatrixConfig)
   matrixConfig?: PriceMatrixConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum" })
   minimum: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=model_type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "model_type" })
   modelType?: PriceModelTypeEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=package_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "package_config" })
+  @Type(() => PricePackageConfig)
   packageConfig?: PricePackageConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=plan_phase_order" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "plan_phase_order" })
   planPhaseOrder: number;
 
-  @SpeakeasyMetadata({ data: "json, name=tiered_bps_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tiered_bps_config" })
+  @Type(() => PriceTieredBpsConfig)
   tieredBpsConfig?: PriceTieredBpsConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=tiered_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tiered_config" })
+  @Type(() => PriceTieredConfig)
   tieredConfig?: PriceTieredConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=unit_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_config" })
+  @Type(() => PriceUnitConfig)
   unitConfig?: PriceUnitConfig;
 }

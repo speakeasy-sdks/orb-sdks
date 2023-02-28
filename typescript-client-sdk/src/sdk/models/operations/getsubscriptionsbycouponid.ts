@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
 export class GetSubscriptionsByCouponIdPathParams extends SpeakeasyBase {
@@ -13,10 +14,13 @@ export class GetSubscriptionsByCouponIdRequest extends SpeakeasyBase {
 }
 
 export class GetSubscriptionsByCouponId200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Subscription })
+  @SpeakeasyMetadata({ elemType: shared.Subscription })
+  @Expose({ name: "data" })
+  @Type(() => shared.Subscription)
   data?: shared.Subscription[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
 

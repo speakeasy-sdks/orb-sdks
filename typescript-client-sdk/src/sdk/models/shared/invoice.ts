@@ -2,6 +2,7 @@ import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import { CustomerBalanceTransaction } from "./customerbalancetransaction";
 import { CustomerTaxId } from "./customertaxid";
 import { Price } from "./price";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 // InvoiceAutoCollection
@@ -9,10 +10,14 @@ import { Price } from "./price";
  * Information about payment auto-collection for this invoice.
 **/
 export class InvoiceAutoCollection extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=next_attempt_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "next_attempt_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   nextAttemptAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=previously_attempted_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "previously_attempted_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   previouslyAttemptedAt?: Date;
 }
 
@@ -21,10 +26,12 @@ export class InvoiceAutoCollection extends SpeakeasyBase {
  * The customer receiving this invoice.
 **/
 export class InvoiceCustomer extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 }
 
@@ -33,10 +40,12 @@ export class InvoiceCustomer extends SpeakeasyBase {
  * For configured prices that are split by a grouping key, this will be populated with the key and a value. The `amount` will be the values for this particular grouping.
 **/
 export class InvoiceLineItemsSubLineItemsGrouping extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "key" })
   key?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=value" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "value" })
   value?: string;
 }
 
@@ -45,7 +54,8 @@ export class InvoiceLineItemsSubLineItemsGrouping extends SpeakeasyBase {
  * Only available if `type` is `matrix`. Contains the values of the matrix that this `sub_line_item` represents.
 **/
 export class InvoiceLineItemsSubLineItemsMatrixConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=dimension_values" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "dimension_values" })
   dimensionValues: string[];
 }
 
@@ -54,13 +64,16 @@ export class InvoiceLineItemsSubLineItemsMatrixConfig extends SpeakeasyBase {
  * Only available if `type` is `tier`. Contains the range of units in this tier and the unit amount.
 **/
 export class InvoiceLineItemsSubLineItemsTierConfig extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=first_unit" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "first_unit" })
   firstUnit: number;
 
-  @SpeakeasyMetadata({ data: "json, name=last_unit" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "last_unit" })
   lastUnit: number;
 
-  @SpeakeasyMetadata({ data: "json, name=unit_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "unit_amount" })
   unitAmount: string;
 }
 export enum InvoiceLineItemsSubLineItemsTypeEnum {
@@ -69,77 +82,108 @@ export enum InvoiceLineItemsSubLineItemsTypeEnum {
 }
 
 export class InvoiceLineItemsSubLineItems extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount" })
   amount: string;
 
-  @SpeakeasyMetadata({ data: "json, name=grouping" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "grouping" })
+  @Type(() => InvoiceLineItemsSubLineItemsGrouping)
   grouping: InvoiceLineItemsSubLineItemsGrouping;
 
-  @SpeakeasyMetadata({ data: "json, name=matrix_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "matrix_config" })
+  @Type(() => InvoiceLineItemsSubLineItemsMatrixConfig)
   matrixConfig?: InvoiceLineItemsSubLineItemsMatrixConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name: string;
 
-  @SpeakeasyMetadata({ data: "json, name=quantity" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "quantity" })
   quantity: number;
 
-  @SpeakeasyMetadata({ data: "json, name=tier_config" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tier_config" })
+  @Type(() => InvoiceLineItemsSubLineItemsTierConfig)
   tierConfig?: InvoiceLineItemsSubLineItemsTierConfig;
 
-  @SpeakeasyMetadata({ data: "json, name=type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
   type: InvoiceLineItemsSubLineItemsTypeEnum;
 }
 
 export class InvoiceLineItemsTaxAmounts extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount" })
   amount: string;
 
-  @SpeakeasyMetadata({ data: "json, name=tax_rate_description" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tax_rate_description" })
   taxRateDescription: string;
 
-  @SpeakeasyMetadata({ data: "json, name=tax_rate_percentage" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tax_rate_percentage" })
   taxRatePercentage: string;
 }
 
 export class InvoiceLineItems extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount" })
   amount: string;
 
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=end_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "end_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   endDate: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=grouping" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "grouping" })
   grouping: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum" })
   minimum: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name: string;
 
-  @SpeakeasyMetadata({ data: "json, name=price" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "price" })
+  @Type(() => Price)
   price: Price;
 
-  @SpeakeasyMetadata({ data: "json, name=quantity" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "quantity" })
   quantity: number;
 
-  @SpeakeasyMetadata({ data: "json, name=start_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "start_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   startDate: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=sub_line_items", elemType: InvoiceLineItemsSubLineItems })
+  @SpeakeasyMetadata({ elemType: InvoiceLineItemsSubLineItems })
+  @Expose({ name: "sub_line_items" })
+  @Type(() => InvoiceLineItemsSubLineItems)
   subLineItems: InvoiceLineItemsSubLineItems[];
 
-  @SpeakeasyMetadata({ data: "json, name=subtotal" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "subtotal" })
   subtotal: string;
 
-  @SpeakeasyMetadata({ data: "json, name=tax_amounts", elemType: InvoiceLineItemsTaxAmounts })
+  @SpeakeasyMetadata({ elemType: InvoiceLineItemsTaxAmounts })
+  @Expose({ name: "tax_amounts" })
+  @Type(() => InvoiceLineItemsTaxAmounts)
   taxAmounts: InvoiceLineItemsTaxAmounts[];
 }
 export enum InvoiceStatusEnum {
@@ -155,7 +199,8 @@ export enum InvoiceStatusEnum {
  * The associated subscription for this invoice.
 **/
 export class InvoiceSubscription extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 }
 
@@ -164,75 +209,112 @@ export class InvoiceSubscription extends SpeakeasyBase {
  * An [`Invoice`](../reference/Orb-API.json/components/schemas/Invoice) is a fundamental billing entity, representing the request for payment for a single subscription. This includes a set of line items, which correspond to prices in the subscription's plan and can represent fixed recurring fees or usage-based fees. They are generated at the end of a billing period, or as the result of an action, such as a cancellation.
 **/
 export class Invoice extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amount_due" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount_due" })
   amountDue: string;
 
-  @SpeakeasyMetadata({ data: "json, name=auto_collection" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "auto_collection" })
+  @Type(() => InvoiceAutoCollection)
   autoCollection?: InvoiceAutoCollection;
 
-  @SpeakeasyMetadata({ data: "json, name=created_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "created_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   createdAt: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=currency" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "currency" })
   currency: string;
 
-  @SpeakeasyMetadata({ data: "json, name=customer" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer" })
+  @Type(() => InvoiceCustomer)
   customer: InvoiceCustomer;
 
-  @SpeakeasyMetadata({ data: "json, name=customer_balance_transactions", elemType: CustomerBalanceTransaction })
+  @SpeakeasyMetadata({ elemType: CustomerBalanceTransaction })
+  @Expose({ name: "customer_balance_transactions" })
+  @Type(() => CustomerBalanceTransaction)
   customerBalanceTransactions: CustomerBalanceTransaction[];
 
-  @SpeakeasyMetadata({ data: "json, name=customer_tax_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer_tax_id" })
+  @Type(() => CustomerTaxId)
   customerTaxId?: CustomerTaxId;
 
-  @SpeakeasyMetadata({ data: "json, name=discount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "discount" })
   discount: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=due_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "due_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   dueDate: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=hosted_invoice_url" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "hosted_invoice_url" })
   hostedInvoiceUrl?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=invoice_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "invoice_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   invoiceDate: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=invoice_pdf" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "invoice_pdf" })
   invoicePdf: string;
 
-  @SpeakeasyMetadata({ data: "json, name=issued_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "issued_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   issuedAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=line_items", elemType: InvoiceLineItems })
+  @SpeakeasyMetadata({ elemType: InvoiceLineItems })
+  @Expose({ name: "line_items" })
+  @Type(() => InvoiceLineItems)
   lineItems: InvoiceLineItems[];
 
-  @SpeakeasyMetadata({ data: "json, name=memo" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "memo" })
   memo?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum" })
   minimum: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=paid_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "paid_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   paidAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=scheduled_issue_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "scheduled_issue_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   scheduledIssueAt?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=status" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
   status: InvoiceStatusEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=subscription" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "subscription" })
+  @Type(() => InvoiceSubscription)
   subscription: InvoiceSubscription;
 
-  @SpeakeasyMetadata({ data: "json, name=subtotal" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "subtotal" })
   subtotal: string;
 
-  @SpeakeasyMetadata({ data: "json, name=total" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "total" })
   total: string;
 
-  @SpeakeasyMetadata({ data: "json, name=voided_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "voided_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   voidedAt?: Date;
 }

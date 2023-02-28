@@ -1,8 +1,10 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Type } from "class-transformer";
 
 
 export class GetPing200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=response" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "response" })
   response: string;
 }
 

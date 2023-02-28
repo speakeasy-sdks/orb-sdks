@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
 export class GetInvoicesQueryParams extends SpeakeasyBase {
@@ -19,10 +20,13 @@ export class GetInvoicesRequest extends SpeakeasyBase {
 }
 
 export class GetInvoices200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Invoice })
+  @SpeakeasyMetadata({ elemType: shared.Invoice })
+  @Expose({ name: "data" })
+  @Type(() => shared.Invoice)
   data?: shared.Invoice[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
 

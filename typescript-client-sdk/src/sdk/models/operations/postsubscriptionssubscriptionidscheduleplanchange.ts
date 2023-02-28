@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangePathParams extends SpeakeasyBase {
@@ -13,28 +14,37 @@ export enum PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBodyChangeOp
 }
 
 export class PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=align_billing_with_plan_change_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "align_billing_with_plan_change_date" })
   alignBillingWithPlanChangeDate?: boolean;
 
-  @SpeakeasyMetadata({ data: "json, name=change_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "change_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   changeDate?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=change_option" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "change_option" })
   changeOption: PostSubscriptionsSubscriptionIdSchedulePlanChangeRequestBodyChangeOptionEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=coupon_redemption_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "coupon_redemption_code" })
   couponRedemptionCode?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=external_plan_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_plan_id" })
   externalPlanId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=minimum_amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "minimum_amount" })
   minimumAmount?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=plan_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "plan_id" })
   planId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=price_overrides" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "price_overrides" })
   priceOverrides?: Record<string, any>[];
 }
 

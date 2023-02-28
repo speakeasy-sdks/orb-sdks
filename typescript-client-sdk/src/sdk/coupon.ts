@@ -1,6 +1,8 @@
 import * as utils from "../internal/utils";
 import * as operations from "./models/operations";
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Coupon {
   _defaultClient: AxiosInstance;
@@ -39,19 +41,12 @@ export class Coupon {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -62,7 +57,11 @@ export class Coupon {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCoupons200ApplicationJSONObject = httpRes?.data;
+              res.getCoupons200ApplicationJSONObject = plainToInstance(
+                operations.GetCoupons200ApplicationJSON,
+                httpRes?.data as operations.GetCoupons200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -105,7 +104,11 @@ export class Coupon {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.coupon = httpRes?.data;
+              res.coupon = plainToInstance(
+                shared.Coupon,
+                httpRes?.data as shared.Coupon,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -148,7 +151,11 @@ export class Coupon {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getSubscriptionsByCouponId200ApplicationJSONObject = httpRes?.data;
+              res.getSubscriptionsByCouponId200ApplicationJSONObject = plainToInstance(
+                operations.GetSubscriptionsByCouponId200ApplicationJSON,
+                httpRes?.data as operations.GetSubscriptionsByCouponId200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -244,7 +251,11 @@ export class Coupon {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.coupon = httpRes?.data;
+              res.coupon = plainToInstance(
+                shared.Coupon,
+                httpRes?.data as shared.Coupon,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

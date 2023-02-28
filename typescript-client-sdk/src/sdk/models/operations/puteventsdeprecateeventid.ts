@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Type } from "class-transformer";
 
 
 export class PutEventsDeprecateEventIdPathParams extends SpeakeasyBase {
@@ -12,21 +13,26 @@ export class PutEventsDeprecateEventIdRequest extends SpeakeasyBase {
 }
 
 export class PutEventsDeprecateEventId400ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
   status?: number;
 
-  @SpeakeasyMetadata({ data: "json, name=title" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "title" })
   title?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
   type?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
   validationErrors?: string[];
 }
 
 export class PutEventsDeprecateEventId200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=deprecated" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "deprecated" })
   deprecated?: string;
 }
 

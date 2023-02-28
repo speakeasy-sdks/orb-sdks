@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class GetCustomerCostsPathParams extends SpeakeasyBase {
@@ -18,7 +19,7 @@ export class GetCustomerCostsQueryParams extends SpeakeasyBase {
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end" })
   timeframeEnd?: string;
 
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeStart?: Date;
 
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=view_mode" })
@@ -34,19 +35,24 @@ export class GetCustomerCostsRequest extends SpeakeasyBase {
 }
 
 export class GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=grouping_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "grouping_key" })
   groupingKey: string;
 
-  @SpeakeasyMetadata({ data: "json, name=grouping_value" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "grouping_value" })
   groupingValue: string;
 
-  @SpeakeasyMetadata({ data: "json, name=secondary_grouping_key" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "secondary_grouping_key" })
   secondaryGroupingKey?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=secondary_grouping_value" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "secondary_grouping_value" })
   secondaryGroupingValue?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=total" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "total" })
   total: string;
 }
 
@@ -55,41 +61,58 @@ export class GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups exte
  * Price's contributions for the timeframe, excluding any transforms (minimums and discounts).
 **/
 export class GetCustomerCosts200ApplicationJSONDataPerPriceCosts extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=price" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "price" })
+  @Type(() => shared.Price)
   price?: shared.Price;
 
-  @SpeakeasyMetadata({ data: "json, name=price_groups", elemType: GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups })
+  @SpeakeasyMetadata({ elemType: GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups })
+  @Expose({ name: "price_groups" })
+  @Type(() => GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups)
   priceGroups: GetCustomerCosts200ApplicationJSONDataPerPriceCostsPriceGroups[];
 
-  @SpeakeasyMetadata({ data: "json, name=subtotal" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "subtotal" })
   subtotal?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=total" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "total" })
   total?: string;
 }
 
 export class GetCustomerCosts200ApplicationJSONData extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=per_price_costs", elemType: GetCustomerCosts200ApplicationJSONDataPerPriceCosts })
+  @SpeakeasyMetadata({ elemType: GetCustomerCosts200ApplicationJSONDataPerPriceCosts })
+  @Expose({ name: "per_price_costs" })
+  @Type(() => GetCustomerCosts200ApplicationJSONDataPerPriceCosts)
   perPriceCosts: GetCustomerCosts200ApplicationJSONDataPerPriceCosts[];
 
-  @SpeakeasyMetadata({ data: "json, name=subtotal" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "subtotal" })
   subtotal: string;
 
-  @SpeakeasyMetadata({ data: "json, name=timeframe_end" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timeframe_end" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   timeframeEnd: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=timeframe_start" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timeframe_start" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   timeframeStart: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=total" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "total" })
   total: string;
 }
 
 export class GetCustomerCosts200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetCustomerCosts200ApplicationJSONData })
+  @SpeakeasyMetadata({ elemType: GetCustomerCosts200ApplicationJSONData })
+  @Expose({ name: "data" })
+  @Type(() => GetCustomerCosts200ApplicationJSONData)
   data: GetCustomerCosts200ApplicationJSONData[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata: Record<string, any>;
 }
 

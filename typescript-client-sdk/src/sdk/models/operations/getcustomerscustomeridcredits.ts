@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class GetCustomersCustomerIdCreditsPathParams extends SpeakeasyBase {
@@ -12,32 +13,43 @@ export class GetCustomersCustomerIdCreditsRequest extends SpeakeasyBase {
 }
 
 export class GetCustomersCustomerIdCredits200ApplicationJSONData extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "balance" })
   balance: number;
 
-  @SpeakeasyMetadata({ data: "json, name=expiry_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "expiry_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   expiryDate: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=per_unit_cost_basis" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_cost_basis" })
   perUnitCostBasis: string;
 }
 
 export class GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=has_more" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "has_more" })
   hasMore: boolean;
 
-  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "next_cursor" })
   nextCursor?: string;
 }
 
 export class GetCustomersCustomerIdCredits200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetCustomersCustomerIdCredits200ApplicationJSONData })
+  @SpeakeasyMetadata({ elemType: GetCustomersCustomerIdCredits200ApplicationJSONData })
+  @Expose({ name: "data" })
+  @Type(() => GetCustomersCustomerIdCredits200ApplicationJSONData)
   data: GetCustomersCustomerIdCredits200ApplicationJSONData[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  @Type(() => GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata)
   paginationMetadata: GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata;
 }
 

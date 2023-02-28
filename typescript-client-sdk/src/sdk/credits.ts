@@ -1,6 +1,8 @@
 import * as utils from "../internal/utils";
 import * as operations from "./models/operations";
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Credits {
   _defaultClient: AxiosInstance;
@@ -56,7 +58,11 @@ export class Credits {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomersCustomerIdCredits200ApplicationJSONObject = httpRes?.data;
+              res.getCustomersCustomerIdCredits200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomersCustomerIdCredits200ApplicationJSON,
+                httpRes?.data as operations.GetCustomersCustomerIdCredits200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -114,19 +120,12 @@ export class Credits {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -137,7 +136,11 @@ export class Credits {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomersCustomerIdCreditsLedger200ApplicationJSONObject = httpRes?.data;
+              res.getCustomersCustomerIdCreditsLedger200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomersCustomerIdCreditsLedger200ApplicationJSON,
+                httpRes?.data as operations.GetCustomersCustomerIdCreditsLedger200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -246,7 +249,11 @@ export class Credits {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.creditLedgerEntry = httpRes?.data;
+              res.creditLedgerEntry = plainToInstance(
+                shared.CreditLedgerEntry,
+                httpRes?.data as shared.CreditLedgerEntry,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

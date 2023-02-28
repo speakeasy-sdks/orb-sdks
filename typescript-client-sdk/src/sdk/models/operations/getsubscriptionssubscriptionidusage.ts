@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Transform, Type } from "class-transformer";
 
 
 export class GetSubscriptionsSubscriptionIdUsagePathParams extends SpeakeasyBase {
@@ -23,10 +24,10 @@ export class GetSubscriptionsSubscriptionIdUsageQueryParams extends SpeakeasyBas
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=group_by" })
   groupBy?: string;
 
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeEnd?: Date;
 
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeStart?: Date;
 
   @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=view_mode" })

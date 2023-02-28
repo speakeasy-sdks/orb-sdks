@@ -1,5 +1,6 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
 export class GetCustomersCustomerIdCreditsLedgerPathParams extends SpeakeasyBase {
@@ -37,18 +38,24 @@ export class GetCustomersCustomerIdCreditsLedgerRequest extends SpeakeasyBase {
 }
 
 export class GetCustomersCustomerIdCreditsLedger200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=has_more" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "has_more" })
   hasMore: boolean;
 
-  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "next_cursor" })
   nextCursor: string;
 }
 
 export class GetCustomersCustomerIdCreditsLedger200ApplicationJSON extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.CreditLedgerEntry })
+  @SpeakeasyMetadata({ elemType: shared.CreditLedgerEntry })
+  @Expose({ name: "data" })
+  @Type(() => shared.CreditLedgerEntry)
   data: shared.CreditLedgerEntry[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  @Type(() => GetCustomersCustomerIdCreditsLedger200ApplicationJSONPaginationMetadata)
   paginationMetadata: GetCustomersCustomerIdCreditsLedger200ApplicationJSONPaginationMetadata;
 }
 

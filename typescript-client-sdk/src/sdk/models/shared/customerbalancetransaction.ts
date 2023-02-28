@@ -1,4 +1,5 @@
 import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 export enum CustomerBalanceTransactionActionEnum {
     AppliedToInvoice = "applied_to_invoice",
@@ -11,7 +12,8 @@ export enum CustomerBalanceTransactionActionEnum {
  * The Invoice associated with this transaction
 **/
 export class CustomerBalanceTransactionInvoice extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 }
 
@@ -20,27 +22,37 @@ export class CustomerBalanceTransactionInvoice extends SpeakeasyBase {
  * A single change to the customer balance. All amounts are in the customer's currency.
 **/
 export class CustomerBalanceTransaction extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=action" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "action" })
   action: CustomerBalanceTransactionActionEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount" })
   amount: string;
 
-  @SpeakeasyMetadata({ data: "json, name=created_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "created_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   createdAt: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=description" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "description" })
   description: string;
 
-  @SpeakeasyMetadata({ data: "json, name=ending_balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ending_balance" })
   endingBalance: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=invoice" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "invoice" })
+  @Type(() => CustomerBalanceTransactionInvoice)
   invoice: CustomerBalanceTransactionInvoice;
 
-  @SpeakeasyMetadata({ data: "json, name=starting_balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "starting_balance" })
   startingBalance: string;
 }
