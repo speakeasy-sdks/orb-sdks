@@ -1,5 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 // CreditLedgerEntryCreditBlock
@@ -7,37 +7,38 @@ import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
  * Credit block that the entry affected
 **/
 export class CreditLedgerEntryCreditBlock extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=expiry_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "expiry_date" })
   expiryDate: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=per_unit_cost_basis" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_cost_basis" })
   perUnitCostBasis: string;
 }
 
-
 export class CreditLedgerEntryCustomer extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 }
-
 export enum CreditLedgerEntryEntryStatusEnum {
     Committed = "committed",
     Pending = "pending"
 }
-
 export enum CreditLedgerEntryEntryTypeEnum {
     Increment = "increment",
     Decrement = "decrement",
     ExpirationChange = "expiration_change",
     CreditBlockExpiry = "credit_block_expiry"
 }
-
 
 // CreditLedgerEntry
 /** 
@@ -46,45 +47,62 @@ export enum CreditLedgerEntryEntryTypeEnum {
  * To support late and out-of-order event reporting, ledger entries are marked as either __committed_ or _pending_. Committed entries are finalized and will not change. Pending entries can be updated up until the event reporting grace period. 
 **/
 export class CreditLedgerEntry extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amount" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "amount" })
   amount: number;
 
-  @SpeakeasyMetadata({ data: "json, name=created_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "created_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   createdAt: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=credit_block" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "credit_block" })
+  @Type(() => CreditLedgerEntryCreditBlock)
   creditBlock: CreditLedgerEntryCreditBlock;
 
-  @SpeakeasyMetadata({ data: "json, name=customer" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer" })
+  @Type(() => CreditLedgerEntryCustomer)
   customer: CreditLedgerEntryCustomer;
 
-  @SpeakeasyMetadata({ data: "json, name=description" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "description" })
   description: string;
 
-  @SpeakeasyMetadata({ data: "json, name=ending_balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ending_balance" })
   endingBalance: number;
 
-  @SpeakeasyMetadata({ data: "json, name=entry_status" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "entry_status" })
   entryStatus: CreditLedgerEntryEntryStatusEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=entry_type" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "entry_type" })
   entryType: CreditLedgerEntryEntryTypeEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=event_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_id" })
   eventId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=ledger_sequence_number" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "ledger_sequence_number" })
   ledgerSequenceNumber: number;
 
-  @SpeakeasyMetadata({ data: "json, name=metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "metadata" })
   metadata: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=price_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "price_id" })
   priceId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=starting_balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "starting_balance" })
   startingBalance: number;
 }

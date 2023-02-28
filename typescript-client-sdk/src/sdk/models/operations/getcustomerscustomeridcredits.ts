@@ -1,5 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class GetCustomersCustomerIdCreditsPathParams extends SpeakeasyBase {
@@ -7,45 +7,51 @@ export class GetCustomersCustomerIdCreditsPathParams extends SpeakeasyBase {
   customerId: string;
 }
 
-
-export class GetCustomersCustomerIdCredits200ApplicationJsonData extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=balance" })
-  balance: number;
-
-  @SpeakeasyMetadata({ data: "json, name=expiry_date" })
-  expiryDate: Date;
-
-  @SpeakeasyMetadata({ data: "json, name=id" })
-  id: string;
-
-  @SpeakeasyMetadata({ data: "json, name=per_unit_cost_basis" })
-  perUnitCostBasis: string;
-}
-
-
-export class GetCustomersCustomerIdCredits200ApplicationJsonPaginationMetadata extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=has_more" })
-  hasMore: boolean;
-
-  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
-  nextCursor?: string;
-}
-
-
-export class GetCustomersCustomerIdCredits200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: GetCustomersCustomerIdCredits200ApplicationJsonData })
-  data: GetCustomersCustomerIdCredits200ApplicationJsonData[];
-
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata: GetCustomersCustomerIdCredits200ApplicationJsonPaginationMetadata;
-}
-
-
 export class GetCustomersCustomerIdCreditsRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: GetCustomersCustomerIdCreditsPathParams;
 }
 
+export class GetCustomersCustomerIdCredits200ApplicationJSONData extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "balance" })
+  balance: number;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "expiry_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
+  expiryDate: Date;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
+  id: string;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "per_unit_cost_basis" })
+  perUnitCostBasis: string;
+}
+
+export class GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "has_more" })
+  hasMore: boolean;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "next_cursor" })
+  nextCursor?: string;
+}
+
+export class GetCustomersCustomerIdCredits200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ elemType: GetCustomersCustomerIdCredits200ApplicationJSONData })
+  @Expose({ name: "data" })
+  @Type(() => GetCustomersCustomerIdCredits200ApplicationJSONData)
+  data: GetCustomersCustomerIdCredits200ApplicationJSONData[];
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  @Type(() => GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata)
+  paginationMetadata: GetCustomersCustomerIdCredits200ApplicationJSONPaginationMetadata;
+}
 
 export class GetCustomersCustomerIdCreditsResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -55,5 +61,5 @@ export class GetCustomersCustomerIdCreditsResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCustomersCustomerIdCredits200ApplicationJSONObject?: GetCustomersCustomerIdCredits200ApplicationJson;
+  getCustomersCustomerIdCredits200ApplicationJSONObject?: GetCustomersCustomerIdCredits200ApplicationJSON;
 }

@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Expose, Type } from "class-transformer";
 
 
 export class PutCustomersExternalCustomerIdExternalCustomerIdPathParams extends SpeakeasyBase {
@@ -8,31 +8,35 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdPathParams extends 
   externalCustomerId: string;
 }
 
-
 // PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress
 /** 
  * The customer's billing address; all fields in the address are optional. This address appears on customer invoices.
 **/
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=city" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "city" })
   city?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=country" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "country" })
   country?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line1" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line1" })
   line1?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line2" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line2" })
   line2?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=postal_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "postal_code" })
   postalCode?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=state" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "state" })
   state?: string;
 }
-
 export enum PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyPaymentProviderEnum {
     Quickbooks = "quickbooks",
     StripeCharge = "stripe_charge",
@@ -40,52 +44,63 @@ export enum PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyPaymentPr
     BillCom = "bill.com"
 }
 
-
 // PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress
 /** 
  * The customer's shipping address; all fields in the address are optional. Note that downstream tax calculations are based on the shipping address.
 **/
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=city" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "city" })
   city?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=country" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "country" })
   country?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line1" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line1" })
   line1?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line2" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line2" })
   line2?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=postal_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "postal_code" })
   postalCode?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=state" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "state" })
   state?: string;
 }
 
-
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=billing_address" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "billing_address" })
+  @Type(() => PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress)
   billingAddress?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyBillingAddress;
 
-  @SpeakeasyMetadata({ data: "json, name=email" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "email" })
   email?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=payment_provider" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "payment_provider" })
   paymentProvider?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyPaymentProviderEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=payment_provider_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "payment_provider_id" })
   paymentProviderId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=shipping_address" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "shipping_address" })
+  @Type(() => PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress)
   shippingAddress?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBodyShippingAddress;
 }
-
 
 export class PutCustomersExternalCustomerIdExternalCustomerIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -94,7 +109,6 @@ export class PutCustomersExternalCustomerIdExternalCustomerIdRequest extends Spe
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PutCustomersExternalCustomerIdExternalCustomerIdRequestBody;
 }
-
 
 export class PutCustomersExternalCustomerIdExternalCustomerIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

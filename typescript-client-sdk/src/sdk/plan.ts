@@ -1,6 +1,8 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import * as operations from "./models/operations";
 import * as utils from "../internal/utils";
+import * as operations from "./models/operations";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Plan {
   _defaultClient: AxiosInstance;
@@ -90,7 +92,11 @@ export class Plan {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getPlans200ApplicationJSONObject = httpRes?.data;
+              res.getPlans200ApplicationJSONObject = plainToInstance(
+                operations.GetPlans200ApplicationJSON,
+                httpRes?.data as operations.GetPlans200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -139,7 +145,11 @@ export class Plan {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.plan = httpRes?.data;
+              res.plan = plainToInstance(
+                shared.Plan,
+                httpRes?.data as shared.Plan,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

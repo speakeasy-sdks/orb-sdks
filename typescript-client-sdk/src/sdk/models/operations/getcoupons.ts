@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Expose, Type } from "class-transformer";
 
 
 export class GetCouponsQueryParams extends SpeakeasyBase {
@@ -11,21 +11,21 @@ export class GetCouponsQueryParams extends SpeakeasyBase {
   showArchived?: boolean;
 }
 
-
-export class GetCoupons200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Coupon })
-  data?: shared.Coupon[];
-
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata?: Record<string, any>;
-}
-
-
 export class GetCouponsRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   queryParams: GetCouponsQueryParams;
 }
 
+export class GetCoupons200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ elemType: shared.Coupon })
+  @Expose({ name: "data" })
+  @Type(() => shared.Coupon)
+  data?: shared.Coupon[];
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  paginationMetadata?: Record<string, any>;
+}
 
 export class GetCouponsResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -35,5 +35,5 @@ export class GetCouponsResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCoupons200ApplicationJSONObject?: GetCoupons200ApplicationJson;
+  getCoupons200ApplicationJSONObject?: GetCoupons200ApplicationJSON;
 }

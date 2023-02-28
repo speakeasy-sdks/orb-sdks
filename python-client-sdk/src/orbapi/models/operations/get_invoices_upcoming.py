@@ -1,6 +1,7 @@
+from __future__ import annotations
 import dataclasses
-from typing import Optional
 from ..shared import upcomingpercent_20invoice as shared_upcomingpercent_20invoice
+from typing import Optional
 
 
 @dataclasses.dataclass

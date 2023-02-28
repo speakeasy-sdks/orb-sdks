@@ -3,30 +3,30 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 	"strings"
 )
 
-type Subscription struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type subscription struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewSubscription(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Subscription {
-	return &Subscription{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newSubscription(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *subscription {
+	return &subscription{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -34,8 +34,8 @@ func NewSubscription(defaultClient, securityClient HTTPClient, serverURL, langua
 // This endpoint returns a list of all subscriptions for an account as a [paginated](../docs/Pagination.md) list, ordered starting from the most recently created subscription. For a full discussion of the subscription resource, see [Subscription](../reference/Orb-API.json/components/schemas/Subscription).
 //
 // Subscriptions can be filtered to a single customer by passing in the `customer_id` query parameter or the `external_customer_id` query parameter.
-func (s *Subscription) GetSubscriptions(ctx context.Context, request operations.GetSubscriptionsRequest) (*operations.GetSubscriptionsResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) GetSubscriptions(ctx context.Context, request operations.GetSubscriptionsRequest) (*operations.GetSubscriptionsResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/subscriptions"
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -43,20 +43,25 @@ func (s *Subscription) GetSubscriptions(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -79,8 +84,8 @@ func (s *Subscription) GetSubscriptions(ctx context.Context, request operations.
 // This endpoint is used to fetch a day-by-day snapshot of a subscription's costs in Orb, calculated by applying pricing information to the underlying usage (see the [subscription usage endpoint](../reference/Orb-API.json/paths/~1subscriptions~1{subscription_id}~1usage/get) to fetch usage per metric, in usage units rather than a currency).
 //
 // The semantics of this endpoint exactly mirror those of [fetching a customer's costs](../reference/Orb-API.json/paths/~1customers~1{customer_id}~1costs/get). Use this endpoint to limit your analysis of costs to a specific subscription for the customer (e.g. to de-aggregate costs when a customer's subscription has started and stopped on the same day).
-func (s *Subscription) GetSubscriptionsCostsByID(ctx context.Context, request operations.GetSubscriptionsCostsByIDRequest) (*operations.GetSubscriptionsCostsByIDResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) GetSubscriptionsCostsByID(ctx context.Context, request operations.GetSubscriptionsCostsByIDRequest) (*operations.GetSubscriptionsCostsByIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/costs", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -88,20 +93,25 @@ func (s *Subscription) GetSubscriptionsCostsByID(ctx context.Context, request op
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsCostsByIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -122,8 +132,8 @@ func (s *Subscription) GetSubscriptionsCostsByID(ctx context.Context, request op
 
 // GetSubscriptionsSubscriptionID - Retrieve a subscription
 // This endpoint is used to fetch a [Subscription](../reference/Orb-API.json/components/schemas/Subscription) given an identifier.
-func (s *Subscription) GetSubscriptionsSubscriptionID(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDRequest) (*operations.GetSubscriptionsSubscriptionIDResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) GetSubscriptionsSubscriptionID(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDRequest) (*operations.GetSubscriptionsSubscriptionIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -131,18 +141,21 @@ func (s *Subscription) GetSubscriptionsSubscriptionID(ctx context.Context, reque
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsSubscriptionIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -163,8 +176,8 @@ func (s *Subscription) GetSubscriptionsSubscriptionID(ctx context.Context, reque
 
 // GetSubscriptionsSubscriptionIDSchedule - View subscription schedule
 // This endpoint returns a [paginated](../docs/Pagination.md) list of all plans associated with a subscription along with their start and end dates. This list contains the subscription's initial plan along with past and future plan changes.
-func (s *Subscription) GetSubscriptionsSubscriptionIDSchedule(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDScheduleRequest) (*operations.GetSubscriptionsSubscriptionIDScheduleResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) GetSubscriptionsSubscriptionIDSchedule(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDScheduleRequest) (*operations.GetSubscriptionsSubscriptionIDScheduleResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/schedule", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -172,18 +185,21 @@ func (s *Subscription) GetSubscriptionsSubscriptionIDSchedule(ctx context.Contex
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsSubscriptionIDScheduleResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -329,8 +345,8 @@ func (s *Subscription) GetSubscriptionsSubscriptionIDSchedule(ctx context.Contex
 // - `first_dimension_value`: `us-east-1`
 // - `second_dimension_key`: `provider`
 // - `second_dimension_value`: `aws`
-func (s *Subscription) GetSubscriptionsSubscriptionIDUsage(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDUsageRequest) (*operations.GetSubscriptionsSubscriptionIDUsageResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) GetSubscriptionsSubscriptionIDUsage(ctx context.Context, request operations.GetSubscriptionsSubscriptionIDUsageRequest) (*operations.GetSubscriptionsSubscriptionIDUsageResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/usage", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -338,20 +354,25 @@ func (s *Subscription) GetSubscriptionsSubscriptionIDUsage(ctx context.Context, 
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsSubscriptionIDUsageResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 
@@ -735,8 +756,8 @@ func (s *Subscription) GetSubscriptionsSubscriptionIDUsage(ctx context.Context, 
 //	}
 //
 // ```
-func (s *Subscription) PostSubscriptions(ctx context.Context, request operations.PostSubscriptionsRequest) (*operations.PostSubscriptionsResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptions(ctx context.Context, request operations.PostSubscriptionsRequest) (*operations.PostSubscriptionsResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/subscriptions"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -751,18 +772,21 @@ func (s *Subscription) PostSubscriptions(ctx context.Context, request operations
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -802,8 +826,8 @@ func (s *Subscription) PostSubscriptions(ctx context.Context, request operations
 //
 // ## Backdated cancellations
 // Orb allows you to cancel a subscription in the past as long as there are no paid invoices between the `requested_date` and the current time. If the cancellation is after the latest issued invoice, Orb will generate a balance refund for the current period. If the cancellation is before the most recently issued invoice, Orb will void the intervening invoice and generate a new one based on the new dates for the subscription. See the section on [cancellation behaviors](../docs/Subscription-management.md#cancellation-behaviors).
-func (s *Subscription) PostSubscriptionsSubscriptionIDCancel(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDCancelRequest) (*operations.PostSubscriptionsSubscriptionIDCancelResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptionsSubscriptionIDCancel(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDCancelRequest) (*operations.PostSubscriptionsSubscriptionIDCancelResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/cancel", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -818,18 +842,21 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDCancel(ctx context.Context
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsSubscriptionIDCancelResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -868,8 +895,8 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDCancel(ctx context.Context
 //
 // ## Prorations for in-advance fees
 // By default, Orb calculates the prorated difference in any fixed fees when making a plan change, adjusting the customer balance as needed. For details on this behavior, [Subscription management](../docs/Subscription-management.md#prorations-for-in-advance-fees).
-func (s *Subscription) PostSubscriptionsSubscriptionIDSchedulePlanChange(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDSchedulePlanChangeRequest) (*operations.PostSubscriptionsSubscriptionIDSchedulePlanChangeResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptionsSubscriptionIDSchedulePlanChange(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDSchedulePlanChangeRequest) (*operations.PostSubscriptionsSubscriptionIDSchedulePlanChangeResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/schedule_plan_change", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -884,18 +911,21 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDSchedulePlanChange(ctx con
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsSubscriptionIDSchedulePlanChangeResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -918,8 +948,8 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDSchedulePlanChange(ctx con
 // This endpoint can be used to unschedule any pending cancellations for a subscription.
 //
 // To be eligible, the subscription must currently be active and have a future cancellation ("Auto-renew turned off"). This operation will turn on auto-renew, ensuring that the subscription does not end at the currently scheduled cancellation time.
-func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingCancellation(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUnschedulePendingCancellationRequest) (*operations.PostSubscriptionsSubscriptionIDUnschedulePendingCancellationResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptionsSubscriptionIDUnschedulePendingCancellation(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUnschedulePendingCancellationRequest) (*operations.PostSubscriptionsSubscriptionIDUnschedulePendingCancellationResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/unschedule_cancellation", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -927,18 +957,21 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingCancellat
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsSubscriptionIDUnschedulePendingCancellationResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -959,8 +992,8 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingCancellat
 
 // PostSubscriptionsSubscriptionIDUnschedulePendingPlanChanges - Unschedule pending plan changes
 // This endpoint can be used to unschedule any pending plan changes on an existing subscription.
-func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingPlanChanges(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesRequest) (*operations.PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptionsSubscriptionIDUnschedulePendingPlanChanges(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesRequest) (*operations.PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/unschedule_pending_plan_changes", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -968,18 +1001,21 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingPlanChang
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -1004,8 +1040,8 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDUnschedulePendingPlanChang
 // To be eligible, the subscription must currently be active and the price specified must be a fixed fee (not usage-based). This operation will immediately update the quantity for the fee, or if a `effective_date` is passed in, will update the quantity on the requested date at midnight in the customer's timezone.
 //
 // If the fee is an in-advance fixed fee, it will also issue an immediate invoice for the difference for the remainder of the billing period.
-func (s *Subscription) PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantity(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityRequest) (*operations.PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityResponse, error) {
-	baseURL := s._serverURL
+func (s *subscription) PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantity(ctx context.Context, request operations.PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityRequest) (*operations.PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/subscriptions/{subscription_id}/update_fixed_fee_quantity", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -1020,18 +1056,21 @@ func (s *Subscription) PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantity(ctx
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostSubscriptionsSubscriptionIDUpdateFixedFeeQuantityResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

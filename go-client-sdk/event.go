@@ -3,29 +3,29 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 	"strings"
 )
 
-type Event struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type event struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewEvent(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Event {
-	return &Event{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newEvent(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *event {
+	return &event{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -41,8 +41,8 @@ func NewEvent(defaultClient, securityClient HTTPClient, serverURL, language, sdk
 // By default, Orb does not return _deprecated_ events in this endpoint.
 //
 // By default, Orb will not throw a `404` if no events matched, Orb will return an empty array for `data` instead.
-func (s *Event) PostEventsSearch(ctx context.Context, request operations.PostEventsSearchRequest) (*operations.PostEventsSearchResponse, error) {
-	baseURL := s._serverURL
+func (s *event) PostEventsSearch(ctx context.Context, request operations.PostEventsSearchRequest) (*operations.PostEventsSearchResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/events/search"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -57,18 +57,21 @@ func (s *Event) PostEventsSearch(ctx context.Context, request operations.PostEve
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostEventsSearchResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -228,8 +231,8 @@ func (s *Event) PostEventsSearch(ctx context.Context, request operations.PostEve
 //	}
 //
 // ```
-func (s *Event) PostIngest(ctx context.Context, request operations.PostIngestRequest) (*operations.PostIngestResponse, error) {
-	baseURL := s._serverURL
+func (s *event) PostIngest(ctx context.Context, request operations.PostIngestRequest) (*operations.PostIngestResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/ingest"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -244,20 +247,25 @@ func (s *Event) PostIngest(ctx context.Context, request operations.PostIngestReq
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostIngestResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -303,8 +311,8 @@ func (s *Event) PostIngest(ctx context.Context, request operations.PostIngestReq
 // * Orb does not accept an `idempotency_key` with the event in this endpoint, since this request is by design idempotent. On retryable errors, you should retry the request and assume the deprecation operation has not succeeded until receipt of a 2xx.
 // * The event's `timestamp` must fall within the customer's current subscription's billing period, or within the grace period of the customer's current subscription's previous billing period. Orb does not allow deprecating events for billing periods that have already invoiced customers.
 // * The `customer_id` or the `external_customer_id` of the original event ingestion request must identify a Customer resource within Orb, even if this event was ingested during the initial integration period. We do not allow deprecating events for customers not in the Orb system.
-func (s *Event) PutEventsDeprecateEventID(ctx context.Context, request operations.PutEventsDeprecateEventIDRequest) (*operations.PutEventsDeprecateEventIDResponse, error) {
-	baseURL := s._serverURL
+func (s *event) PutEventsDeprecateEventID(ctx context.Context, request operations.PutEventsDeprecateEventIDRequest) (*operations.PutEventsDeprecateEventIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/events/{event_id}/deprecate", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "PUT", url, nil)
@@ -312,18 +320,21 @@ func (s *Event) PutEventsDeprecateEventID(ctx context.Context, request operation
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PutEventsDeprecateEventIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -368,8 +379,8 @@ func (s *Event) PutEventsDeprecateEventID(ctx context.Context, request operation
 // * The `customer_id` or `external_customer_id` of the new event must match the `customer_id` or `external_customer_id` of the existing event already ingested. Exactly one of `customer_id` and `external_customer_id` should be specified, and similar to ingestion, the ID must identify a Customer resource within Orb. Unlike ingestion, for event amendment, we strictly enforce that the Customer must be in the Orb system, even during the initial integration period. We do not allow updating the `Customer` an event is associated with.
 // * Orb does not accept an `idempotency_key` with the event in this endpoint, since this request is by design idempotent. On retryable errors, you should retry the request and assume the amendment operation has not succeeded until receipt of a 2xx.
 // * The event's `timestamp` must fall within the customer's current subscription's billing period, or within the grace period of the customer's current subscription's previous billing period.
-func (s *Event) PutEventsEventID(ctx context.Context, request operations.PutEventsEventIDRequest) (*operations.PutEventsEventIDResponse, error) {
-	baseURL := s._serverURL
+func (s *event) PutEventsEventID(ctx context.Context, request operations.PutEventsEventIDRequest) (*operations.PutEventsEventIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/events/{event_id}", request.PathParams)
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -384,18 +395,21 @@ func (s *Event) PutEventsEventID(ctx context.Context, request operations.PutEven
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PutEventsEventIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

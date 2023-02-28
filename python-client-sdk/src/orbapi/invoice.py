@@ -1,7 +1,7 @@
 import requests
-from typing import Optional
-from orbapi.models import shared, operations
 from . import utils
+from orbapi.models import operations, shared
+from typing import Optional
 
 class Invoice:
     _client: requests.Session

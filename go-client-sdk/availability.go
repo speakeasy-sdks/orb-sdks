@@ -3,29 +3,29 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 	"strings"
 )
 
-type Availability struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type availability struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewAvailability(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Availability {
-	return &Availability{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newAvailability(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *availability {
+	return &availability{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -33,8 +33,8 @@ func NewAvailability(defaultClient, securityClient HTTPClient, serverURL, langua
 // This endpoint allows you to test your connection to the Orb API and check the validity of your API key, passed in the `Authorization` header. This is particularly useful for checking that your environment is set up properly, and is a great choice for connectors and integrations.
 //
 // This API does not have any side-effects or return any Orb resources.
-func (s *Availability) GetPing(ctx context.Context) (*operations.GetPingResponse, error) {
-	baseURL := s._serverURL
+func (s *availability) GetPing(ctx context.Context) (*operations.GetPingResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/ping"
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -42,18 +42,21 @@ func (s *Availability) GetPing(ctx context.Context) (*operations.GetPingResponse
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetPingResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

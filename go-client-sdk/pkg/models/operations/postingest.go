@@ -24,21 +24,9 @@ type PostIngestRequestBody struct {
 	Events []PostIngestRequestBodyEvents `json:"events"`
 }
 
-// PostIngest200ApplicationJSONDebug
-// Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
-type PostIngest200ApplicationJSONDebug struct {
-	Duplicate []string `json:"duplicate,omitempty"`
-	Ingested  []string `json:"ingested,omitempty"`
-}
-
-type PostIngest200ApplicationJSONValidationFailed struct {
-	IdempotencyKey   *string                  `json:"idempotency_key,omitempty"`
-	ValidationErrors []map[string]interface{} `json:"validation_errors,omitempty"`
-}
-
-type PostIngest200ApplicationJSON struct {
-	Debug            *PostIngest200ApplicationJSONDebug             `json:"debug,omitempty"`
-	ValidationFailed []PostIngest200ApplicationJSONValidationFailed `json:"validation_failed"`
+type PostIngestRequest struct {
+	QueryParams PostIngestQueryParams
+	Request     *PostIngestRequestBody `request:"mediaType=application/json"`
 }
 
 // PostIngest400ApplicationJSONDebug
@@ -58,14 +46,26 @@ type PostIngest400ApplicationJSON struct {
 	ValidationFailed []PostIngest400ApplicationJSONValidationFailed `json:"validation_failed"`
 }
 
-type PostIngestRequest struct {
-	QueryParams PostIngestQueryParams
-	Request     *PostIngestRequestBody `request:"mediaType=application/json"`
+// PostIngest200ApplicationJSONDebug
+// Optional debug information (only present when debug=true is passed to the endpoint). Contains ingested and duplicate event idempotency keys.
+type PostIngest200ApplicationJSONDebug struct {
+	Duplicate []string `json:"duplicate,omitempty"`
+	Ingested  []string `json:"ingested,omitempty"`
+}
+
+type PostIngest200ApplicationJSONValidationFailed struct {
+	IdempotencyKey   *string                  `json:"idempotency_key,omitempty"`
+	ValidationErrors []map[string]interface{} `json:"validation_errors,omitempty"`
+}
+
+type PostIngest200ApplicationJSON struct {
+	Debug            *PostIngest200ApplicationJSONDebug             `json:"debug,omitempty"`
+	ValidationFailed []PostIngest200ApplicationJSONValidationFailed `json:"validation_failed"`
 }
 
 type PostIngestResponse struct {
 	ContentType                        string
-	StatusCode                         int64
+	StatusCode                         int
 	PostIngest200ApplicationJSONObject *PostIngest200ApplicationJSON
 	PostIngest400ApplicationJSONObject *PostIngest400ApplicationJSON
 }

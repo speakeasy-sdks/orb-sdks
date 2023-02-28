@@ -1,25 +1,29 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
-
-export class GetCustomers200ApplicationJsonPaginationMetadata extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=has_more" })
+export class GetCustomers200ApplicationJSONPaginationMetadata extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "has_more" })
   hasMore: boolean;
 
-  @SpeakeasyMetadata({ data: "json, name=next_cursor" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "next_cursor" })
   nextCursor: string;
 }
 
-
-export class GetCustomers200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Customer })
+export class GetCustomers200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ elemType: shared.Customer })
+  @Expose({ name: "data" })
+  @Type(() => shared.Customer)
   data: shared.Customer[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata: GetCustomers200ApplicationJsonPaginationMetadata;
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  @Type(() => GetCustomers200ApplicationJSONPaginationMetadata)
+  paginationMetadata: GetCustomers200ApplicationJSONPaginationMetadata;
 }
-
 
 export class GetCustomersResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -29,5 +33,5 @@ export class GetCustomersResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getCustomers200ApplicationJSONObject?: GetCustomers200ApplicationJson;
+  getCustomers200ApplicationJSONObject?: GetCustomers200ApplicationJSON;
 }

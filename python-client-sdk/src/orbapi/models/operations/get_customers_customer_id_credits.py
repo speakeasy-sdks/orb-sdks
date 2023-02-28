@@ -1,10 +1,11 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Optional
-from dataclasses_json import dataclass_json
+from dataclasses_json import Undefined, dataclass_json
+from datetime import datetime
+from marshmallow import fields
 from orbapi import utils
+from typing import Optional
 
 
 @dataclasses.dataclass
@@ -12,7 +13,12 @@ class GetCustomersCustomerIDCreditsPathParams:
     customer_id: str = dataclasses.field(metadata={'path_param': { 'field_name': 'customer_id', 'style': 'simple', 'explode': False }})
     
 
-@dataclass_json
+@dataclasses.dataclass
+class GetCustomersCustomerIDCreditsRequest:
+    path_params: GetCustomersCustomerIDCreditsPathParams = dataclasses.field()
+    
+
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomersCustomerIDCredits200ApplicationJSONData:
     balance: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('balance') }})
@@ -21,23 +27,18 @@ class GetCustomersCustomerIDCredits200ApplicationJSONData:
     per_unit_cost_basis: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('per_unit_cost_basis') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomersCustomerIDCredits200ApplicationJSONPaginationMetadata:
     has_more: bool = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('has_more') }})
-    next_cursor: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('next_cursor') }})
+    next_cursor: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('next_cursor'), 'exclude': lambda f: f is None }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomersCustomerIDCredits200ApplicationJSON:
     data: list[GetCustomersCustomerIDCredits200ApplicationJSONData] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: GetCustomersCustomerIDCredits200ApplicationJSONPaginationMetadata = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetCustomersCustomerIDCreditsRequest:
-    path_params: GetCustomersCustomerIDCreditsPathParams = dataclasses.field()
     
 
 @dataclasses.dataclass

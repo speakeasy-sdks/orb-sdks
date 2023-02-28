@@ -1,6 +1,7 @@
 package shared
 
 import (
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/types"
 	"time"
 )
 
@@ -79,5 +80,5 @@ type UpcomingPercent20Invoice struct {
 	LineItems        []UpcomingPercent20InvoiceLineItems  `json:"line_items"`
 	Subscription     UpcomingPercent20InvoiceSubscription `json:"subscription"`
 	Subtotal         string                               `json:"subtotal"`
-	TargetDate       time.Time                            `json:"target_date"`
+	TargetDate       types.Date                           `json:"target_date"`
 }

@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Type } from "class-transformer";
 
 
 export class GetCouponsCouponIdPathParams extends SpeakeasyBase {
@@ -8,12 +8,10 @@ export class GetCouponsCouponIdPathParams extends SpeakeasyBase {
   couponId: string;
 }
 
-
 export class GetCouponsCouponIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: GetCouponsCouponIdPathParams;
 }
-
 
 export class GetCouponsCouponIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

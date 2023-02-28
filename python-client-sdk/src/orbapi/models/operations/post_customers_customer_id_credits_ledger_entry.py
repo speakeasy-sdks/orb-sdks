@@ -1,12 +1,13 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
-from enum import Enum
-from dataclasses_json import dataclass_json
-from orbapi import utils
 from ..shared import credit_ledger_entry as shared_credit_ledger_entry
+from dataclasses_json import Undefined, dataclass_json
+from datetime import date
+from enum import Enum
+from marshmallow import fields
+from orbapi import utils
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -19,7 +20,7 @@ class PostCustomersCustomerIDCreditsLedgerEntryRequestBodyEntryTypeEnum(str, Enu
     EXPIRATION_CHANGE = "expiration_change"
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings:
     r"""PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings
@@ -28,21 +29,21 @@ class PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings:
     
     auto_collection: bool = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('auto_collection') }})
     net_terms: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('net_terms') }})
-    memo: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('memo') }})
+    memo: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('memo'), 'exclude': lambda f: f is None }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class PostCustomersCustomerIDCreditsLedgerEntryRequestBody:
     amount: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('amount') }})
     entry_type: PostCustomersCustomerIDCreditsLedgerEntryRequestBodyEntryTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('entry_type') }})
-    block_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('block_id') }})
-    description: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('description') }})
-    expiry_date: Optional[date] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('expiry_date'), 'encoder': utils.dateisoformat(True), 'decoder': dateutil.parser.isoparse, 'mm_field': fields.DateTime(format='iso') }})
-    invoice_settings: Optional[PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('invoice_settings') }})
-    metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('metadata') }})
-    per_unit_cost_basis: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('per_unit_cost_basis') }})
-    target_expiry_date: Optional[date] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('target_expiry_date'), 'encoder': utils.dateisoformat(True), 'decoder': dateutil.parser.isoparse, 'mm_field': fields.DateTime(format='iso') }})
+    block_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('block_id'), 'exclude': lambda f: f is None }})
+    description: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('description'), 'exclude': lambda f: f is None }})
+    expiry_date: Optional[date] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('expiry_date'), 'encoder': utils.dateisoformat(True), 'decoder': utils.datefromisoformat, 'mm_field': fields.DateTime(format='iso'), 'exclude': lambda f: f is None }})
+    invoice_settings: Optional[PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('invoice_settings'), 'exclude': lambda f: f is None }})
+    metadata: Optional[dict[str, Any]] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('metadata'), 'exclude': lambda f: f is None }})
+    per_unit_cost_basis: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('per_unit_cost_basis'), 'exclude': lambda f: f is None }})
+    target_expiry_date: Optional[date] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('target_expiry_date'), 'encoder': utils.dateisoformat(True), 'decoder': utils.datefromisoformat, 'mm_field': fields.DateTime(format='iso'), 'exclude': lambda f: f is None }})
     
 
 @dataclasses.dataclass

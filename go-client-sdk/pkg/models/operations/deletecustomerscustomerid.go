@@ -10,5 +10,5 @@ type DeleteCustomersCustomerIDRequest struct {
 
 type DeleteCustomersCustomerIDResponse struct {
 	ContentType string
-	StatusCode  int64
+	StatusCode  int
 }

@@ -10,5 +10,5 @@ type GetExternalPlansPlanIDRequest struct {
 
 type GetExternalPlansPlanIDResponse struct {
 	ContentType string
-	StatusCode  int64
+	StatusCode  int
 }

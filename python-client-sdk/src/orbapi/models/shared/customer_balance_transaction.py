@@ -1,9 +1,10 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
+from dataclasses_json import Undefined, dataclass_json
+from datetime import datetime
 from enum import Enum
-from dataclasses_json import dataclass_json
+from marshmallow import fields
 from orbapi import utils
 
 class CustomerBalanceTransactionActionEnum(str, Enum):
@@ -12,7 +13,7 @@ class CustomerBalanceTransactionActionEnum(str, Enum):
     MANUAL_ADJUSTMENT = "manual_adjustment"
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CustomerBalanceTransactionInvoice:
     r"""CustomerBalanceTransactionInvoice
@@ -22,7 +23,7 @@ class CustomerBalanceTransactionInvoice:
     id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('id') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CustomerBalanceTransaction:
     r"""CustomerBalanceTransaction

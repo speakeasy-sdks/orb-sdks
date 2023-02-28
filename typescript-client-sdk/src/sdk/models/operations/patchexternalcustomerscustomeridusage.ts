@@ -1,5 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PatchExternalCustomersCustomerIdUsagePathParams extends SpeakeasyBase {
@@ -7,66 +7,34 @@ export class PatchExternalCustomersCustomerIdUsagePathParams extends SpeakeasyBa
   externalCustomerId: string;
 }
 
-
 export class PatchExternalCustomersCustomerIdUsageQueryParams extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_end;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeEnd: Date;
 
-  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start" })
+  @SpeakeasyMetadata({ data: "queryParam, style=form;explode=true;name=timeframe_start;dateTimeFormat=YYYY-MM-DDThh:mm:ss.sssZ" })
   timeframeStart: Date;
 }
 
-
 export class PatchExternalCustomersCustomerIdUsageRequestBodyEvents extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=event_name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_name" })
   eventName: string;
 
-  @SpeakeasyMetadata({ data: "json, name=properties" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "properties" })
   properties: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=timestamp" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timestamp" })
   timestamp: string;
 }
 
-
 export class PatchExternalCustomersCustomerIdUsageRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=events", elemType: PatchExternalCustomersCustomerIdUsageRequestBodyEvents })
+  @SpeakeasyMetadata({ elemType: PatchExternalCustomersCustomerIdUsageRequestBodyEvents })
+  @Expose({ name: "events" })
+  @Type(() => PatchExternalCustomersCustomerIdUsageRequestBodyEvents)
   events: PatchExternalCustomersCustomerIdUsageRequestBodyEvents[];
 }
-
-
-export class PatchExternalCustomersCustomerIdUsage200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=duplicate" })
-  duplicate?: Record<string, any>[];
-
-  @SpeakeasyMetadata({ data: "json, name=ingested" })
-  ingested?: string[];
-}
-
-
-export class PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=idempotency_key" })
-  idempotencyKey?: string;
-
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
-  validationErrors?: string[];
-}
-
-
-export class PatchExternalCustomersCustomerIdUsage400ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
-  status: number;
-
-  @SpeakeasyMetadata({ data: "json, name=title" })
-  title: string;
-
-  @SpeakeasyMetadata({ data: "json, name=type" })
-  type: string;
-
-  @SpeakeasyMetadata({ data: "json, name=validation_errors", elemType: PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors })
-  validationErrors: PatchExternalCustomersCustomerIdUsage400ApplicationJsonValidationErrors[];
-}
-
 
 export class PatchExternalCustomersCustomerIdUsageRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -79,6 +47,44 @@ export class PatchExternalCustomersCustomerIdUsageRequest extends SpeakeasyBase 
   request?: PatchExternalCustomersCustomerIdUsageRequestBody;
 }
 
+export class PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "idempotency_key" })
+  idempotencyKey?: string;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
+  validationErrors?: string[];
+}
+
+export class PatchExternalCustomersCustomerIdUsage400ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
+  status: number;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "title" })
+  title: string;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
+  type: string;
+
+  @SpeakeasyMetadata({ elemType: PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors })
+  @Expose({ name: "validation_errors" })
+  @Type(() => PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors)
+  validationErrors: PatchExternalCustomersCustomerIdUsage400ApplicationJSONValidationErrors[];
+}
+
+export class PatchExternalCustomersCustomerIdUsage200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "duplicate" })
+  duplicate?: Record<string, any>[];
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "ingested" })
+  ingested?: string[];
+}
 
 export class PatchExternalCustomersCustomerIdUsageResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -88,8 +94,8 @@ export class PatchExternalCustomersCustomerIdUsageResponse extends SpeakeasyBase
   statusCode: number;
 
   @SpeakeasyMetadata()
-  patchExternalCustomersCustomerIdUsage200ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage200ApplicationJson;
+  patchExternalCustomersCustomerIdUsage200ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage200ApplicationJSON;
 
   @SpeakeasyMetadata()
-  patchExternalCustomersCustomerIdUsage400ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage400ApplicationJson;
+  patchExternalCustomersCustomerIdUsage400ApplicationJSONObject?: PatchExternalCustomersCustomerIdUsage400ApplicationJSON;
 }

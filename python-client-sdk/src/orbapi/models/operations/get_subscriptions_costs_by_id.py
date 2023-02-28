@@ -1,11 +1,12 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
-from dataclasses_json import dataclass_json
-from orbapi import utils
 from ..shared import price as shared_price
+from dataclasses_json import Undefined, dataclass_json
+from datetime import datetime
+from marshmallow import fields
+from orbapi import utils
+from typing import Any, Optional
 
 
 @dataclasses.dataclass
@@ -21,17 +22,23 @@ class GetSubscriptionsCostsByIDQueryParams:
     view_mode: Optional[str] = dataclasses.field(default=None, metadata={'query_param': { 'field_name': 'view_mode', 'style': 'form', 'explode': True }})
     
 
-@dataclass_json
+@dataclasses.dataclass
+class GetSubscriptionsCostsByIDRequest:
+    path_params: GetSubscriptionsCostsByIDPathParams = dataclasses.field()
+    query_params: GetSubscriptionsCostsByIDQueryParams = dataclasses.field()
+    
+
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCostsPriceGroups:
     grouping_key: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('grouping_key') }})
     grouping_value: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('grouping_value') }})
     total: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('total') }})
-    secondary_grouping_key: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('secondary_grouping_key') }})
-    secondary_grouping_value: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('secondary_grouping_value') }})
+    secondary_grouping_key: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('secondary_grouping_key'), 'exclude': lambda f: f is None }})
+    secondary_grouping_value: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('secondary_grouping_value'), 'exclude': lambda f: f is None }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCosts:
     r"""GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCosts
@@ -39,12 +46,12 @@ class GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCosts:
     """
     
     price_groups: list[GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCostsPriceGroups] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('price_groups') }})
-    price: Optional[shared_price.Price] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('price') }})
-    subtotal: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('subtotal') }})
-    total: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('total') }})
+    price: Optional[shared_price.Price] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('price'), 'exclude': lambda f: f is None }})
+    subtotal: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('subtotal'), 'exclude': lambda f: f is None }})
+    total: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('total'), 'exclude': lambda f: f is None }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetSubscriptionsCostsByID200ApplicationJSONData:
     per_price_costs: list[GetSubscriptionsCostsByID200ApplicationJSONDataPerPriceCosts] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('per_price_costs') }})
@@ -54,17 +61,11 @@ class GetSubscriptionsCostsByID200ApplicationJSONData:
     total: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('total') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetSubscriptionsCostsByID200ApplicationJSON:
     data: list[GetSubscriptionsCostsByID200ApplicationJSONData] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})
     pagination_metadata: dict[str, Any] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('pagination_metadata') }})
-    
-
-@dataclasses.dataclass
-class GetSubscriptionsCostsByIDRequest:
-    path_params: GetSubscriptionsCostsByIDPathParams = dataclasses.field()
-    query_params: GetSubscriptionsCostsByIDQueryParams = dataclasses.field()
     
 
 @dataclasses.dataclass

@@ -1,16 +1,18 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
+import { Expose, Type } from "class-transformer";
 
 
-
-export class GetPlans200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Plan })
+export class GetPlans200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ elemType: shared.Plan })
+  @Expose({ name: "data" })
+  @Type(() => shared.Plan)
   data?: shared.Plan[];
 
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
   paginationMetadata?: Record<string, any>;
 }
-
 
 export class GetPlansResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -20,5 +22,5 @@ export class GetPlansResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getPlans200ApplicationJSONObject?: GetPlans200ApplicationJson;
+  getPlans200ApplicationJSONObject?: GetPlans200ApplicationJSON;
 }

@@ -1,9 +1,10 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Optional
+from datetime import datetime
 from enum import Enum
+from marshmallow import fields
+from typing import Optional
 
 
 @dataclasses.dataclass

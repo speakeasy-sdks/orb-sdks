@@ -1,6 +1,8 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
-import * as operations from "./models/operations";
 import * as utils from "../internal/utils";
+import * as operations from "./models/operations";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Subscription {
   _defaultClient: AxiosInstance;
@@ -39,19 +41,12 @@ export class Subscription {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -62,7 +57,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getSubscriptions200ApplicationJSONObject = httpRes?.data;
+              res.getSubscriptions200ApplicationJSONObject = plainToInstance(
+                operations.GetSubscriptions200ApplicationJSON,
+                httpRes?.data as operations.GetSubscriptions200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -93,19 +92,12 @@ export class Subscription {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -116,7 +108,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getSubscriptionsCostsById200ApplicationJSONObject = httpRes?.data;
+              res.getSubscriptionsCostsById200ApplicationJSONObject = plainToInstance(
+                operations.GetSubscriptionsCostsById200ApplicationJSON,
+                httpRes?.data as operations.GetSubscriptionsCostsById200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -159,7 +155,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -202,7 +202,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getSubscriptionsSubscriptionIdSchedule200ApplicationJSONObject = httpRes?.data;
+              res.getSubscriptionsSubscriptionIdSchedule200ApplicationJSONObject = plainToInstance(
+                operations.GetSubscriptionsSubscriptionIdSchedule200ApplicationJSON,
+                httpRes?.data as operations.GetSubscriptionsSubscriptionIdSchedule200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -351,19 +355,12 @@ export class Subscription {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -766,7 +763,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -842,7 +843,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -916,7 +921,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -961,7 +970,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -1004,7 +1017,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -1064,7 +1081,11 @@ export class Subscription {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.subscription = httpRes?.data;
+              res.subscription = plainToInstance(
+                shared.Subscription,
+                httpRes?.data as shared.Subscription,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

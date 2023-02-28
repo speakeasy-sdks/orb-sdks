@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetCustomersExternalCustomerIDExternalCustomerIDPathParams struct {
@@ -15,5 +15,5 @@ type GetCustomersExternalCustomerIDExternalCustomerIDRequest struct {
 type GetCustomersExternalCustomerIDExternalCustomerIDResponse struct {
 	ContentType string
 	Customer    *shared.Customer
-	StatusCode  int64
+	StatusCode  int
 }

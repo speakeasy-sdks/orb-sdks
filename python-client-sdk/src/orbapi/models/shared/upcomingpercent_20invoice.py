@@ -1,14 +1,15 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Optional
+from dataclasses_json import Undefined, dataclass_json
+from datetime import date, datetime
 from enum import Enum
-from dataclasses_json import dataclass_json
+from marshmallow import fields
 from orbapi import utils
+from typing import Optional
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceCustomer:
     r"""UpcomingPercent20InvoiceCustomer
@@ -19,7 +20,7 @@ class UpcomingPercent20InvoiceCustomer:
     id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('id') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceLineItemsGrouping:
     r"""UpcomingPercent20InvoiceLineItemsGrouping
@@ -30,7 +31,7 @@ class UpcomingPercent20InvoiceLineItemsGrouping:
     value: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('value') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig:
     r"""UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig
@@ -40,7 +41,7 @@ class UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig:
     dimension_values: list[str] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('dimension_values') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig:
     r"""UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig
@@ -56,18 +57,18 @@ class UpcomingPercent20InvoiceLineItemsSubLineItemsTypeEnum(str, Enum):
     TIER = "tier"
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceLineItemsSubLineItems:
     amount: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('amount') }})
     name: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('name') }})
     quantity: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('quantity') }})
     type: UpcomingPercent20InvoiceLineItemsSubLineItemsTypeEnum = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('type') }})
-    matrix_config: Optional[UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('matrix_config') }})
-    tier_config: Optional[UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('tier_config') }})
+    matrix_config: Optional[UpcomingPercent20InvoiceLineItemsSubLineItemsMatrixConfig] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('matrix_config'), 'exclude': lambda f: f is None }})
+    tier_config: Optional[UpcomingPercent20InvoiceLineItemsSubLineItemsTierConfig] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('tier_config'), 'exclude': lambda f: f is None }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceLineItems:
     amount: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('amount') }})
@@ -80,7 +81,7 @@ class UpcomingPercent20InvoiceLineItems:
     subtotal: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('subtotal') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20InvoiceSubscription:
     r"""UpcomingPercent20InvoiceSubscription
@@ -90,7 +91,7 @@ class UpcomingPercent20InvoiceSubscription:
     id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('id') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class UpcomingPercent20Invoice:
     r"""UpcomingPercent20Invoice
@@ -108,5 +109,5 @@ class UpcomingPercent20Invoice:
     line_items: list[UpcomingPercent20InvoiceLineItems] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('line_items') }})
     subscription: UpcomingPercent20InvoiceSubscription = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('subscription') }})
     subtotal: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('subtotal') }})
-    target_date: date = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('target_date'), 'encoder': utils.dateisoformat(False), 'decoder': dateutil.parser.isoparse, 'mm_field': fields.DateTime(format='iso') }})
+    target_date: date = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('target_date'), 'encoder': utils.dateisoformat(False), 'decoder': utils.datefromisoformat, 'mm_field': fields.DateTime(format='iso') }})
     

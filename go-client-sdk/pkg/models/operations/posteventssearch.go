@@ -1,12 +1,16 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type PostEventsSearchRequestBody struct {
 	EventIds  []string `json:"event_ids,omitempty"`
 	InvoiceID *string  `json:"invoice_id,omitempty"`
+}
+
+type PostEventsSearchRequest struct {
+	Request *PostEventsSearchRequestBody `request:"mediaType=application/json"`
 }
 
 // PostEventsSearch200ApplicationJSON
@@ -16,12 +20,8 @@ type PostEventsSearch200ApplicationJSON struct {
 	PaginationMetadata map[string]interface{} `json:"pagination_metadata,omitempty"`
 }
 
-type PostEventsSearchRequest struct {
-	Request *PostEventsSearchRequestBody `request:"mediaType=application/json"`
-}
-
 type PostEventsSearchResponse struct {
 	ContentType                              string
-	StatusCode                               int64
+	StatusCode                               int
 	PostEventsSearch200ApplicationJSONObject *PostEventsSearch200ApplicationJSON
 }

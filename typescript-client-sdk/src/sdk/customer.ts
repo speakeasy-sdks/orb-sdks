@@ -1,6 +1,8 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse, ParamsSerializerOptions } from "axios";
-import * as operations from "./models/operations";
 import * as utils from "../internal/utils";
+import * as operations from "./models/operations";
+import * as shared from "./models/shared";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Customer {
   _defaultClient: AxiosInstance;
@@ -79,19 +81,12 @@ export class Customer {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -102,7 +97,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomerCosts200ApplicationJSONObject = httpRes?.data;
+              res.getCustomerCosts200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomerCosts200ApplicationJSON,
+                httpRes?.data as operations.GetCustomerCosts200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -196,19 +195,12 @@ export class Customer {
     
     const client: AxiosInstance = this._securityClient!;
     
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "get",
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -219,7 +211,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomerCostsById200ApplicationJSONObject = httpRes?.data;
+              res.getCustomerCostsById200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomerCostsById200ApplicationJSON,
+                httpRes?.data as operations.GetCustomerCostsById200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -261,7 +257,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomers200ApplicationJSONObject = httpRes?.data;
+              res.getCustomers200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomers200ApplicationJSON,
+                httpRes?.data as operations.GetCustomers200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -307,7 +307,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 201:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.customer = httpRes?.data;
+              res.customer = plainToInstance(
+                shared.Customer,
+                httpRes?.data as shared.Customer,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -362,7 +366,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getCustomersCustomerIdBalanceTransactions200ApplicationJSONObject = httpRes?.data;
+              res.getCustomersCustomerIdBalanceTransactions200ApplicationJSONObject = plainToInstance(
+                operations.GetCustomersCustomerIdBalanceTransactions200ApplicationJSON,
+                httpRes?.data as operations.GetCustomersCustomerIdBalanceTransactions200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -407,7 +415,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.customer = httpRes?.data;
+              res.customer = plainToInstance(
+                shared.Customer,
+                httpRes?.data as shared.Customer,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -499,21 +511,14 @@ export class Customer {
     const client: AxiosInstance = this._securityClient!;
     
     const headers = {...reqBodyHeaders, ...config?.headers};
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "patch",
       headers: headers,
       data: reqBody, 
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -524,12 +529,20 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.patchCustomersCustomerIdUsage200ApplicationJSONObject = httpRes?.data;
+              res.patchCustomersCustomerIdUsage200ApplicationJSONObject = plainToInstance(
+                operations.PatchCustomersCustomerIdUsage200ApplicationJSON,
+                httpRes?.data as operations.PatchCustomersCustomerIdUsage200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.patchCustomersCustomerIdUsage400ApplicationJSONObject = httpRes?.data;
+              res.patchCustomersCustomerIdUsage400ApplicationJSONObject = plainToInstance(
+                operations.PatchCustomersCustomerIdUsage400ApplicationJSON,
+                httpRes?.data as operations.PatchCustomersCustomerIdUsage400ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -568,21 +581,14 @@ export class Customer {
     const client: AxiosInstance = this._securityClient!;
     
     const headers = {...reqBodyHeaders, ...config?.headers};
-    const qpSerializer: ParamsSerializerOptions = utils.getQueryParamSerializer(req.queryParams);
-
-    const requestConfig: AxiosRequestConfig = {
-      ...config,
-      params: req.queryParams,
-      paramsSerializer: qpSerializer,
-    };
-    
+    const queryParams: string = utils.serializeQueryParams(req.queryParams);
     
     const r = client.request({
-      url: url,
+      url: url + queryParams,
       method: "patch",
       headers: headers,
       data: reqBody, 
-      ...requestConfig,
+      ...config,
     });
     
     return r.then((httpRes: AxiosResponse) => {
@@ -593,12 +599,20 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.patchExternalCustomersCustomerIdUsage200ApplicationJSONObject = httpRes?.data;
+              res.patchExternalCustomersCustomerIdUsage200ApplicationJSONObject = plainToInstance(
+                operations.PatchExternalCustomersCustomerIdUsage200ApplicationJSON,
+                httpRes?.data as operations.PatchExternalCustomersCustomerIdUsage200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
           case httpRes?.status == 400:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.patchExternalCustomersCustomerIdUsage400ApplicationJSONObject = httpRes?.data;
+              res.patchExternalCustomersCustomerIdUsage400ApplicationJSONObject = plainToInstance(
+                operations.PatchExternalCustomersCustomerIdUsage400ApplicationJSON,
+                httpRes?.data as operations.PatchExternalCustomersCustomerIdUsage400ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -659,7 +673,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 201:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.customer = httpRes?.data;
+              res.customer = plainToInstance(
+                shared.Customer,
+                httpRes?.data as shared.Customer,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -717,7 +735,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.customer = httpRes?.data;
+              res.customer = plainToInstance(
+                shared.Customer,
+                httpRes?.data as shared.Customer,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }
@@ -775,7 +797,11 @@ export class Customer {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.customer = httpRes?.data;
+              res.customer = plainToInstance(
+                shared.Customer,
+                httpRes?.data as shared.Customer,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

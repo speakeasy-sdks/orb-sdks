@@ -1,8 +1,8 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"time"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/types"
 )
 
 type PostSubscriptionsApplicationJSONExternalMarketplaceEnum string
@@ -34,7 +34,7 @@ type PostSubscriptionsApplicationJSON struct {
 	PhaseOverrides                        []PostSubscriptionsApplicationJSONPhaseOverrides         `json:"phase_overrides,omitempty"`
 	PlanID                                *string                                                  `json:"plan_id,omitempty"`
 	PriceOverrides                        []map[string]interface{}                                 `json:"price_overrides,omitempty"`
-	StartDate                             *time.Time                                               `json:"start_date,omitempty"`
+	StartDate                             *types.Date                                              `json:"start_date,omitempty"`
 }
 
 type PostSubscriptionsRequests struct {
@@ -48,6 +48,6 @@ type PostSubscriptionsRequest struct {
 
 type PostSubscriptionsResponse struct {
 	ContentType  string
-	StatusCode   int64
+	StatusCode   int
 	Subscription *shared.Subscription
 }

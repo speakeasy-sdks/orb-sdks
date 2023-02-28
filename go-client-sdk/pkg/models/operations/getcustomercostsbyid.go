@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 	"time"
 )
 
@@ -21,6 +21,11 @@ type GetCustomerCostsByIDQueryParams struct {
 	TimeframeEnd   *string                           `queryParam:"style=form,explode=true,name=timeframe_end"`
 	TimeframeStart *time.Time                        `queryParam:"style=form,explode=true,name=timeframe_start"`
 	ViewMode       *GetCustomerCostsByIDViewModeEnum `queryParam:"style=form,explode=true,name=view_mode"`
+}
+
+type GetCustomerCostsByIDRequest struct {
+	PathParams  GetCustomerCostsByIDPathParams
+	QueryParams GetCustomerCostsByIDQueryParams
 }
 
 type GetCustomerCostsByID200ApplicationJSONDataPerPriceCostsPriceGroups struct {
@@ -53,13 +58,8 @@ type GetCustomerCostsByID200ApplicationJSON struct {
 	PaginationMetadata map[string]interface{}                       `json:"pagination_metadata"`
 }
 
-type GetCustomerCostsByIDRequest struct {
-	PathParams  GetCustomerCostsByIDPathParams
-	QueryParams GetCustomerCostsByIDQueryParams
-}
-
 type GetCustomerCostsByIDResponse struct {
 	ContentType                                  string
-	StatusCode                                   int64
+	StatusCode                                   int
 	GetCustomerCostsByID200ApplicationJSONObject *GetCustomerCostsByID200ApplicationJSON
 }

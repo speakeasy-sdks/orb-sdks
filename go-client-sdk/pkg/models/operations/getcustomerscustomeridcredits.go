@@ -8,6 +8,10 @@ type GetCustomersCustomerIDCreditsPathParams struct {
 	CustomerID string `pathParam:"style=simple,explode=false,name=customer_id"`
 }
 
+type GetCustomersCustomerIDCreditsRequest struct {
+	PathParams GetCustomersCustomerIDCreditsPathParams
+}
+
 type GetCustomersCustomerIDCredits200ApplicationJSONData struct {
 	Balance          float64   `json:"balance"`
 	ExpiryDate       time.Time `json:"expiry_date"`
@@ -25,12 +29,8 @@ type GetCustomersCustomerIDCredits200ApplicationJSON struct {
 	PaginationMetadata GetCustomersCustomerIDCredits200ApplicationJSONPaginationMetadata `json:"pagination_metadata"`
 }
 
-type GetCustomersCustomerIDCreditsRequest struct {
-	PathParams GetCustomersCustomerIDCreditsPathParams
-}
-
 type GetCustomersCustomerIDCreditsResponse struct {
 	ContentType                                           string
-	StatusCode                                            int64
+	StatusCode                                            int
 	GetCustomersCustomerIDCredits200ApplicationJSONObject *GetCustomersCustomerIDCredits200ApplicationJSON
 }

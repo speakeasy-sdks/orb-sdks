@@ -1,8 +1,8 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"time"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/types"
 )
 
 type PostCustomersCustomerIDCreditsLedgerEntryPathParams struct {
@@ -30,11 +30,11 @@ type PostCustomersCustomerIDCreditsLedgerEntryRequestBody struct {
 	BlockID          *string                                                              `json:"block_id,omitempty"`
 	Description      *string                                                              `json:"description,omitempty"`
 	EntryType        PostCustomersCustomerIDCreditsLedgerEntryRequestBodyEntryTypeEnum    `json:"entry_type"`
-	ExpiryDate       *time.Time                                                           `json:"expiry_date,omitempty"`
+	ExpiryDate       *types.Date                                                          `json:"expiry_date,omitempty"`
 	InvoiceSettings  *PostCustomersCustomerIDCreditsLedgerEntryRequestBodyInvoiceSettings `json:"invoice_settings,omitempty"`
 	Metadata         map[string]interface{}                                               `json:"metadata,omitempty"`
 	PerUnitCostBasis *string                                                              `json:"per_unit_cost_basis,omitempty"`
-	TargetExpiryDate *time.Time                                                           `json:"target_expiry_date,omitempty"`
+	TargetExpiryDate *types.Date                                                          `json:"target_expiry_date,omitempty"`
 }
 
 type PostCustomersCustomerIDCreditsLedgerEntryRequest struct {
@@ -45,5 +45,5 @@ type PostCustomersCustomerIDCreditsLedgerEntryRequest struct {
 type PostCustomersCustomerIDCreditsLedgerEntryResponse struct {
 	ContentType       string
 	CreditLedgerEntry *shared.CreditLedgerEntry
-	StatusCode        int64
+	StatusCode        int
 }

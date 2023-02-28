@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import { CustomerTaxId } from "./customertaxid";
-
+import { Expose, Transform, Type } from "class-transformer";
 
 
 // CustomerBillingAddress
@@ -8,25 +8,30 @@ import { CustomerTaxId } from "./customertaxid";
  * The customer's billing address; all fields in the address are optional. This address appears on customer invoices.
 **/
 export class CustomerBillingAddress extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=city" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "city" })
   city?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=country" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "country" })
   country?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line1" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line1" })
   line1?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line2" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line2" })
   line2?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=postal_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "postal_code" })
   postalCode?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=state" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "state" })
   state?: string;
 }
-
 export enum CustomerPaymentProviderEnum {
     Stripe = "stripe",
     Quickbooks = "quickbooks",
@@ -35,31 +40,35 @@ export enum CustomerPaymentProviderEnum {
     StripeInvoice = "stripe_invoice"
 }
 
-
 // CustomerShippingAddress
 /** 
  * The customer's shipping address; all fields in the address are optional. Note that downstream tax calculations are based on the shipping address.
 **/
 export class CustomerShippingAddress extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=city" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "city" })
   city?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=country" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "country" })
   country?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line1" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line1" })
   line1?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=line2" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "line2" })
   line2?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=postal_code" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "postal_code" })
   postalCode?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=state" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "state" })
   state?: string;
 }
-
 
 // Customer
 /** 
@@ -72,45 +81,63 @@ export class CustomerShippingAddress extends SpeakeasyBase {
  * A customer also has a timezone (from the standard [IANA timezone database](https://www.iana.org/time-zones)), which defaults to your account's timezone. See [Timezone localization](../docs/Timezone-localization.md) for information on what this timezone parameter influences within Orb.
 **/
 export class Customer extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=auto_collection" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "auto_collection" })
   autoCollection?: boolean;
 
-  @SpeakeasyMetadata({ data: "json, name=balance" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "balance" })
   balance: string;
 
-  @SpeakeasyMetadata({ data: "json, name=billing_address" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "billing_address" })
+  @Type(() => CustomerBillingAddress)
   billingAddress?: CustomerBillingAddress;
 
-  @SpeakeasyMetadata({ data: "json, name=created_at" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "created_at" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   createdAt: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=currency" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "currency" })
   currency: string;
 
-  @SpeakeasyMetadata({ data: "json, name=email" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "email" })
   email: string;
 
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "id" })
   id: string;
 
-  @SpeakeasyMetadata({ data: "json, name=name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "name" })
   name: string;
 
-  @SpeakeasyMetadata({ data: "json, name=payment_provider" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "payment_provider" })
   paymentProvider: CustomerPaymentProviderEnum;
 
-  @SpeakeasyMetadata({ data: "json, name=payment_provider_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "payment_provider_id" })
   paymentProviderId: string;
 
-  @SpeakeasyMetadata({ data: "json, name=shipping_address" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "shipping_address" })
+  @Type(() => CustomerShippingAddress)
   shippingAddress?: CustomerShippingAddress;
 
-  @SpeakeasyMetadata({ data: "json, name=tax_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "tax_id" })
+  @Type(() => CustomerTaxId)
   taxId: CustomerTaxId;
 
-  @SpeakeasyMetadata({ data: "json, name=timezone" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timezone" })
   timezone: string;
 }

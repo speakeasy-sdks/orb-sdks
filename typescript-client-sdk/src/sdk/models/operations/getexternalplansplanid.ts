@@ -1,5 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Type } from "class-transformer";
 
 
 export class GetExternalPlansPlanIdPathParams extends SpeakeasyBase {
@@ -7,12 +7,10 @@ export class GetExternalPlansPlanIdPathParams extends SpeakeasyBase {
   externalPlanId: string;
 }
 
-
 export class GetExternalPlansPlanIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: GetExternalPlansPlanIdPathParams;
 }
-
 
 export class GetExternalPlansPlanIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

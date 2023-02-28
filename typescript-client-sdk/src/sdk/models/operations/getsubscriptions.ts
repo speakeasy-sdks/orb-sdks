@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Expose, Type } from "class-transformer";
 
 
 export class GetSubscriptionsQueryParams extends SpeakeasyBase {
@@ -11,21 +11,21 @@ export class GetSubscriptionsQueryParams extends SpeakeasyBase {
   externalCustomerId?: string;
 }
 
-
-export class GetSubscriptions200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=data", elemType: shared.Subscription })
-  data?: shared.Subscription[];
-
-  @SpeakeasyMetadata({ data: "json, name=pagination_metadata" })
-  paginationMetadata?: Record<string, any>;
-}
-
-
 export class GetSubscriptionsRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   queryParams: GetSubscriptionsQueryParams;
 }
 
+export class GetSubscriptions200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata({ elemType: shared.Subscription })
+  @Expose({ name: "data" })
+  @Type(() => shared.Subscription)
+  data?: shared.Subscription[];
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "pagination_metadata" })
+  paginationMetadata?: Record<string, any>;
+}
 
 export class GetSubscriptionsResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -35,5 +35,5 @@ export class GetSubscriptionsResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getSubscriptions200ApplicationJSONObject?: GetSubscriptions200ApplicationJson;
+  getSubscriptions200ApplicationJSONObject?: GetSubscriptions200ApplicationJSON;
 }

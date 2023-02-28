@@ -1,9 +1,6 @@
 
-
 import requests
-from orbapi.models import shared
 from . import utils
-
 from .availability import Availability
 from .coupon import Coupon
 from .credits import Credits
@@ -12,7 +9,7 @@ from .event import Event
 from .invoice import Invoice
 from .plan import Plan
 from .subscription import Subscription
-
+from orbapi.models import shared
 
 SERVERS = [
 	"https://api.billwithorb.com/v1",
@@ -35,8 +32,8 @@ class OrbAPI:
     _security: shared.Security
     _server_url: str = SERVERS[0]
     _language: str = "python"
-    _sdk_version: str = "1.1.1"
-    _gen_version: str = "0.21.0"
+    _sdk_version: str = "2.1.2"
+    _gen_version: str = "1.5.4"
 
     def __init__(self) -> None:
         self._client = requests.Session()

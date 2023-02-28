@@ -1,5 +1,5 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
-
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PutEventsEventIdPathParams extends SpeakeasyBase {
@@ -7,45 +7,28 @@ export class PutEventsEventIdPathParams extends SpeakeasyBase {
   eventId: string;
 }
 
-
 export class PutEventsEventIdRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "customer_id" })
   customerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=event_name" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "event_name" })
   eventName: string;
 
-  @SpeakeasyMetadata({ data: "json, name=external_customer_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "external_customer_id" })
   externalCustomerId?: string;
 
-  @SpeakeasyMetadata({ data: "json, name=properties" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "properties" })
   properties: Record<string, any>;
 
-  @SpeakeasyMetadata({ data: "json, name=timestamp" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "timestamp" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   timestamp: Date;
 }
-
-
-export class PutEventsEventId200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=amended" })
-  amended?: string;
-}
-
-
-export class PutEventsEventId400ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=status" })
-  status?: number;
-
-  @SpeakeasyMetadata({ data: "json, name=title" })
-  title?: string;
-
-  @SpeakeasyMetadata({ data: "json, name=type" })
-  type?: string;
-
-  @SpeakeasyMetadata({ data: "json, name=validation_errors" })
-  validationErrors?: string[];
-}
-
 
 export class PutEventsEventIdRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -55,6 +38,29 @@ export class PutEventsEventIdRequest extends SpeakeasyBase {
   request?: PutEventsEventIdRequestBody;
 }
 
+export class PutEventsEventId400ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "status" })
+  status?: number;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "title" })
+  title?: string;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "type" })
+  type?: string;
+
+  @SpeakeasyMetadata()
+  @Expose({ name: "validation_errors" })
+  validationErrors?: string[];
+}
+
+export class PutEventsEventId200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "amended" })
+  amended?: string;
+}
 
 export class PutEventsEventIdResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -64,8 +70,8 @@ export class PutEventsEventIdResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  putEventsEventId200ApplicationJSONObject?: PutEventsEventId200ApplicationJson;
+  putEventsEventId200ApplicationJSONObject?: PutEventsEventId200ApplicationJSON;
 
   @SpeakeasyMetadata()
-  putEventsEventId400ApplicationJSONObject?: PutEventsEventId400ApplicationJson;
+  putEventsEventId400ApplicationJSONObject?: PutEventsEventId400ApplicationJSON;
 }

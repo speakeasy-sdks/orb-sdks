@@ -6,6 +6,6 @@ type GetPing200ApplicationJSON struct {
 
 type GetPingResponse struct {
 	ContentType                     string
-	StatusCode                      int64
+	StatusCode                      int
 	GetPing200ApplicationJSONObject *GetPing200ApplicationJSON
 }

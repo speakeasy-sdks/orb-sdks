@@ -1,6 +1,7 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import * as operations from "./models/operations";
 import * as utils from "../internal/utils";
+import * as operations from "./models/operations";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { plainToInstance } from "class-transformer";
 
 export class Availability {
   _defaultClient: AxiosInstance;
@@ -49,7 +50,11 @@ export class Availability {
         switch (true) {
           case httpRes?.status == 200:
             if (utils.matchContentType(contentType, `application/json`)) {
-                res.getPing200ApplicationJSONObject = httpRes?.data;
+              res.getPing200ApplicationJSONObject = plainToInstance(
+                operations.GetPing200ApplicationJSON,
+                httpRes?.data as operations.GetPing200ApplicationJSON,
+                { excludeExtraneousValues: true }
+              );
             }
             break;
         }

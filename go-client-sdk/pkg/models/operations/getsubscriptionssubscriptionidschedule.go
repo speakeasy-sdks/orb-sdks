@@ -8,6 +8,10 @@ type GetSubscriptionsSubscriptionIDSchedulePathParams struct {
 	SubscriptionID string `pathParam:"style=simple,explode=false,name=subscription_id"`
 }
 
+type GetSubscriptionsSubscriptionIDScheduleRequest struct {
+	PathParams GetSubscriptionsSubscriptionIDSchedulePathParams
+}
+
 type GetSubscriptionsSubscriptionIDSchedule200ApplicationJSONDataPlan struct {
 	ID   *string `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
@@ -24,12 +28,8 @@ type GetSubscriptionsSubscriptionIDSchedule200ApplicationJSON struct {
 	PaginationMetadata map[string]interface{}                                         `json:"pagination_metadata,omitempty"`
 }
 
-type GetSubscriptionsSubscriptionIDScheduleRequest struct {
-	PathParams GetSubscriptionsSubscriptionIDSchedulePathParams
-}
-
 type GetSubscriptionsSubscriptionIDScheduleResponse struct {
 	ContentType                                                    string
-	StatusCode                                                     int64
+	StatusCode                                                     int
 	GetSubscriptionsSubscriptionIDSchedule200ApplicationJSONObject *GetSubscriptionsSubscriptionIDSchedule200ApplicationJSON
 }

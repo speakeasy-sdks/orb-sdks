@@ -1,10 +1,11 @@
+from __future__ import annotations
 import dataclasses
-from typing import Optional
-from dataclasses_json import dataclass_json
+from dataclasses_json import Undefined, dataclass_json
 from orbapi import utils
+from typing import Optional
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetPing200ApplicationJSON:
     response: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('response') }})

@@ -23,9 +23,10 @@ type PatchExternalCustomersCustomerIDUsageRequestBody struct {
 	Events []PatchExternalCustomersCustomerIDUsageRequestBodyEvents `json:"events"`
 }
 
-type PatchExternalCustomersCustomerIDUsage200ApplicationJSON struct {
-	Duplicate []map[string]interface{} `json:"duplicate,omitempty"`
-	Ingested  []string                 `json:"ingested,omitempty"`
+type PatchExternalCustomersCustomerIDUsageRequest struct {
+	PathParams  PatchExternalCustomersCustomerIDUsagePathParams
+	QueryParams PatchExternalCustomersCustomerIDUsageQueryParams
+	Request     *PatchExternalCustomersCustomerIDUsageRequestBody `request:"mediaType=application/json"`
 }
 
 type PatchExternalCustomersCustomerIDUsage400ApplicationJSONValidationErrors struct {
@@ -40,15 +41,14 @@ type PatchExternalCustomersCustomerIDUsage400ApplicationJSON struct {
 	ValidationErrors []PatchExternalCustomersCustomerIDUsage400ApplicationJSONValidationErrors `json:"validation_errors"`
 }
 
-type PatchExternalCustomersCustomerIDUsageRequest struct {
-	PathParams  PatchExternalCustomersCustomerIDUsagePathParams
-	QueryParams PatchExternalCustomersCustomerIDUsageQueryParams
-	Request     *PatchExternalCustomersCustomerIDUsageRequestBody `request:"mediaType=application/json"`
+type PatchExternalCustomersCustomerIDUsage200ApplicationJSON struct {
+	Duplicate []map[string]interface{} `json:"duplicate,omitempty"`
+	Ingested  []string                 `json:"ingested,omitempty"`
 }
 
 type PatchExternalCustomersCustomerIDUsageResponse struct {
 	ContentType                                                   string
-	StatusCode                                                    int64
+	StatusCode                                                    int
 	PatchExternalCustomersCustomerIDUsage200ApplicationJSONObject *PatchExternalCustomersCustomerIDUsage200ApplicationJSON
 	PatchExternalCustomersCustomerIDUsage400ApplicationJSONObject *PatchExternalCustomersCustomerIDUsage400ApplicationJSON
 }

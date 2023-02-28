@@ -1,14 +1,15 @@
+from __future__ import annotations
 import dataclasses
-from datetime import date, datetime
-from marshmallow import fields
 import dateutil.parser
-from typing import Any,Optional
+from dataclasses_json import Undefined, dataclass_json
+from datetime import datetime
 from enum import Enum
-from dataclasses_json import dataclass_json
+from marshmallow import fields
 from orbapi import utils
+from typing import Any, Optional
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CreditLedgerEntryCreditBlock:
     r"""CreditLedgerEntryCreditBlock
@@ -20,7 +21,7 @@ class CreditLedgerEntryCreditBlock:
     per_unit_cost_basis: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('per_unit_cost_basis') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CreditLedgerEntryCustomer:
     external_customer_id: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('external_customer_id') }})
@@ -37,7 +38,7 @@ class CreditLedgerEntryEntryTypeEnum(str, Enum):
     CREDIT_BLOCK_EXPIRY = "credit_block_expiry"
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class CreditLedgerEntry:
     r"""CreditLedgerEntry
@@ -58,6 +59,6 @@ class CreditLedgerEntry:
     ledger_sequence_number: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('ledger_sequence_number') }})
     metadata: dict[str, Any] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('metadata') }})
     starting_balance: float = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('starting_balance') }})
-    event_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('event_id') }})
-    price_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('price_id') }})
+    event_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('event_id'), 'exclude': lambda f: f is None }})
+    price_id: Optional[str] = dataclasses.field(default=None, metadata={'dataclasses_json': { 'letter_case': utils.field_name('price_id'), 'exclude': lambda f: f is None }})
     

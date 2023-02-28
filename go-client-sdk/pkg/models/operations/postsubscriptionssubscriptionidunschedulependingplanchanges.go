@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesPathParams struct {
@@ -14,6 +14,6 @@ type PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesRequest struct {
 
 type PostSubscriptionsSubscriptionIDUnschedulePendingPlanChangesResponse struct {
 	ContentType  string
-	StatusCode   int64
+	StatusCode   int
 	Subscription *shared.Subscription
 }

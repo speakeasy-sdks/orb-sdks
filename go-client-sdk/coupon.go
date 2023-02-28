@@ -3,30 +3,30 @@ package sdk
 import (
 	"context"
 	"fmt"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/operations"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/utils"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/operations"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/utils"
 	"net/http"
 	"strings"
 )
 
-type Coupon struct {
-	_defaultClient  HTTPClient
-	_securityClient HTTPClient
-	_serverURL      string
-	_language       string
-	_sdkVersion     string
-	_genVersion     string
+type coupon struct {
+	defaultClient  HTTPClient
+	securityClient HTTPClient
+	serverURL      string
+	language       string
+	sdkVersion     string
+	genVersion     string
 }
 
-func NewCoupon(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *Coupon {
-	return &Coupon{
-		_defaultClient:  defaultClient,
-		_securityClient: securityClient,
-		_serverURL:      serverURL,
-		_language:       language,
-		_sdkVersion:     sdkVersion,
-		_genVersion:     genVersion,
+func newCoupon(defaultClient, securityClient HTTPClient, serverURL, language, sdkVersion, genVersion string) *coupon {
+	return &coupon{
+		defaultClient:  defaultClient,
+		securityClient: securityClient,
+		serverURL:      serverURL,
+		language:       language,
+		sdkVersion:     sdkVersion,
+		genVersion:     genVersion,
 	}
 }
 
@@ -34,8 +34,8 @@ func NewCoupon(defaultClient, securityClient HTTPClient, serverURL, language, sd
 // This endpoint returns a list of all [coupons](../reference/Orb-API.json/components/schemas/Coupon) for an account in a list format.
 //
 // The list of coupons is ordered starting from the most recently created coupon. The response also includes [`pagination_metadata`](../reference/Orb-API.json/components/schemas/Pagination-metadata), which lets the caller retrieve the next page of results if they exist. More information about pagination can be found in the [Pagination-metadata schema](../reference/Orb-API.json/components/schemas/Pagination-metadata).
-func (s *Coupon) GetCoupons(ctx context.Context, request operations.GetCouponsRequest) (*operations.GetCouponsResponse, error) {
-	baseURL := s._serverURL
+func (s *coupon) GetCoupons(ctx context.Context, request operations.GetCouponsRequest) (*operations.GetCouponsResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/coupons"
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -43,20 +43,25 @@ func (s *Coupon) GetCoupons(ctx context.Context, request operations.GetCouponsRe
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	utils.PopulateQueryParams(ctx, req, request.QueryParams)
+	if err := utils.PopulateQueryParams(ctx, req, request.QueryParams); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCouponsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -77,8 +82,8 @@ func (s *Coupon) GetCoupons(ctx context.Context, request operations.GetCouponsRe
 
 // GetCouponsCouponID - Retrieve a coupon
 // This endpoint retrieves a coupon by its ID. To fetch coupons by their redemption code, use the [List coupons](../reference/Orb-API.json/paths/~1coupons/get) endpoint with the `redemption_code` parameter.
-func (s *Coupon) GetCouponsCouponID(ctx context.Context, request operations.GetCouponsCouponIDRequest) (*operations.GetCouponsCouponIDResponse, error) {
-	baseURL := s._serverURL
+func (s *coupon) GetCouponsCouponID(ctx context.Context, request operations.GetCouponsCouponIDRequest) (*operations.GetCouponsCouponIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/coupons/{coupon_id}", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -86,18 +91,21 @@ func (s *Coupon) GetCouponsCouponID(ctx context.Context, request operations.GetC
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetCouponsCouponIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -118,8 +126,8 @@ func (s *Coupon) GetCouponsCouponID(ctx context.Context, request operations.GetC
 
 // GetSubscriptionsByCouponID - List subscriptions for a coupon
 // This endpoint returns a list of all subscriptions that have redeemed a given coupon as a [paginated](../docs/Pagination.md) list, ordered starting from the most recently created subscription. For a full discussion of the subscription resource, see [Subscription](../reference/Orb-API.json/components/schemas/Subscription).
-func (s *Coupon) GetSubscriptionsByCouponID(ctx context.Context, request operations.GetSubscriptionsByCouponIDRequest) (*operations.GetSubscriptionsByCouponIDResponse, error) {
-	baseURL := s._serverURL
+func (s *coupon) GetSubscriptionsByCouponID(ctx context.Context, request operations.GetSubscriptionsByCouponIDRequest) (*operations.GetSubscriptionsByCouponIDResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/coupons/{coupon_id}/subscriptions", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
@@ -127,18 +135,21 @@ func (s *Coupon) GetSubscriptionsByCouponID(ctx context.Context, request operati
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.GetSubscriptionsByCouponIDResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -159,8 +170,8 @@ func (s *Coupon) GetSubscriptionsByCouponID(ctx context.Context, request operati
 
 // PostCoupons - Create a coupon
 // This endpoint allows the creation of coupons, which can then be redeemed at subscription creation or plan change.
-func (s *Coupon) PostCoupons(ctx context.Context, request operations.PostCouponsRequest) (*operations.PostCouponsResponse, error) {
-	baseURL := s._serverURL
+func (s *coupon) PostCoupons(ctx context.Context, request operations.PostCouponsRequest) (*operations.PostCouponsResponse, error) {
+	baseURL := s.serverURL
 	url := strings.TrimSuffix(baseURL, "/") + "/coupons"
 
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request)
@@ -175,18 +186,21 @@ func (s *Coupon) PostCoupons(ctx context.Context, request operations.PostCoupons
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostCouponsResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {
@@ -198,8 +212,8 @@ func (s *Coupon) PostCoupons(ctx context.Context, request operations.PostCoupons
 
 // PostCouponsCouponIDArchive - Archive a coupon
 // This endpoint allows a coupon to be archived. Archived coupons can no longer be redeemed, and will be hidden from lists of active coupons. Additionally, once a coupon is archived, its redemption code can be reused for a different coupon.
-func (s *Coupon) PostCouponsCouponIDArchive(ctx context.Context, request operations.PostCouponsCouponIDArchiveRequest) (*operations.PostCouponsCouponIDArchiveResponse, error) {
-	baseURL := s._serverURL
+func (s *coupon) PostCouponsCouponIDArchive(ctx context.Context, request operations.PostCouponsCouponIDArchiveRequest) (*operations.PostCouponsCouponIDArchiveResponse, error) {
+	baseURL := s.serverURL
 	url := utils.GenerateURL(ctx, baseURL, "/coupons/{coupon_id}/archive", request.PathParams)
 
 	req, err := http.NewRequestWithContext(ctx, "POST", url, nil)
@@ -207,18 +221,21 @@ func (s *Coupon) PostCouponsCouponIDArchive(ctx context.Context, request operati
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 
-	client := s._securityClient
+	client := s.securityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
 	}
 	defer httpRes.Body.Close()
 
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.PostCouponsCouponIDArchiveResponse{
-		StatusCode:  int64(httpRes.StatusCode),
+		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 	}
 	switch {

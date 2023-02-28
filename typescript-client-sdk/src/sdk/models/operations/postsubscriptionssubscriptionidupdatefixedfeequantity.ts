@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Expose, Transform, Type } from "class-transformer";
 
 
 export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityPathParams extends SpeakeasyBase {
@@ -8,18 +8,20 @@ export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityPathParams ext
   subscriptionId: string;
 }
 
-
 export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityRequestBody extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=effective_date" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "effective_date" })
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   effectiveDate?: Date;
 
-  @SpeakeasyMetadata({ data: "json, name=price_id" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "price_id" })
   priceId: string;
 
-  @SpeakeasyMetadata({ data: "json, name=quantity" })
+  @SpeakeasyMetadata()
+  @Expose({ name: "quantity" })
   quantity: number;
 }
-
 
 export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -28,7 +30,6 @@ export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityRequest extend
   @SpeakeasyMetadata({ data: "request, media_type=application/json" })
   request?: PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityRequestBody;
 }
-
 
 export class PostSubscriptionsSubscriptionIdUpdateFixedFeeQuantityResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

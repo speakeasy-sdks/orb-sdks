@@ -1,6 +1,6 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
 import * as shared from "../shared";
-
+import { Type } from "class-transformer";
 
 
 export class PostInvoicesInvoiceIdVoidPathParams extends SpeakeasyBase {
@@ -8,12 +8,10 @@ export class PostInvoicesInvoiceIdVoidPathParams extends SpeakeasyBase {
   invoiceId: string;
 }
 
-
 export class PostInvoicesInvoiceIdVoidRequest extends SpeakeasyBase {
   @SpeakeasyMetadata()
   pathParams: PostInvoicesInvoiceIdVoidPathParams;
 }
-
 
 export class PostInvoicesInvoiceIdVoidResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()

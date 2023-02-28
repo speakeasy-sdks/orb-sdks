@@ -1,18 +1,19 @@
+from __future__ import annotations
 import dataclasses
-from typing import Optional
-from dataclasses_json import dataclass_json
-from orbapi import utils
 from ..shared import customer as shared_customer
+from dataclasses_json import Undefined, dataclass_json
+from orbapi import utils
+from typing import Optional
 
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomers200ApplicationJSONPaginationMetadata:
     has_more: bool = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('has_more') }})
     next_cursor: str = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('next_cursor') }})
     
 
-@dataclass_json
+@dataclass_json(undefined=Undefined.EXCLUDE)
 @dataclasses.dataclass
 class GetCustomers200ApplicationJSON:
     data: list[shared_customer.Customer] = dataclasses.field(metadata={'dataclasses_json': { 'letter_case': utils.field_name('data') }})

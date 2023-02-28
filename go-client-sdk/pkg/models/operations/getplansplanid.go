@@ -1,7 +1,7 @@
 package operations
 
 import (
-	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/pkg/models/shared"
+	"github.com/speakeasy-sdks/orb-sdks/go-client-sdk/v2/pkg/models/shared"
 )
 
 type GetPlansPlanIDPathParams struct {
@@ -15,5 +15,5 @@ type GetPlansPlanIDRequest struct {
 type GetPlansPlanIDResponse struct {
 	ContentType string
 	Plan        *shared.Plan
-	StatusCode  int64
+	StatusCode  int
 }

@@ -1,12 +1,12 @@
-import { SpeakeasyMetadata, SpeakeasyBase } from "../../../internal/utils";
+import { SpeakeasyBase, SpeakeasyMetadata } from "../../../internal/utils";
+import { Expose, Type } from "class-transformer";
 
 
-
-export class GetPing200ApplicationJson extends SpeakeasyBase {
-  @SpeakeasyMetadata({ data: "json, name=response" })
+export class GetPing200ApplicationJSON extends SpeakeasyBase {
+  @SpeakeasyMetadata()
+  @Expose({ name: "response" })
   response: string;
 }
-
 
 export class GetPingResponse extends SpeakeasyBase {
   @SpeakeasyMetadata()
@@ -16,5 +16,5 @@ export class GetPingResponse extends SpeakeasyBase {
   statusCode: number;
 
   @SpeakeasyMetadata()
-  getPing200ApplicationJSONObject?: GetPing200ApplicationJson;
+  getPing200ApplicationJSONObject?: GetPing200ApplicationJSON;
 }

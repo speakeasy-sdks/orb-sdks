@@ -1,6 +1,7 @@
+from __future__ import annotations
 import dataclasses
-from typing import Optional
 from ..shared import plan as shared_plan
+from typing import Optional
 
 
 @dataclasses.dataclass
